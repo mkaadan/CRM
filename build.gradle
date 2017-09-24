@@ -29,6 +29,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.webjars:bootstrap:3.0.3")
-    compile("org.webjars:vue:2.4.2")
+    compile("org.webjars:jquery:2.0.3-1")
     testCompile("junit:junit")
 }

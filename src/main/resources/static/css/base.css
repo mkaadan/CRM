@@ -1,0 +1,23 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.spacer {
+  padding: 60px 15px;
+}
+
+#footer {
+  height: 60px;
+  background-color: #101010;
+  color: white;
+
+  p {
+    padding-top: 50%; 
+  }
+}
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
