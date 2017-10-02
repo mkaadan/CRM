@@ -1,13 +1,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:include="layout :: htmlhead" th:with="title='Hello'"></head>
-
+  <head th:include="layout :: htmlhead"></head>
   <body>
     <div class ="wrapper">
       <div th:replace="layout :: navbar">(navbar)</div>
-      <div class="container">
+      <div class="container-fluid">
         <div class="spacer">
-          <p class="lead" th:text="${greeting}">(greeting)</p>
-          <p>The current time is <span th:text="${currentTime}">(time)</span></p>
+            <div class="row">
+              <div class="col-lg-12 metaBar">
+                  <div class="pull-left">
+                    <p th:text="${moduleName}" class="moduleName"></p>
+                  </div>
+                  <div class="pull-right">
+                    <p th:text="${welcomeMessage}" class= "text-right welcomeMessage"></p>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+          <div class="row">
+            <table class="table table-striped header-fixed">
+              <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>Lead Source</th>
+                    <th>Lead Owner</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr th:each="lead : ${leadData}">
+                  <td th:text="${lead.getName()}"></td>
+                  <td th:text="${lead.getCompany()}"></td>
+                  <td th:text="${lead.getEmail()}"></td>
+                  <td th:text="${lead.getLeadSource()}"></td>
+                  <td th:text="${lead.getLeadOwner()}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
