@@ -1,10 +1,20 @@
 html, body {
   height: 100%;
   margin: 0;
+  background-color: white;
+}
+
+.container-fluid {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.navLinks {
+  font-size: 1.25em; 
 }
 
 .spacer {
-  padding: 60px 15px;
+  padding-top: 60px;
 }
 
 #footer {
@@ -13,11 +23,55 @@ html, body {
   color: white;
 
   p {
-    padding-top: 50%; 
+    padding-top: 50%;
   }
 }
 
 .wrapper {
   min-height: 100%;
   margin-bottom: -50px;
+}
+
+.moduleName {
+  font-size: 1.5em;
+}
+
+.welcomeMessage {
+  font-size: 1.5em;
+}
+
+.header-fixed {
+    width: 100%
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+    display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: 750px;
+}
+
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+    width: 20%;
+    float: left;
+}
+
+.table {
+  background-color: #f0f0f0;
 }
