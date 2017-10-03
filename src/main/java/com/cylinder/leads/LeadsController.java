@@ -13,7 +13,6 @@ public class LeadsController {
       // Render the list view for leads.
     	public String index(Model model) {
         model.addAttribute("moduleName", "Leads");
-        model.addAttribute("welcomeMessage", "Hello Ryan!");
     		return "leads/list";
       }
 }
