@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class LeadsController {
     	@RequestMapping(method=RequestMethod.GET)
-      // Render the list view for leads. 
+      // Render the list view for leads.
     	public String index(Model model) {
+        model.addAttribute("moduleName", "Leads");
     		return "leads/list";
+      }
 }
