@@ -56,4 +56,11 @@ class Lead {
   public void setFirstName(String name) {
     this.firstName = name;
   }
+
+  @Override
+  public String toString() {
+      return String.format(
+              "Lead[leadId=%d, firstName='%s']",
+              leadId, firstName);
+  }
 }
