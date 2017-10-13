@@ -1,75 +1,76 @@
 package com.cylinder.leads;
 
+import com.cylinder.global.Industry;
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="contacts", schema="lead")
 class Lead {
+    @Id
+    @Column(name="contact_id")
+    public Long leadId;
+    /** The first name of the lead. */
+    @Column(name="first_name")
+    public String firstName;
 
-    /** The full name of the lead. */
-    public String name;
-    /** The name of the company where the lead represents. */
-    public String company;
-    /** The email of the lead. */
-    public String email;
-    /** Where did the lead originate from? A Trade show? Cold Call? */
-    public String leadSource;
-    /** Whose is responible for this lead? */
-    public String leadOwner;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
+    public Industry industry;
 
-    /**
-    * Construct a new instance of a lead.
-    * @param name the full name of the lead.
-    * @param company the name of the company where the lead represents.
-    * @param email the email of the lead.
-    * @param leadSource where did the lead originate from? A Trade show? Cold Call?
-    * @param leadOwner whose is responible for this lead?
-    */
-    public Lead(String name,
-                String company,
-                String email,
-                String leadSource,
-                String leadOwner) {
-        this.name = name;
-        this.company = company;
-        this.email = email;
-        this.leadSource = leadSource;
-        this.leadOwner = leadOwner;
-    }
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable (
+      name="email_lookups",
+      schema="lead",
+      joinColumns={ @JoinColumn(name="contact_lookup_id", referencedColumnName="contact_id") },
+      inverseJoinColumns={ @JoinColumn(name="email_lookup_id", referencedColumnName="email_id") }
+   )
+    public List<LeadEmail> emails;
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getName() {
-      return this.name;
-    }
+    /** Construct for JPA **/
+    protected Lead() {}
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getCompany() {
-      return this.company;
-    }
+  public Long getLeadId() {
+      return this.leadId;
+  }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getEmail() {
-      return this.email;
-    }
+  public void setLeadId(long id) {
+      this.leadId = id;
+  }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getLeadSource() {
-      return this.leadSource;
-    }
+  public String getFirstName() {
+      return this.firstName;
+  }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getLeadOwner() {
-      return this.leadOwner;
-    }
+  public void setFirstName(String name) {
+    this.firstName = name;
+  }
+
+  public Industry getIndustry() {
+    return this.industry;
+  }
+
+  public void setIndustry(Industry industry) {
+    return this.industry = industry;
+  }
+
+  public List<LeadEmail> getIndustry() {
+    return this.emails;
+  }
+
+  public void setIndustry(Industry industry) {
+    this.industry = industry;
+  }
+
+  @Override
+  public String toString() {
+      String email_string = "";
+      for (LeadEmail item: this.emails) {
+        email_string = email_string + item.toString();
+      }
+      return String.format(
+              "Lead[leadId=%d, firstName='%s', industryName='%s', emails='%s']",
+              leadId, firstName, this.industry.toString(), email_string);
+  }
 }
