@@ -1,15 +1,9 @@
 package com.cylinder.leads;
 
-import java.util.Set;
+import com.cylinder.global.Industry;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 @Entity
 @Table(name="contacts", schema="lead")
@@ -20,25 +14,22 @@ class Lead {
     /** The first name of the lead. */
     @Column(name="first_name")
     public String firstName;
-    /** The last name of the lead. *
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
+    public Industry industry;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable (
+      name="email_lookups",
+      schema="lead",
+      joinColumns={ @JoinColumn(name="contact_lookup_id", referencedColumnName="contact_id") },
+      inverseJoinColumns={ @JoinColumn(name="email_lookup_id", referencedColumnName="email_id") }
+   )
+    public List<LeadEmail> emails;
 
     /** Construct for JPA **/
     protected Lead() {}
-
-    /**
-    * Construct a new instance of a lead.
-    * @param name the full name of the lead.
-    * @param company the name of the company where the lead represents.
-    * @param email the email of the lead.
-    * @param leadSource where did the lead originate from? A Trade show? Cold Call?
-    * @param leadOwner whose is responible for this lead?
-    */
-    public Lead(Long leadId,
-                String firstName) {
-        this.leadId = leadId;
-        this.firstName = firstName;
-    }
-
 
   public Long getLeadId() {
       return this.leadId;
@@ -48,7 +39,6 @@ class Lead {
       this.leadId = id;
   }
 
-
   public String getFirstName() {
       return this.firstName;
   }
@@ -57,10 +47,30 @@ class Lead {
     this.firstName = name;
   }
 
+  public Industry getIndustry() {
+    return this.industry;
+  }
+
+  public void setIndustry(Industry industry) {
+    return this.industry = industry;
+  }
+
+  public List<LeadEmail> getIndustry() {
+    return this.emails;
+  }
+
+  public void setIndustry(Industry industry) {
+    this.industry = industry;
+  }
+
   @Override
   public String toString() {
+      String email_string = "";
+      for (LeadEmail item: this.emails) {
+        email_string = email_string + item.toString();
+      }
       return String.format(
-              "Lead[leadId=%d, firstName='%s']",
-              leadId, firstName);
+              "Lead[leadId=%d, firstName='%s', industryName='%s', emails='%s']",
+              leadId, firstName, this.industry.toString(), email_string);
   }
 }
