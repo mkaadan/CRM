@@ -13,7 +13,36 @@ class Lead {
     public Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
+<<<<<<< Updated upstream
     public String firstName;
+=======
+    protected String firstName;
+
+    @Column(name="last_name")
+    protected String lastName;
+
+    @Column(name="title")
+    protected String title;
+
+    @Column(name="company_name")
+    protected String companyName;
+
+    @Column(name="phone")
+    protected String phone;
+
+    @Column(name="phone_ext")
+    protected String phoneExt;
+
+    @Column(name="mobile")
+    protected String mobile;
+
+    @Column(name="fax")
+    protected String fax;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id", referencedColumnName="address_id")
+    protected LeadAddress address;
+>>>>>>> Stashed changes
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
@@ -35,8 +64,33 @@ class Lead {
       return this.leadId;
   }
 
+<<<<<<< Updated upstream
   public void setLeadId(long id) {
       this.leadId = id;
+=======
+  public String getFirstName() {
+      return this.firstName;
+  }
+
+  public String getLastName() {
+    return this.lastName;
+  }
+
+  public String getTitle() {
+    return this.title;
+  }
+
+  public String getPhone() {
+    return this.phone;
+  }
+
+  public String getPhoneExt() {
+    return this.phoneExt;
+  }
+
+  public String getFax() {
+    return this.fax;
+>>>>>>> Stashed changes
   }
 
   public String getFirstName() {
@@ -51,8 +105,25 @@ class Lead {
     return this.industry;
   }
 
+<<<<<<< Updated upstream
   public void setIndustry(Industry industry) {
     return this.industry = industry;
+=======
+  public List<LeadEmail> getEmails() {
+    return this.emails;
+  }
+
+  public LeadAddress getAddress() {
+    return this.address;
+  }
+
+  public String getMobile() {
+    return this.mobile;
+  }
+
+  public void setLeadId(long id) {
+      this.leadId = id;
+>>>>>>> Stashed changes
   }
 
   public List<LeadEmail> getIndustry() {
