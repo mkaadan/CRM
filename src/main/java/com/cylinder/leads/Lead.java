@@ -1,17 +1,29 @@
 package com.cylinder.leads;
 
-class Lead {
+import java.util.Set;
 
-    /** The full name of the lead. */
-    public String name;
-    /** The name of the company where the lead represents. */
-    public String company;
-    /** The email of the lead. */
-    public String email;
-    /** Where did the lead originate from? A Trade show? Cold Call? */
-    public String leadSource;
-    /** Whose is responible for this lead? */
-    public String leadOwner;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Column;
+
+@Entity
+@Table(name="contacts", schema="lead")
+class Lead {
+    @Id
+    @Column(name="contact_id")
+    public Long leadId;
+    /** The first name of the lead. */
+    @Column(name="first_name")
+    public String firstName;
+    /** The last name of the lead. *
+
+    /** Construct for JPA **/
+    protected Lead() {}
 
     /**
     * Construct a new instance of a lead.
@@ -21,55 +33,27 @@ class Lead {
     * @param leadSource where did the lead originate from? A Trade show? Cold Call?
     * @param leadOwner whose is responible for this lead?
     */
-    public Lead(String name,
-                String company,
-                String email,
-                String leadSource,
-                String leadOwner) {
-        this.name = name;
-        this.company = company;
-        this.email = email;
-        this.leadSource = leadSource;
-        this.leadOwner = leadOwner;
+    public Lead(Long leadId,
+                String firstName) {
+        this.leadId = leadId;
+        this.firstName = firstName;
     }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getName() {
-      return this.name;
-    }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getCompany() {
-      return this.company;
-    }
+  public Long getLeadId() {
+      return this.leadId;
+  }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getEmail() {
-      return this.email;
-    }
+  public void setLeadId(long id) {
+      this.leadId = id;
+  }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getLeadSource() {
-      return this.leadSource;
-    }
 
-    /**
-    * Returns the full name of the lead.
-    * @return the name of the lead.
-    */
-    public String getLeadOwner() {
-      return this.leadOwner;
-    }
+  public String getFirstName() {
+      return this.firstName;
+  }
+
+  public void setFirstName(String name) {
+    this.firstName = name;
+  }
 }
