@@ -10,14 +10,39 @@ import javax.persistence.*;
 class Lead {
     @Id
     @Column(name="contact_id")
-    public Long leadId;
+    protected Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
-    public String firstName;
+    protected String firstName;
+
+    @Column(name="last_name")
+    protected String lastName;
+
+    @Column(name="title")
+    protected String title;
+
+    @Column(name="company_name")
+    protected String companyName;
+
+    @Column(name="phone")
+    protected String phone;
+
+    @Column(name="phone_ext")
+    protected String phone_ext;
+
+    @Column(name="mobile")
+    protected String mobile;
+
+    @Column(name="fax")
+    protected String fax;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id", referencedColumnName="address_id")
+    protected LeadAddress address;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
-    public Industry industry;
+    protected Industry industry;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable (
@@ -28,6 +53,7 @@ class Lead {
    )
     public List<LeadEmail> emails;
 
+
     /** Construct for JPA **/
     protected Lead() {}
 
@@ -35,32 +61,61 @@ class Lead {
       return this.leadId;
   }
 
-  public void setLeadId(long id) {
-      this.leadId = id;
-  }
-
   public String getFirstName() {
       return this.firstName;
   }
 
-  public void setFirstName(String name) {
-    this.firstName = name;
+  public String getTitle() {
+    return this.title;
+  }
+
+  public String getPhone() {
+    return this.phone;
+  }
+
+  public String getFax() {
+    return this.fax; 
+  }
+
+  public String getFullName() {
+    return this.firstName + " " + this.lastName;
+  }
+
+  public String getCompanyName() {
+    return this.companyName;
   }
 
   public Industry getIndustry() {
     return this.industry;
   }
 
-  public void setIndustry(Industry industry) {
-    return this.industry = industry;
+  public List<LeadEmail> getEmails() {
+    return this.emails;
   }
 
-  public List<LeadEmail> getIndustry() {
-    return this.emails;
+  public LeadAddress getAddress() {
+    return this.address;
+  }
+
+  public void setLeadId(long id) {
+      this.leadId = id;
+  }
+
+
+  public void setFirstName(String name) {
+    this.firstName = name;
   }
 
   public void setIndustry(Industry industry) {
     this.industry = industry;
+  }
+
+  public void setEmails(List<LeadEmail> emails) {
+    this.emails = emails;
+  }
+
+  public void setAddress(LeadAddress address) {
+    this.address = address;
   }
 
   @Override

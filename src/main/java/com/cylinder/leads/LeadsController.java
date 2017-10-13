@@ -1,5 +1,7 @@
 package com.cylinder.leads;
 
+import java.lang.Iterable;
+
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,16 @@ public class LeadsController {
 
     	@RequestMapping(method=RequestMethod.GET)
       // Render the list view for leads.
-    	public @ResponseBody String index(){
-        Lead lead = leadRepository.findOne(1L);
-         return lead.toString();
+    	public String list(Model model){
+        model.addAttribute("moduleName", "Leads");
+        Iterable<Lead> leadData =  leadRepository.findAll();
+        model.addAttribute("leadData", leadData);
+        return "leads/list";
+      }
+
+      @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
+      public String singleRecord(@PathVariable("id") Long id) {
+          Lead leadData = leadRepository.findOne(id); 
+          return "leads/singlelead";
       }
 }

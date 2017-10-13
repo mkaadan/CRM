@@ -21,19 +21,19 @@
               <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Company</th>
-                    <th>Email</th>
-                    <th>Lead Source</th>
-                    <th>Lead Owner</th>
+                    <th>Title</th>
+                    <th>Company Name</th>
+                    <th>Phone</th>
+                    <th>Fax</th>
                   </tr>
               </thead>
               <tbody>
                 <tr th:each="lead : ${leadData}">
-                  <td th:text="${lead.getName()}"></td>
-                  <td th:text="${lead.getCompany()}"></td>
-                  <td th:text="${lead.getEmail()}"></td>
-                  <td th:text="${lead.getLeadSource()}"></td>
-                  <td th:text="${lead.getLeadOwner()}"></td>
+                  <td><a th:text="${lead.getFullName()}" th:href="@{|/id/${lead.getLeadId()}|}"></a></td>
+                  <td th:text="${lead.getTitle()}"></td>
+                  <td th:text="${lead.getCompanyName()}"></td>
+                  <td th:text="${lead.getPhone()}"></td>
+                  <td th:text="${lead.getFax()}"></td>
                 </tr>
               </tbody>
             </table>
