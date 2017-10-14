@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+..package com.cylinder.leads;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -18,11 +18,6 @@ public class LeadsController {
 
     	@RequestMapping(method=RequestMethod.GET)
       // Render the list view for leads.
-<<<<<<< Updated upstream
-    	public @ResponseBody String index(){
-        Lead lead = leadRepository.findOne(1L);
-         return lead.toString();
-=======
     	public String list(Model model){
         model.addAttribute("moduleName", "Leads");
         Iterable<Lead> leadData =  leadRepository.findAll();
@@ -36,6 +31,5 @@ public class LeadsController {
           model.addAttribute("moduleName", "Leads");
           model.addAttribute("leadData", leadData);
           return "leads/singlelead";
->>>>>>> Stashed changes
       }
 }
