@@ -1,3 +1,4 @@
+
 <html xmlns:th="http://www.thymeleaf.org">
   <head th:include="layout :: htmlhead"></head>
   <body>
@@ -29,7 +30,7 @@
               </thead>
               <tbody>
                 <tr th:each="lead : ${leadData}">
-                  <td><a th:text="${lead.getFullName()}" th:href="@{|/id/${lead.getLeadId()}|}"></a></td>
+                  <td><a th:text="${lead.getFullName()}" th:href="@{|/${lead.getLeadId()}|}"></a></td>
                   <td th:text="${lead.getTitle()}"></td>
                   <td th:text="${lead.getCompanyName()}"></td>
                   <td th:text="${lead.getPhone()}"></td>

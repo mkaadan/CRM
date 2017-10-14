@@ -28,7 +28,7 @@ class Lead {
     protected String phone;
 
     @Column(name="phone_ext")
-    protected String phone_ext;
+    protected String phoneExt;
 
     @Column(name="mobile")
     protected String mobile;
@@ -65,6 +65,14 @@ class Lead {
       return this.firstName;
   }
 
+  public String getLastName() {
+    return this.lastName;
+  }
+
+  public String getFullName() {
+    return this.firstName + " " + this.lastName;
+  }
+
   public String getTitle() {
     return this.title;
   }
@@ -73,12 +81,12 @@ class Lead {
     return this.phone;
   }
 
-  public String getFax() {
-    return this.fax; 
+  public String getPhoneExt() {
+    return this.phoneExt;
   }
 
-  public String getFullName() {
-    return this.firstName + " " + this.lastName;
+  public String getFax() {
+    return this.fax; 
   }
 
   public String getCompanyName() {
@@ -97,10 +105,13 @@ class Lead {
     return this.address;
   }
 
+  public String getMobile() {
+    return this.mobile;
+  }
+
   public void setLeadId(long id) {
       this.leadId = id;
   }
-
 
   public void setFirstName(String name) {
     this.firstName = name;

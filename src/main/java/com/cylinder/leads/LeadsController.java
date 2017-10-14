@@ -27,9 +27,12 @@ public class LeadsController {
         return "leads/list";
       }
 
-      @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
-      public String singleRecord(@PathVariable("id") Long id) {
-          Lead leadData = leadRepository.findOne(id); 
+      @RequestMapping(value="/{id}", method=RequestMethod.GET)
+      public String singleRecord(@PathVariable("id") Long id, Model model) {
+          Lead leadData = leadRepository.findOne(id);
+          model.addAttribute("moduleName", "Leads");
+          model.addAttribute("leadData", leadData);
+          model.addAttribute("toList", "/");
           return "leads/singlelead";
       }
 }

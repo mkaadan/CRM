@@ -24,14 +24,24 @@ public class LeadAddress {
   @Column(name="zip_postal")
   protected String zipPostal;
 
+
+  @Column(name="street_address")
+  protected String streetAddress;
+
   public LeadAddress(){}
 
   public Long getAddressId() {
     return this.addressId;
   }
+  
   public String getCity() {
     return this.city;
   }
+
+  public String getStreetAddress() {
+    return this.streetAddress; 
+  }
+
   public String getStateProv() {
     return this.stateProv;
   }
@@ -63,6 +73,5 @@ public class LeadAddress {
   public void setZipPostal(String zipPostal) {
     this.zipPostal = zipPostal;
   }
-
 
 }

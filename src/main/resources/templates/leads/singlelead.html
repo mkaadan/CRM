@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:include="layout :: htmlhead"></head>
+  <body>
+    <div class ="wrapper">
+      <div th:replace="layout :: navbar">(navbar)</div>
+        <div class="container-fluid">
+          <div class="spacer">
+            <div class="row">
+                <div class="col-lg-12 metaBar">
+                    <div class="pull-left">
+                      <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
+                    </div>
+                    <div class="pull-right">
+                      <p th:text="${welcomeMessage}" class= "text-right welcomeMessage"></p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers"> Basic Information </h3>
+                <div class="col-md-4">
+                    <p th:text="'First Name: ' + ${leadData.getFirstName()}"></p>
+                    <p th:text="'Last Name: ' + ${leadData.getLastName()}"></p>
+                    <p th:text="'Title: ' + ${leadData.getTitle()}"></p>
+                    <p th:text="'Company Name: ' + ${leadData.getCompanyName()}"></p>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3> Phone Information </h3>
+                <div class="col-md-4">
+                  <p th:text="'Phone: ' + ${leadData.getPhone()} + '+' + ${leadData.getPhoneExt()} "></p>
+                  <p th:text="'Mobile: ' + ${leadData.getMobile()}"></p>
+                  <p th:text="'Fax: ' + ${leadData.getFax()}"></p>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers">Email Information</h3>
+                <div class="col-md-4">
+                  <a th:each="email : ${leadData.getEmails()}"
+                      th:text="'Work: ' + ${email.getEmail()}" th:href="'mailto:'+${email.getEmail()}"></a>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers"> Address Information </h3>
+                <div class="row">
+                    <div class="col-md-3 indent-address">
+                      <p th:text="'Apartment Number: ' + ${leadData.getAddress().getApartmentNumber()}"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p th:text="'Street Address: ' + ${leadData.getAddress().getStreetAddress()}"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p th:text="'PO Box: ' + ${leadData.getAddress().getPoBox()}"></p>
+                    </div>
+                </div>
+                  <div class="row">
+                      <div class="col-md-3 indent-address">
+                          <p th:text="'City: ' + ${leadData.getAddress().getCity()}"></p>
+                      </div>
+                      <div class="col-md-4">
+                            <p th:text="'State/Province: ' + ${leadData.getAddress().getStateProv()}"></p>
+                      </div>
+                      <div class="col-md-4">
+                          <p th:text="'Zip/Postal: ' + ${leadData.getAddress().getZipPostal()}"></p>
+                      </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    <div th:include="layout :: footer" id="footer">(footer)</div>
+  </body>
+</html>
