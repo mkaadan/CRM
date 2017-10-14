@@ -10,7 +10,7 @@ import javax.persistence.*;
 class Lead {
     @Id
     @Column(name="contact_id")
-    public Long leadId;
+    protected Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
     protected String firstName;
@@ -42,7 +42,7 @@ class Lead {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
-    public Industry industry;
+    protected Industry industry;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable (
@@ -52,6 +52,7 @@ class Lead {
       inverseJoinColumns={ @JoinColumn(name="email_lookup_id", referencedColumnName="email_id") }
    )
     public List<LeadEmail> emails;
+
 
     /** Construct for JPA **/
     protected Lead() {}
@@ -85,7 +86,7 @@ class Lead {
   }
 
   public String getFax() {
-    return this.fax;
+    return this.fax; 
   }
 
   public String getCompanyName() {
@@ -96,14 +97,9 @@ class Lead {
     return this.industry;
   }
 
-  public void setFirstName(String name) {
-    this.firstName = name;
-  }
-
   public List<LeadEmail> getEmails() {
-      return this.emails;
+    return this.emails;
   }
-
 
   public LeadAddress getAddress() {
     return this.address;
@@ -117,8 +113,20 @@ class Lead {
       this.leadId = id;
   }
 
+  public void setFirstName(String name) {
+    this.firstName = name;
+  }
+
   public void setIndustry(Industry industry) {
     this.industry = industry;
+  }
+
+  public void setEmails(List<LeadEmail> emails) {
+    this.emails = emails;
+  }
+
+  public void setAddress(LeadAddress address) {
+    this.address = address;
   }
 
   @Override
