@@ -63,11 +63,7 @@ class Lead {
   public Long getLeadId() {
       return this.leadId;
   }
-
-<<<<<<< Updated upstream
-  public void setLeadId(long id) {
-      this.leadId = id;
-=======
+  
   public String getFirstName() {
       return this.firstName;
   }
@@ -90,7 +86,6 @@ class Lead {
 
   public String getFax() {
     return this.fax;
->>>>>>> Stashed changes
   }
 
   public String getFirstName() {
@@ -105,10 +100,6 @@ class Lead {
     return this.industry;
   }
 
-<<<<<<< Updated upstream
-  public void setIndustry(Industry industry) {
-    return this.industry = industry;
-=======
   public List<LeadEmail> getEmails() {
     return this.emails;
   }
@@ -123,7 +114,6 @@ class Lead {
 
   public void setLeadId(long id) {
       this.leadId = id;
->>>>>>> Stashed changes
   }
 
   public List<LeadEmail> getIndustry() {
