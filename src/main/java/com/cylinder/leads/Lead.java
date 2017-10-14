@@ -13,9 +13,6 @@ class Lead {
     public Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
-<<<<<<< Updated upstream
-    public String firstName;
-=======
     protected String firstName;
 
     @Column(name="last_name")
@@ -42,7 +39,6 @@ class Lead {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="address_id")
     protected LeadAddress address;
->>>>>>> Stashed changes
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
@@ -63,13 +59,17 @@ class Lead {
   public Long getLeadId() {
       return this.leadId;
   }
-  
+
   public String getFirstName() {
       return this.firstName;
   }
 
   public String getLastName() {
     return this.lastName;
+  }
+
+  public String getFullName() {
+    return this.firstName + " " + this.lastName;
   }
 
   public String getTitle() {
@@ -88,21 +88,22 @@ class Lead {
     return this.fax;
   }
 
-  public String getFirstName() {
-      return this.firstName;
-  }
-
-  public void setFirstName(String name) {
-    this.firstName = name;
+  public String getCompanyName() {
+    return this.companyName;
   }
 
   public Industry getIndustry() {
     return this.industry;
   }
 
-  public List<LeadEmail> getEmails() {
-    return this.emails;
+  public void setFirstName(String name) {
+    this.firstName = name;
   }
+
+  public List<LeadEmail> getEmails() {
+      return this.emails;
+  }
+
 
   public LeadAddress getAddress() {
     return this.address;
@@ -114,10 +115,6 @@ class Lead {
 
   public void setLeadId(long id) {
       this.leadId = id;
-  }
-
-  public List<LeadEmail> getIndustry() {
-    return this.emails;
   }
 
   public void setIndustry(Industry industry) {

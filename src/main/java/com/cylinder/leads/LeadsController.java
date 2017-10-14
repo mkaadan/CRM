@@ -1,4 +1,4 @@
-..package com.cylinder.leads;
+package com.cylinder.leads;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,7 @@ public class LeadsController {
           Lead leadData = leadRepository.findOne(id);
           model.addAttribute("moduleName", "Leads");
           model.addAttribute("leadData", leadData);
+          model.addAttribute("toList", "/");
           return "leads/singlelead";
       }
 }

@@ -10,7 +10,7 @@ html, body {
 }
 
 .navLinks {
-  font-size: 1.25em; 
+  font-size: 1.25em;
 }
 
 .spacer {
@@ -74,4 +74,24 @@ html, body {
 
 .table {
   background-color: #f0f0f0;
+}
+
+.single-view {
+  font-size: 1.5em
+}
+
+.indent-address {
+  margin-left: 15px;
+}
+
+.section-headers {
+  padding-bottom: 10px;
+}
+
+.backLink {
+  color: black;
+}
+
+.backLink:hover {
+  color:black;
 }
