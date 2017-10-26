@@ -4,5 +4,5 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface LeadAddressRepository extends CrudRepository<LeadAddress, Long> {
+public interface AddressRepository extends CrudRepository<Address, Long> {
 }

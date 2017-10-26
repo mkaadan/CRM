@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="contacts", schema="lead")
+@Table(name="details", schema="lead")
 class Lead {
     @Id
-    @Column(name="contact_id")
+    @Column(name="lead_id")
     protected Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
@@ -27,18 +27,16 @@ class Lead {
     @Column(name="phone")
     protected String phone;
 
-    @Column(name="phone_ext")
-    protected String phoneExt;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
+    protected Status status;
 
     @Column(name="mobile")
     protected String mobile;
 
-    @Column(name="fax")
-    protected String fax;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="address_id")
-    protected LeadAddress address;
+    protected Address address;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industry_id", referencedColumnName = "industry_id")
@@ -48,10 +46,10 @@ class Lead {
     @JoinTable (
       name="email_lookups",
       schema="lead",
-      joinColumns={ @JoinColumn(name="contact_lookup_id", referencedColumnName="contact_id") },
-      inverseJoinColumns={ @JoinColumn(name="email_lookup_id", referencedColumnName="email_id") }
+      joinColumns={ @JoinColumn(name="lead_id", referencedColumnName="lead_id") },
+      inverseJoinColumns={ @JoinColumn(name="email_id", referencedColumnName="email_id") }
    )
-    public List<LeadEmail> emails;
+    public List<Email> emails;
 
 
     /** Construct for JPA **/
@@ -81,14 +79,6 @@ class Lead {
     return this.phone;
   }
 
-  public String getPhoneExt() {
-    return this.phoneExt;
-  }
-
-  public String getFax() {
-    return this.fax; 
-  }
-
   public String getCompanyName() {
     return this.companyName;
   }
@@ -97,11 +87,11 @@ class Lead {
     return this.industry;
   }
 
-  public List<LeadEmail> getEmails() {
+  public List<Email> getEmails() {
     return this.emails;
   }
 
-  public LeadAddress getAddress() {
+  public Address getAddress() {
     return this.address;
   }
 
@@ -121,22 +111,11 @@ class Lead {
     this.industry = industry;
   }
 
-  public void setEmails(List<LeadEmail> emails) {
+  public void setEmails(List<Email> emails) {
     this.emails = emails;
   }
 
-  public void setAddress(LeadAddress address) {
+  public void setAddress(Address address) {
     this.address = address;
-  }
-
-  @Override
-  public String toString() {
-      String email_string = "";
-      for (LeadEmail item: this.emails) {
-        email_string = email_string + item.toString();
-      }
-      return String.format(
-              "Lead[leadId=%d, firstName='%s', industryName='%s', emails='%s']",
-              leadId, firstName, this.industry.toString(), email_string);
   }
 }
