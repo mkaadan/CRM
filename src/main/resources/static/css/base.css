@@ -1,12 +1,5 @@
 html, body {
   height: 100%;
-  margin: 0;
-  background-color: white;
-}
-
-.container-fluid {
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .navLinks {
@@ -17,19 +10,15 @@ html, body {
   padding-top: 60px;
 }
 
-#footer {
-  height: 60px;
-  background-color: #101010;
-  color: white;
-
-  p {
-    padding-top: 50%;
-  }
-}
-
 .wrapper {
   min-height: 100%;
-  margin-bottom: -50px;
+  height: auto;
+  margin: 0 auto -60px;
+}
+
+.footer {
+  height: 60px;
+  background-color: black;
 }
 
 .moduleName {
