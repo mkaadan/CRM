@@ -1,19 +1,18 @@
-package com.cylinder.leads;
+package com.cylinder.shared;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@Table(name="emails", schema="lead")
-public class LeadEmail {
-
+@MappedSuperclass
+abstract public class SimpleEmail {
   @Id
   @Column(name="email_id")
   protected Long emailId;
   @Column(name="email")
   protected String email;
 
-  public LeadEmail(){}
-    
   public Long getEmailId() {
     return this.emailId;
   }
@@ -29,11 +28,4 @@ public class LeadEmail {
   public void setEmail(String email) {
     this.email = email;
   }
-
-  @Override
-  public String toString() {
-    return this.email;
-  }
-
-
 }
