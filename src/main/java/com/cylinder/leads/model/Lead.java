@@ -49,7 +49,14 @@ class Lead {
       joinColumns={ @JoinColumn(name="lead_id", referencedColumnName="lead_id") },
       inverseJoinColumns={ @JoinColumn(name="email_id", referencedColumnName="email_id") }
    )
-    public List<Email> emails;
+    protected List<Email> emails;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="status_id", referencedColumnName = "status_id")
+    protected Source source;
+
+    @Column
+    protected String twitter;
 
 
     /** Construct for JPA **/
@@ -97,6 +104,10 @@ class Lead {
 
   public String getMobile() {
     return this.mobile;
+  }
+
+  public Status getStatus() {
+    return this.status;
   }
 
   public void setLeadId(long id) {
