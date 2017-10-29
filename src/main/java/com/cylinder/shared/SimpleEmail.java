@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 @MappedSuperclass
 abstract public class SimpleEmail {
   @Id
@@ -27,5 +29,10 @@ abstract public class SimpleEmail {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  // is the given email rfc 822 compliant?
+  public static boolean isValidEmail(String potentialEmail) {
+    return EmailValidator.getInstance().isValid(potentialEmail);
   }
 }
