@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+package com.cylinder.leads.model;
 
 import com.cylinder.global.Industry;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="details", schema="lead")
-class Lead {
+public class Lead {
     @Id
     @Column(name="lead_id")
     protected Long leadId;
@@ -52,7 +52,7 @@ class Lead {
     protected List<Email> emails;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="status_id", referencedColumnName = "status_id")
+    @JoinColumn(name="source_id", referencedColumnName = "source_id")
     protected Source source;
 
     @Column

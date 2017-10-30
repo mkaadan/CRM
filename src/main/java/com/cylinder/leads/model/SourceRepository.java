@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+package com.cylinder.leads.model;
 
 import org.springframework.data.repository.CrudRepository;
 
