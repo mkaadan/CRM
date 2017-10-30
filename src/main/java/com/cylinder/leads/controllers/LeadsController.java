@@ -1,6 +1,7 @@
-package com.cylinder.leads;
+package com.cylinder.leads.controller;
 
 import java.lang.Iterable;
+import java.util.Optional;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -8,15 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.cylinder.leads.Lead;
-import com.cylinder.leads.LeadRepository;
-
+import com.cylinder.leads.model.*;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/lead")
 public class LeadsController {
+
       @Autowired
       private LeadRepository leadRepository;
+
+      @Autowired
+      private StatusRepository statusRespository;
+
+      @Autowired
+      private SourceRepository sourceRespository;
 
     	@RequestMapping(method=RequestMethod.GET)
       // Render the list view for leads.
@@ -27,7 +33,7 @@ public class LeadsController {
         return "leads/list";
       }
 
-      @RequestMapping(value="/{id}", method=RequestMethod.GET)
+      @RequestMapping(value="/records/{id}", method=RequestMethod.GET)
       public String singleRecord(@PathVariable("id") Long id, Model model) {
           Lead leadData = leadRepository.findOne(id);
           model.addAttribute("moduleName", "Leads");
@@ -35,4 +41,21 @@ public class LeadsController {
           model.addAttribute("toList", "/");
           return "leads/singlelead";
       }
+
+      @RequestMapping(value="/new/{id}", method=RequestMethod.GET)
+      public String newRecord(@PathVariable("id"), Model model) {
+          model.addAttribute("moduleName", "Leads");
+          Iterable<Source> sourceData = sourceRespository.findAll();
+          Iterable<Status> statusData = statusRespository.findAll();
+          model.addAttribute("leadStatus", statusData);
+          model.addAttribute("leadSource", sourceData);
+          return "leads/editsingle";
+      }
+
+      @RequestMapping(value="/records", method=RequestMethod.POST)
+      @ResponseBody
+      public void saveRecord(@PathVariable("id") Optional<Long> id,
+                              @RequestBody Lead lead) {
+      leadRepository.save(lead);
+    }
 }
