@@ -1,8 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org">
-  <head th:include="layout :: htmlhead"></head>
-  <body>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/lead/single.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="content">
     <div class="wrapper">
-      <div th:replace="layout :: navbar">(navbar)</div>
         <div class="container">
           <div class="spacer">
             <div class="row">
@@ -16,8 +17,8 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+            <div class="single-space row"></div>
             <div class="row single-view">
-                <h3 class="section-headers"> Basic Information </h3>
                 <div class="col-md-4">
                     <p th:text="'First Name: ' + ${leadData.getFirstName()}"></p>
                     <p th:text="'Last Name: ' + ${leadData.getLastName()}"></p>
@@ -66,7 +67,6 @@
               </div>
           </div>
         </div>
-      <footer th:replace="layout :: footer">(footer)</footer>
     </div>
-  </body>
+  </th:block>
 </html>

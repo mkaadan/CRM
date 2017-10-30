@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+package com.cylinder.leads.model;
 
 import javax.persistence.*;
 
@@ -10,4 +10,12 @@ public class Status {
   protected Long statusId;
   @Column
   protected String descriptor;
+
+  public Long getStatusId() {
+    return this.statusId;
+  }
+
+  public String getDescriptor() {
+    return this.descriptor;
+  }
 }

@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+package com.cylinder.leads.model;
 
 import java.util.List;
 

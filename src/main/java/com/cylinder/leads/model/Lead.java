@@ -1,4 +1,4 @@
-package com.cylinder.leads;
+package com.cylinder.leads.model;
 
 import com.cylinder.global.Industry;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="details", schema="lead")
-class Lead {
+public class Lead {
     @Id
     @Column(name="lead_id")
     protected Long leadId;
@@ -49,7 +49,14 @@ class Lead {
       joinColumns={ @JoinColumn(name="lead_id", referencedColumnName="lead_id") },
       inverseJoinColumns={ @JoinColumn(name="email_id", referencedColumnName="email_id") }
    )
-    public List<Email> emails;
+    protected List<Email> emails;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="source_id", referencedColumnName = "source_id")
+    protected Source source;
+
+    @Column
+    protected String twitter;
 
 
     /** Construct for JPA **/
@@ -97,6 +104,10 @@ class Lead {
 
   public String getMobile() {
     return this.mobile;
+  }
+
+  public Status getStatus() {
+    return this.status;
   }
 
   public void setLeadId(long id) {
