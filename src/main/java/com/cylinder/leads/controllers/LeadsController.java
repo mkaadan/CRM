@@ -42,8 +42,8 @@ public class LeadsController {
           return "leads/singlelead";
       }
 
-      @RequestMapping(value="/new/{id}", method=RequestMethod.GET)
-      public String newRecord(@PathVariable("id"), Model model) {
+      @RequestMapping(value="/new", method=RequestMethod.GET)
+      public String newRecord(Model model) {
           model.addAttribute("moduleName", "Leads");
           Iterable<Source> sourceData = sourceRespository.findAll();
           Iterable<Status> statusData = statusRespository.findAll();
@@ -51,11 +51,4 @@ public class LeadsController {
           model.addAttribute("leadSource", sourceData);
           return "leads/editsingle";
       }
-
-      @RequestMapping(value="/records", method=RequestMethod.POST)
-      @ResponseBody
-      public void saveRecord(@PathVariable("id") Optional<Long> id,
-                              @RequestBody Lead lead) {
-      leadRepository.save(lead);
-    }
 }
