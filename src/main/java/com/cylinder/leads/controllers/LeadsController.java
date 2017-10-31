@@ -1,7 +1,6 @@
-package com.cylinder.leads.controller;
+package com.cylinder.leads.controllers;
 
 import java.lang.Iterable;
-import java.util.Optional;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
