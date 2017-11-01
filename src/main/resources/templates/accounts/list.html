@@ -38,19 +38,17 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Rating</th>
-                            <th>Website</th>
                             <th>Phone</th>
-                            <th>Address</th>
+                            <th>Website</th>
+                            <th>Owner</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="account : ${accountData}">
                             <td><a th:text="${account.getAccountName()}" th:href="@{|/acccount/records/${account.getAccountId()}|}"></a></td>
-                            <td th:text="${account.getRating()}"></td>
-                            <td th:text="${account.getWebsite()}"></td>
                             <td th:text="${account.getPhone()}"></td>
-                            <td th:text="${account.getShippingAddress()}"></td>
+                            <td th:text="${account.getWebsite()}"></td>
+                            <td th:text="${account.getOwner()}"></td>
                         </tr>
                         </tbody>
                     </table>

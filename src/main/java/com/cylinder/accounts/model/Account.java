@@ -1,5 +1,7 @@
 package com.cylinder.accounts.model;
 
+import com.cylinder.crmusers.model.CrmUser;
+
 import javax.persistence.*;
 
 @Entity
@@ -49,15 +51,13 @@ public class Account {
     @JoinColumn(name="shipping_address_id", referencedColumnName="address_id")
     private Address shippingAddress;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name="owner_id", referencedColumnName="account_id")
-//    private long owner;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="owner_id", referencedColumnName="account_id")
+    private CrmUser owner;
 
     public Account() {
 
     }
-
 
     public long getAccountId() {
         return accountId;
@@ -161,5 +161,13 @@ public class Account {
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public String getOwner() {
+        return owner.getName();
+    }
+
+    public void setOwner(CrmUser owner) {
+        this.owner = owner;
     }
 }
