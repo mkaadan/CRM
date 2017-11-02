@@ -2,6 +2,7 @@ package com.cylinder.accounts.controllers;
 
 import java.lang.Iterable;
 
+import com.cylinder.accounts.model.Account;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,4 +26,13 @@ public class AccountsController {
         model.addAttribute("accountData", accountData);
         return "accounts/list";
       }
+
+    @RequestMapping(value="/records/{id}", method=RequestMethod.GET)
+    public String singleRecord(@PathVariable("id") Long id, Model model) {
+        Account accountData = accountRepository.findOne(id);
+        model.addAttribute("moduleName", "Accounts");
+        model.addAttribute("accountData", accountData);
+        model.addAttribute("toList", "/");
+        return "accounts/singleaccount";
+    }
 }

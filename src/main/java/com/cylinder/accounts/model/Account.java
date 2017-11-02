@@ -45,7 +45,7 @@ public class Account {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="billing_address_id", referencedColumnName="address_id")
-    private Address billingAddressId;
+    private Address billingAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="shipping_address_id", referencedColumnName="address_id")
@@ -147,12 +147,12 @@ public class Account {
         this.numberEmployees = numberEmployees;
     }
 
-    public Address getBillingAddressId() {
-        return billingAddressId;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setBillingAddressId(Address billingAddressId) {
-        this.billingAddressId = billingAddressId;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     public Address getShippingAddress() {
