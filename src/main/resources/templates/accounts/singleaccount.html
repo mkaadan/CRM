@@ -68,7 +68,7 @@
                     <tr>
                         <td><strong>Billing Address:</strong></td>
                         <td th:with="billingAddress=${accountData.getBillingAddress()}">
-                            <span th:if="${billingAddress.getPoBox() != null}" th:utext="${'PO: '+billingAddress.getPoBox()}+'&lt;br&gt;'"></span>
+                            <span th:if="${billingAddress.getPoBox() != null}" th:utext="${'PO Box: '+billingAddress.getPoBox()}+'&lt;br&gt;'"></span>
                             <span th:if="${billingAddress.getApartmentNumber() != null}" th:text="${billingAddress.getApartmentNumber()+' -'}"></span>
                             <span th:text="${billingAddress.getStreetAddress()}"></span><br/>
                             <span th:text="${billingAddress.getCity()+', '+billingAddress.getStateProv()+' '+billingAddress.getZipPostal()}"></span><br/>
