@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="account : ${accountData}">
-                            <td><a th:text="${account.getAccountName()}" th:href="@{|/acccount/records/${account.getAccountId()}|}"></a></td>
+                            <td><a th:text="${account.getAccountName()}" th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
                             <td th:text="${account.getPhone()}"></td>
                             <td th:text="${account.getWebsite()}"></td>
                             <td th:text="${account.getOwner()}"></td>

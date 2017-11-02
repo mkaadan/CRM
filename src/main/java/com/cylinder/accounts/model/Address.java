@@ -7,5 +7,4 @@ import com.cylinder.shared.*;
 @Table(name="addresses", schema="account")
 public class Address extends SimpleAddress {
   public Address(){}
-
 }
