@@ -1,11 +1,7 @@
 $(document).ready(function() {
     var table = $('#accountList').DataTable( {
-        scrollY:        "300px",
-        scrollX:        true,
+        scrollY:        '50vh',
         scrollCollapse: true,
-        paging:         false,
-        fixedColumns:   {
-            heightMatch: 'none'
-        }
+        paging:         false
     } );
 } );

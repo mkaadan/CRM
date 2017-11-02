@@ -1,13 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
 <th:block layout:fragment="scripts">
-    <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
-    <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.js}"></script>
     <script th:src="@{/js/accounts/accountsList.js}"></script>
 </th:block>
 <th:block layout:fragment="stylesheets">
-    <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
-    <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
-    <link th:href="@{/css/account/list.css}" rel="stylesheet"></link>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.css}"></link>
 </th:block>
 <th:block layout:fragment="content">
     <div class="container">
