@@ -85,3 +85,7 @@ html, body {
 .backLink:hover {
   color:black;
 }
+
+.btn-cursor {
+  cursor: pointer;
+}
