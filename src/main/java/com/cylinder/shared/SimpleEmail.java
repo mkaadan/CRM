@@ -1,18 +1,18 @@
 package com.cylinder.shared;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
-import org.apache.commons.validator.routines.EmailValidator;
+import org.hibernate.validator.constraints.Email;
 
 @MappedSuperclass
 abstract public class SimpleEmail {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="email_id")
   protected Long emailId;
   @Column(name="email")
+  @Email
   protected String email;
 
   public Long getEmailId() {
@@ -31,8 +31,4 @@ abstract public class SimpleEmail {
     this.email = email;
   }
 
-  // is the given email rfc 822 compliant?
-  public static boolean isValidEmail(String potentialEmail) {
-    return EmailValidator.getInstance().isValid(potentialEmail);
-  }
 }
