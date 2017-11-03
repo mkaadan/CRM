@@ -78,7 +78,7 @@
                     <tr>
                         <td><strong>Shipping Address:</strong></td>
                         <td th:with="shippingAddress=${accountData.getShippingAddress()}">
-                            <span th:if="${shippingAddress.getPoBox() != null}" th:utext="${'PO: '+shippingAddress.getPoBox()+'&lt;br&gt;'}"></span>
+                            <span th:if="${shippingAddress.getPoBox() != null}" th:utext="${'PO Box: '+shippingAddress.getPoBox()+'&lt;br&gt;'}"></span>
                             <span th:if="${shippingAddress.getApartmentNumber() != null}" th:text="${shippingAddress.getApartmentNumber()+' -'}"></span>
                             <span th:text="${shippingAddress.getStreetAddress()}"></span><br/>
                             <span th:text="${shippingAddress.getCity()+', '+shippingAddress.getStateProv()+' '+shippingAddress.getZipPostal()}"></span><br/>
