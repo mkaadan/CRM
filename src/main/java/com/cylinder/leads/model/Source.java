@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Source {
   @Id
   @Column(name="source_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   protected Long sourceId;
   @Column
   protected String descriptor;
