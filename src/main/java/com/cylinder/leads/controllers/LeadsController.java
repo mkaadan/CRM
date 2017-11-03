@@ -44,7 +44,7 @@ public class LeadsController {
           Lead leadData = leadRepository.findOne(id);
           model.addAttribute("moduleName", "Leads");
           model.addAttribute("leadData", leadData);
-          model.addAttribute("toList", "/");
+          model.addAttribute("toList", "/lead");
           return "leads/singlelead";
       }
 
@@ -63,6 +63,7 @@ public class LeadsController {
           model.addAttribute("leadStatus", statusData);
           model.addAttribute("leadSource", sourceData);
           model.addAttribute("leadData", lead);
+          model.addAttribute("toList", "/lead");
           return "leads/editsingle";
       }
 
@@ -75,6 +76,7 @@ public class LeadsController {
           model.addAttribute("leadStatus", statusData);
           model.addAttribute("leadSource", sourceData);
           model.addAttribute("leadData", new Lead());
+          model.addAttribute("toList", "/lead");
           return "leads/editsingle";
       }
 
@@ -95,16 +97,12 @@ public class LeadsController {
                                BindingResult result,
                                Model model) {
         if (result.hasErrors()) {
-            System.out.println("------------------------------------------");
-            for (FieldError error: result.getFieldErrors()) {
-              System.out.println(error);
-            }
-            System.out.println("------------------------------------------");
             model.addAttribute("moduleName", "Leads");
             Iterable<Source> sourceData = sourceRespository.findAll();
             Iterable<Status> statusData = statusRespository.findAll();
             model.addAttribute("leadStatus", statusData);
             model.addAttribute("leadSource", sourceData);
+            model.addAttribute("toList", "/lead");
             return "leads/editsingle";
         }
         if (lead.getAddress().areFieldsNull()) {
