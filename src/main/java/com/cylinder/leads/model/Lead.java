@@ -5,7 +5,7 @@ import com.cylinder.global.Industry;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name="details", schema="lead")
@@ -16,20 +16,20 @@ public class Lead {
     protected Long leadId;
     /** The first name of the lead. */
     @Column(name="first_name")
-    @Pattern(regexp="([a-zA-Z])", message="Please enter a valid first name.")
-
+    @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid first name.")
     protected String firstName;
 
     @Column(name="last_name")
     @NotNull(message="Please provide the last name for the lead.")
-    @Pattern(regexp="[a-zA-Z]", message="Please provide a valid last name.")
+    @Pattern(regexp="[a-zA-Z]{1,250}", message="Please provide a valid last name.")
     protected String lastName;
 
     @Column(name="title")
-    @Pattern(regexp="[a-zA-Z]", message="Please provide a valid title.")
+    @Pattern(regexp="[a-zA-Z]{1,250}", message="Please provide a valid title.")
     protected String title;
 
     @Column(name="company_name")
+    @Pattern(regexp=".+{1,250}")
     protected String companyName;
 
     @Column(name="phone")
@@ -67,7 +67,7 @@ public class Lead {
     @Pattern(regexp="@.*", message="Please provide a valid twitter handler.")
     protected String twitter;
 
-    public Lead() {}
+  public Lead() {}
 
   public Long getLeadId() {
       return this.leadId;
@@ -82,7 +82,11 @@ public class Lead {
   }
 
   public String getFullName() {
-    return this.firstName + " " + this.lastName;
+    if (this.firstName == null) {
+      return this.lastName;
+    } else {
+      return this.firstName + " " + this.lastName;
+    }
   }
 
   public String getTitle() {
