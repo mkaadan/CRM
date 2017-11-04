@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="source", schema="lead")
+@Table(name="sources", schema="lead")
 public class Source {
   @Id
   @Column(name="source_id")
