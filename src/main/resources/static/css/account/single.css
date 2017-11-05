@@ -1,0 +1,11 @@
+.single-space {
+  padding-top: 25px;
+}
+.table {
+    width: auto;
+    background: white;
+}
+
+.table.no-border tr td, .table.no-border tr th {
+    border-width: 0;
+}
