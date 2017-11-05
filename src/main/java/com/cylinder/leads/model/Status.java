@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Status {
   @Id
   @Column(name="status_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   protected Long statusId;
   @Column
   protected String descriptor;

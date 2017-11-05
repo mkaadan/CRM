@@ -4,31 +4,37 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
-import java.util.Optional;
-
+import javax.validation.constraints.*;
 
 @MappedSuperclass
 abstract public class SimpleAddress {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="address_id")
   protected Long addressId;
   @Column(name="apartment_number")
+  @Pattern(regexp="(?:[0-9]*\\s?[a-zA-Z]*){1,50}", message="Please enter a valid apartment number.")
   protected String apartmentNumber;
   @Column(name="city")
+  @Pattern(regexp="(?:[A-Za-z\\s]){1,250}", message="Please enter a valid city name.")
   protected String city;
   @Column(name="street")
+  @Pattern(regexp="[A-Za-z0-9\\s]{1,250}", message="Please enter a valid street address.")
   protected String streetAddress;
   @Column(name="prov_state")
+  @Pattern(regexp="[A-Za-z0-9\\s]{1,250}", message="Please enter a valid state or province.")
   protected String stateProv;
   @Column(name="country")
+  @Pattern(regexp="(?:[A-Za-z0-9\\s]*){1,250}", message="Please enter a valid country.")
   protected String country;
   @Column(name="zip_postal")
+  @Pattern(regexp="(?:[A-Za-z0-9\\s]*){1,25}", message="Please enter a valid zip or postal code.")
   protected String zipPostal;
   @Column(name="po_box")
+  @Pattern(regexp="(?:[A-Za-z0-9\\s]*){1,25}", message="Please enter a valid po box number.")
   protected String poBox;
 
   public Long getAddressId() {
@@ -79,6 +85,14 @@ abstract public class SimpleAddress {
     this.apartmentNumber = apartmentNumber;
   }
 
+  public void setStreetAddress(String streetAddress) {
+    this.streetAddress = streetAddress;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
   public void setPoBox(String poBox) {
     this.poBox = poBox;
   }
@@ -87,108 +101,18 @@ abstract public class SimpleAddress {
     this.zipPostal = zipPostal;
   }
 
-  public static boolean isValidAddress(String apartmentNumber,
-                                       String city,
-                                       String streetAddress,
-                                       String stateProv,
-                                       String country,
-                                       String zipPostal,
-                                       String poBox) {
-      // at least one of values must be set other wise it isn't valid.
-      if (apartmentNumber == null &&
-          city == null &&
-          streetAddress == null &&
-          stateProv == null &&
-          country == null &&
-          zipPostal == null &&
-          poBox == null) {
-            return false;
-      } else {
-        return isValidApartmentNumber(apartmentNumber) &&
-               isValidCity(city) &&
-               isValidStreetAddress(streetAddress) &&
-               isValidStateProv(stateProv) &&
-               isValidCountry(country) &&
-               isValidZipPostal(zipPostal) &&
-               isValidPoBox(poBox);
-      }
-  }
-
-  // The only consistent validation is number and letters. Austrialia has
-  // 32/4 Street Address where germany it only the street number. So there isn't
-  // a consistent validation for this.
-  private static boolean isValidApartmentNumber(String apartmentNumber) {
-    if (apartmentNumber != null) {
-      Pattern apartmentNumberPattern = Pattern.compile("[0-9]+[a-zA-Z]");
-      Matcher apartmentMatcher = apartmentNumberPattern.matcher(apartmentNumber);
-      return apartmentMatcher.matches() && (apartmentNumber.length() <= 50);
-    } else {
-      return true;
-    }
-  }
-
-  private static boolean isValidCity(String city) {
-    if(city != null) {
-      Pattern cityPattern = Pattern.compile("^[a-zA-Z]+(?:\\s[a-zA-Z]+)*$");
-      Matcher apartmentMatcher =  cityPattern.matcher(city);
-      return apartmentMatcher.matches() && (city.length() <= 250);
-    } else {
-      return true;
-    }
-  }
-
-  private static boolean isValidStreetAddress(String streetAddress) {
-    if(streetAddress != null) {
-      Pattern streetAddressPattern = Pattern.compile("^\\d+(?:\\s[A-Z]?[a-z]+)+");
-      Matcher streetAddressMatcher =  streetAddressPattern.matcher(streetAddress);
-      return streetAddressMatcher.matches() && (streetAddress.length() <= 250);
-    } else {
-      return true;
-    }
-  }
-
-  private static boolean isValidStateProv(String stateProv) {
-    if(stateProv != null) {
-      Pattern stateProvPattern = Pattern.compile("^[A-Z][a-z]+$");
-      Matcher stateMatcher = stateProvPattern.matcher(stateProv);
-      return stateMatcher.matches() && (stateProv.length() <= 250);
-    } else {
-      return true;
-    }
-  }
-
-  // Long term goal might be add geo database that meets ISO standards.
-  private static boolean isValidCountry(String country) {
-    if(country != null) {
-      Pattern countryPattern = Pattern.compile("^[A-Z][a-z]+$");
-      Matcher countryMatcher = countryPattern.matcher(country);
-      return countryMatcher.matches() && (country.length() <= 250);
-    } else {
-      return true;
-    }
-  }
-
-  // Zip postal code is country dependent so to certain degree all we can do is
-  // ensure that it doesn't contain any special character. It has to up to the
-  // the user to ensure the validity.
-  private static boolean isValidZipPostal(String zipPostal) {
-    if(zipPostal != null) {
-      Pattern zipPostalPattern = Pattern.compile("^[a-zA-Z0-9]$");
-      Matcher zipPostalMatcher = zipPostalPattern.matcher(zipPostal);
-      return zipPostalMatcher.matches() && (zipPostal.length() <= 25);
-    } else {
-      return true;
-    }
-  }
-
-  private static boolean isValidPoBox(String poBox) {
-    if(poBox != null) {
-      // might be a little naive?
-      Pattern poBoxPattern = Pattern.compile("^PO\\sBOX\\s[0-9]+$");
-      Matcher poBoxMatcher = poBoxPattern.matcher(poBox);
-      return poBoxMatcher.matches() && (poBox.length() <= 25);
-    } else {
-      return true;
-    }
+  /*
+  * If everything is null then we need to update the class that is dependent on
+  * this "class" so that it is null. If one doesn't then we might get a useless
+  * record with only nulls in it.
+  **/
+  public boolean areFieldsNull() {
+    return (this.apartmentNumber == null) &&
+    (this.city == null) &&
+    (this.streetAddress == null) &&
+    (this.stateProv == null) &&
+    (this.country == null) &&
+    (this.zipPostal == null) &&
+    (this.poBox == null);
   }
 }

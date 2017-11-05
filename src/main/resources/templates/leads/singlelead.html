@@ -2,69 +2,150 @@
   <th:block layout:fragment="stylesheets">
     <link th:href="@{/css/lead/single.css}" rel="stylesheet"></link>
   </th:block>
+  <th:block layout:fragment="scripts">
+    <script th:src="@{/js/leads/edit.js}"></script>
+  </th:block>
   <th:block layout:fragment="content">
     <div class="wrapper">
         <div class="container">
           <div class="spacer">
             <div class="row">
-                <div class="col-lg-12 metaBar">
-                    <div class="pull-left">
-                      <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
-                    </div>
-                    <div class="pull-right">
-                      <p th:text="${welcomeMessage}" class= "text-right welcomeMessage"></p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+              <div class="col-lg-12 metaBar">
+                  <div class="pull-left">
+                    <a th:href="${toList}"
+                       th:text="${moduleName}"
+                       class="moduleName backLink">
+                    </a>
+                  </div>
+                  <div class="pull-right">
+                    <p th:text="${welcomeMessage}"
+                       class= "text-right welcomeMessage">
+                    </p>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="row pull-right">
+              <a  class="btn btn-primary"
+                  role="button"
+                  th:href="@{|/lead/edit/${leadData.getLeadId()}|}">Edit
+              </a>
+              <button id="deleteRecord"
+                      th:attr="data-id=${leadData.getLeadId()}"
+                      class="btn btn-primary">Delete
+              </button>
             </div>
             <div class="single-space row"></div>
             <div class="row single-view">
-                <div class="col-md-4">
-                    <p th:text="'First Name: ' + ${leadData.getFirstName()}"></p>
-                    <p th:text="'Last Name: ' + ${leadData.getLastName()}"></p>
-                    <p th:text="'Title: ' + ${leadData.getTitle()}"></p>
-                    <p th:text="'Company Name: ' + ${leadData.getCompanyName()}"></p>
+                <h3> Basic Information </h3>
+                <div class="col-md-12">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-2">First Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${leadData.getFirstName() != null}
+                                      ? ${leadData.getFirstName()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Last Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${leadData.getLastName() != null}
+                                    ? ${leadData.getLastName()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Title: </dt>
+                      <dd class="col-md-2"
+                          th:text="${leadData.getTitle() != null}
+                                    ? ${leadData.getTitle()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Company Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${leadData.getCompanyName() != null}
+                                    ? ${leadData.getCompanyName()} : ''">
+                      </dd>
+                    </dl>
                 </div>
             </div>
             <div class="row single-view">
                 <h3> Phone Information </h3>
-                <div class="col-md-4">
-                  <p th:text="'Phone: ' + ${leadData.getPhone()}"></p>
-                  <p th:text="'Mobile: ' + ${leadData.getMobile()}"></p>
+                <div class="col-md-12">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Phone: </dt>
+                    <dd class="col-md-2"
+                        th:text="${leadData.getPhone() != null}
+                                  ? ${leadData.getPhone()} : ''" >
+                    </dd>
+                    <dt class="col-md-2">Mobile: </dt>
+                    <dd class="col-md-2"
+                        th:text="${leadData.getMobile() != null}
+                                  ? ${leadData.getMobile()} : ''">
+                    </dd>
+                  </dl>
                 </div>
             </div>
             <div class="row single-view">
                 <h3 class="section-headers">Email Information</h3>
                 <div class="col-md-4">
-                  <a th:each="email : ${leadData.getEmails()}"
-                      th:text="'Work: ' + ${email.getEmail()}" th:href="'mailto:'+${email.getEmail()}"></a>
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Primary Email: </dt>
+                    <dd>
+                        <a th:if="${leadData.getPrimaryEmail()?.getEmail()}"
+                           th:text="${leadData.getPrimaryEmail()?.getEmail()}"
+                           th:href="'mailto:' + ${leadData.getPrimaryEmail()?.getEmail()}">
+                        </a>
+                    </dd>
+                    <dt class="col-md-2">Secondary Email: </dt>
+                    <dd>
+                        <a th:if="${leadData.getSecondaryEmail()?.getEmail()}"
+                           th:text="${leadData.getSecondaryEmail()?.getEmail()}"
+                           th:href="'mailto:' + ${leadData.getSecondaryEmail()?.getEmail()}">
+                        </a>
+                    </dd>
+                  </dl>
                 </div>
             </div>
             <div class="row single-view">
                 <h3 class="section-headers"> Address Information </h3>
-                <div class="row">
-                    <div class="col-md-3 indent-address">
-                      <p th:text="'Apartment Number: ' + ${leadData.getAddress().getApartmentNumber()}"></p>
-                    </div>
-                    <div class="col-md-4">
-                        <p th:text="'Street Address: ' + ${leadData.getAddress().getStreetAddress()}"></p>
-                    </div>
-                    <div class="col-md-4">
-                        <p th:text="'PO Box: ' + ${leadData.getAddress().getPoBox()}"></p>
-                    </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-1">Apartment Number: </dt>
+                      <dd class="col-md-1"
+                          th:text="${leadData.getAddress()?.getApartmentNumber() != null}
+                                    ? ${leadData.getAddress().getApartmentNumber()} : ''">
+                      </dd>
+                      <dt class="col-md-1">Street Address: </dt>
+                      <dd class="col-md-1"
+                          th:text="${leadData.getAddress()?.getStreetAddress() != null}
+                                    ? ${leadData.getAddress().getStreetAddress()} : ''">
+                      </dd>
+                    </dl>
                 </div>
-                  <div class="row">
-                      <div class="col-md-3 indent-address">
-                          <p th:text="'City: ' + ${leadData.getAddress().getCity()}"></p>
-                      </div>
-                      <div class="col-md-4">
-                            <p th:text="'State/Province: ' + ${leadData.getAddress().getStateProv()}"></p>
-                      </div>
-                      <div class="col-md-4">
-                          <p th:text="'Zip/Postal: ' + ${leadData.getAddress().getZipPostal()}"></p>
-                      </div>
-                  </div>
-              </div>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt>City: </dt>
+                    <dd th:text="${leadData.getAddress()?.getCity() != null}
+                                  ? ${leadData.getAddress().getCity()} : ''">
+                    </dd>
+                    <dt>State/Province: </dt>
+                    <dd th:text="${leadData.getAddress()?.getStateProv() != null}
+                                  ? ${leadData.getAddress().getStateProv()} : ''">
+                    </dd>
+                    <dt>Country: </dt>
+                    <dd th:text="${leadData.getAddress()?.getCountry() != null}
+                                  ? ${leadData.getAddress().getCountry()} : ''">
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt>Zip/Postal Code: </dt>
+                      <dd th:text="${leadData.getAddress()?.getZipPostal() != null}
+                                    ? ${leadData.getAddress().getZipPostal()} : ''">
+                      </dd>
+                      <dt>P.O. Box: </dt>
+                      <dd th:text="${leadData.getAddress()?.getPoBox() != null}
+                                    ? ${leadData.getAddress().getPoBox()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+            </div>
           </div>
         </div>
     </div>
