@@ -81,31 +81,5 @@
           </a>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <table id ="leadList" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Title</th>
-              <th>Company Name</th>
-              <th>Phone</th>
-              <th>Mobile</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="lead : ${leadData}">
-              <td><a th:text="${lead.getFullName()}" th:href="@{|/lead/records/${lead.getLeadId()}|}"></a></td>
-              <td th:text="${lead.getTitle()}"></td>
-              <td th:text="${lead.getCompanyName()}"></td>
-              <td th:text="${lead.getPhone()}"></td>
-              <td th:text="${lead.getMobile()}"></td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
 </th:block>
 </html>
