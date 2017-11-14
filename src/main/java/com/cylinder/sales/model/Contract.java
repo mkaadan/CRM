@@ -1,18 +1,21 @@
 package com.cylinder.sales.model;
 
-import com.cylinder.crmusers.model.CrmUser;
+import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "contracts", schema = "sale")
 public class Contract {
     @Id
     @Column(name="contract_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contractId;
 
     /** The contrac's title. */
     @Column(name="contract_title")
+    @Pattern(regexp="[a-zA-Z]{1,250}", message="Please provide a valid title.")
     private String contractTitle;
 
     /** The contrac's body text. */
@@ -23,14 +26,14 @@ public class Contract {
 
     /* Get the identifier for the contract. */
     public long getContractId() {
-        return contractId;
+        return this.contractId;
     }
 
     /* Get the title of the contract. */
-    public String getContractTitle() { return contractTitle; }
+    public String getContractTitle() { return this.contractTitle; }
 
     /* Get the body text of the contract. */
-    public String getContractText() { return contractText; }
+    public String getContractText() { return this.contractText; }
 
     /* Set the identifier for the lead. */
     public void setContractId(long contractId) {
