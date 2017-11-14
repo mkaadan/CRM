@@ -1,6 +1,6 @@
 package com.cylinder.sales.model;
 
-import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.accounts.model.Account;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
@@ -15,9 +15,9 @@ public class Quote {
     @Column(name="contact_id")
     private Long contactId;
 
-    /** The identifyer of the account associated with the quote. */
-    @Column(name="account_id")
-    private Long accountId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private Account account;
 
     /** The identifyer of the owner of the quote. */
     @Column(name="owner_id")
@@ -47,8 +47,8 @@ public class Quote {
     /* Get the identifier for the contact on the quote. */
     public Long getContactId() { return this.contactId; }
 
-    /* Get the identifier for the account on the quote. */
-    public Long getAccountId() { return this.accountId; }
+    /* Get the account on the quote. */
+    public Account getAccount() { return this.account; }
 
     /* Get the identifier for the owner of the quote. */
     public Long getOwnerId() { return this.ownerId; }
@@ -75,9 +75,9 @@ public class Quote {
         this.contactId = contactId;
     }
 
-    /* Set the identifier for the account on the quote. */
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    /* Set the account on the quote. */
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     /* Set the identifier for the owner of the quote. */
