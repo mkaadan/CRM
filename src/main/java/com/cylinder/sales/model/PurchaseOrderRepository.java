@@ -4,5 +4,5 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface PurchaseOrderRepository extends CrudRepository<Status, Long> {
+public interface PurchaseOrderRepository extends CrudRepository<PurchaseOrder, Long> {
 }

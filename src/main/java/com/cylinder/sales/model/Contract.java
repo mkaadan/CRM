@@ -13,11 +13,11 @@ public class Contract {
 
     /** The contrac's title. */
     @Column(name="contract_title")
-    private string contractTitle;
+    private String contractTitle;
 
     /** The contrac's body text. */
     @Column(name="contract")
-    private string contractText;
+    private String contractText;
 
     public Contract() { }
 

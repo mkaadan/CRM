@@ -1,7 +1,7 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
-
+import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
@@ -29,11 +29,11 @@ public class PurchaseOrder {
 
     /** The time stamp of when the purchase order was created. */
     @Column(name="created")
-    private Time created;
+    private Timestamp created;
 
     /** The time stamp of when the purchase order was last modified. */
     @Column(name="last_modified")
-    private Time lastModified;
+    private Timestamp lastModified;
 
     /** The identifyer of who last modified the purchase order. */
     @Column(name="last_modified_by_id")
@@ -67,12 +67,12 @@ public class PurchaseOrder {
     }
 
     /* Get the time stamp of when the purchase order was created. */
-    public Time getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
     /* Get the time stamp of when the purchase order was last modified. */
-    public Time getLastModified() {
+    public Timestamp getLastModified() {
         return lastModified;
     }
 
@@ -107,12 +107,12 @@ public class PurchaseOrder {
     }
 
     /* Set the time stamp of when the purchase order was created. */
-    public void setCreated(Time created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
     /* Set the time stamp of when the purchase order was last modified. */
-    public void setLastModified(Time lastModified) {
+    public void setLastModified(Timestamp lastModified) {
         this.lastModified = lastModified;
     }
 
