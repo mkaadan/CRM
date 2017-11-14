@@ -34,7 +34,7 @@ public class Contract {
 
     /* Get the body text of the contract. */
     public String getContractText() { return this.contractText; }
-
+    
     /* Get the preview of the body text of the contract. */
     public String getContractPreviewText() {
         String contractPreviewText = "";
