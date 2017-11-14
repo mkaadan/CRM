@@ -2,12 +2,12 @@
   <th:block layout:fragment="scripts">
     <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
-    <script th:src="@{/js/sales/quotesList.js}"></script>
+    <script th:src="@{/js/sales/salesOrdersList.js}"></script>
   </th:block>
   <th:block layout:fragment="stylesheets">
     <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
     <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
-    <link th:href="@{/css/sale/quotelist.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/sale/salesOrderlist.css}" rel="stylesheet"></link>
   </th:block>
   <th:block layout:fragment="content">
       <div class="container">
@@ -25,7 +25,7 @@
           </div>
           <div class ="row">
             <div class="col-sm-12">
-              <a th:href="@{|/quote/#|}">
+              <a th:href="@{|/salesorders/#|}">
                 <button class="btn-primary pull-right btn-list">
                       <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -34,7 +34,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <table id ="quoteList" class="table table-striped table-bordered" cellspacing="0" width="100%">
+              <table id ="salesOrderList" class="table table-striped table-bordered" cellspacing="0" width="100%">
               <thead>
                   <tr>
                     <th>ID</th>
@@ -44,15 +44,15 @@
                   </tr>
               </thead>
               <tbody>
-                <tr th:each="quote : ${quoteData}">
+                <tr th:each="salesOrder : ${salesOrderData}">
                     <td>
-                        <a th:text="${quote.getQuoteId()}"
-                           th:href="@{|/quote/records/${quote.getQuoteId()}|}">
+                        <a th:text="${quote.getPurchaseOrderId()}"
+                           th:href="@{|/salesorder/records/${salesOrder.getId()}|}">
                         </a>
                     </td>
-                  <td th:text="${quote.getAccount() != null} ? ${quote.getAccount().getAccountName()} : ''"></td>
-                  <td th:text="${quote.getContactId() != null} ? ${quote.getContactId()} : ''"></td>
-                  <td th:text="${quote.getOwnerId() != null} ? ${quote.getOwnerId()} : ''"></td>
+                  <td th:text="${salesOrder.getAccountId() != null} ? ${salesOrder.getAccountId()} : ''"></td>
+                  <td th:text="${salesOrder.getContactId() != null} ? ${salesOrder.getContactId()} : ''"></td>
+                  <td th:text="${salesOrder.getOwnerId() != null} ? ${salesOrder.getOwnerId()} : ''"></td>
                 </tr>
               </tbody>
             </table>
