@@ -1,12 +1,12 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
-
+import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "quotes", schema = "sale")
-public class PurchaseOrder {
+public class Quote {
     @Id
     @Column(name="quote_id")
     private Long quoteId;
@@ -29,11 +29,11 @@ public class PurchaseOrder {
 
     /** The time stamp of when the quote was created. */
     @Column(name="created")
-    private Time created;
+    private Timestamp created;
 
     /** The time stamp of when the quote was last modified. */
     @Column(name="last_modified")
-    private Time lastModified;
+    private Timestamp lastModified;
 
     /** The identifyer of who last modified the quote. */
     @Column(name="last_modified_by_id")
@@ -67,12 +67,12 @@ public class PurchaseOrder {
     }
 
     /* Get the time stamp of when the quote was created. */
-    public Time getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
     /* Get the time stamp of when the quote was last modified. */
-    public Time getLastModified() { return lastModified; }
+    public Timestamp getLastModified() { return lastModified; }
 
     /* Get the identifier for the person who last modified the quote. */
     public Long getLastModifiedById() { return lastModifiedById; }
@@ -103,12 +103,12 @@ public class PurchaseOrder {
     }
 
     /* Set the time stamp of when the quote was created. */
-    public void setCreated(Time created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
     /* Set the time stamp of when the quote was last modified. */
-    public void setLastModified(Time lastModified) {
+    public void setLastModified(Timestamp lastModified) {
         this.lastModified = lastModified;
     }
 
