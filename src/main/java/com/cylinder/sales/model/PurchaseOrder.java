@@ -1,4 +1,4 @@
-package com.cylinder.sales.contracts.model;
+package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
 
@@ -11,31 +11,31 @@ public class PurchaseOrder {
     @Column(name="purchase_order_id")
     private Long purchaseOrderId;
 
-    /** The identifyer of the contact associated with the PO. */
+    /** The identifyer of the contact associated with the purchase order. */
     @Column(name="contact_id")
     private Long contactId;
 
-    /** The identifyer of the account associated with the PO. */
+    /** The identifyer of the account associated with the purchase order. */
     @Column(name="account_id")
     private Long accountId;
 
-    /** The identifyer of the owner of the PO. */
+    /** The identifyer of the owner of the purchase order. */
     @Column(name="owner_id")
     private Long ownerId;
 
-    /** The identifyer of the creator of the PO. */
+    /** The identifyer of the creator of the purchase order. */
     @Column(name="created_by")
     private Long createdBy;
 
-    /** The time stamp of when the PO was created. */
+    /** The time stamp of when the purchase order was created. */
     @Column(name="created")
     private Time created;
 
-    /** The time stamp of when the PO was last modified. */
+    /** The time stamp of when the purchase order was last modified. */
     @Column(name="last_modified")
     private Time lastModified;
 
-    /** The identifyer of who last modified the PO. */
+    /** The identifyer of who last modified the purchase order. */
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
