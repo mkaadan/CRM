@@ -44,8 +44,8 @@
               <tbody>
                 <tr th:each="contract : ${contractData}">
                     <td>
-                        <a th:text="${contract.getTitle()}"
-                           th:href="@{|/contract/records/${contract.getTitle()}|}">
+                        <a th:text="${contract.getContractTitle()}"
+                           th:href="@{|/contract/records/${contract.getContractTitle()}|}">
                         </a>
                     </td>
                   <td th:text="${contract.getContractText() != null} ? ${contract.getContractText()} : ''"></td>
