@@ -164,7 +164,7 @@ public class SalesOrder {
 
     /* Set the identifier for the contact on the sales order. */
     public void setContactId(Long contactId) { this.contactId = contactId; }
-    
+
     /* Set the account on the sales order. */
     public void setAccount(Account account) { this.account = account; }
 }
