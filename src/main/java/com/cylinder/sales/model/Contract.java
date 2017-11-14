@@ -1,4 +1,4 @@
-package com.cylinder.sales.contracts.model;
+package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
 
