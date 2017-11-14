@@ -51,7 +51,6 @@ public class PurchaseOrder {
 
     /* Get the identifier for the contact on the purchase order. */
     public Long getContactId() {
-<<<<<<< HEAD
         return this.contactId;
     }
 
