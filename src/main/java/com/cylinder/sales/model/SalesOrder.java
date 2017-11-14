@@ -1,24 +1,24 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
-
+import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "sales_orders", schema = "sale")
-public class PurchaseOrder {
+public class SalesOrder {
     @Id
     @Column(name="sales_order")
     private Long salesOrderId;
 
     /* Billing address information associated to the sales order. */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="billing_address_id", referencedColumnName="billing_address_id")
+    @JoinColumn(name="billing_address_id", referencedColumnName="address_id")
     private Address billingAddress;
 
     /* Shipping address information associated to the sales order. */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="shipping_address_id", referencedColumnName="shipping_address_id")
+    @JoinColumn(name="shipping_address_id", referencedColumnName="address_id")
     private Address shippingAddress;
 
     /** The identifyer of the contact associated with the sales order. */
@@ -55,11 +55,11 @@ public class PurchaseOrder {
 
     /** The time stamp of when the sales order was created. */
     @Column(name="created")
-    private Time created;
+    private Timestamp created;
 
     /** The time stamp of when the sales order was last modified. */
     @Column(name="last_modified")
-    private Time lastModified;
+    private Timestamp lastModified;
 
     /** The identifyer of who last modified the sales order. */
     @Column(name="last_modified_by_id")
@@ -91,12 +91,12 @@ public class PurchaseOrder {
     }
 
     /* Get the time stamp of when the sales order was created. */
-    public Time getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
     /* Get the time stamp of when the sales order was last modified. */
-    public Time getLastModified() { return lastModified; }
+    public Timestamp getLastModified() { return lastModified; }
 
     /* Get the identifier for the person who last modified the sales order. */
     public Long getLastModifiedById() { return lastModifiedById; }
@@ -137,12 +137,12 @@ public class PurchaseOrder {
     }
 
     /* Set the time stamp of when the sales order was created. */
-    public void setCreated(Time created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
     /* Set the time stamp of when the sales order was last modified. */
-    public void setLastModified(Time lastModified) {
+    public void setLastModified(Timestamp lastModified) {
         this.lastModified = lastModified;
     }
 
