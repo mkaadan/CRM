@@ -42,40 +42,28 @@ public class Quote {
     public Quote() { }
 
     /* Get the identifier for the quote. */
-    public Long getQuoteId() {
-        return quoteId;
-    }
+    public Long getQuoteId() { return this.quoteId; }
 
     /* Get the identifier for the contact on the quote. */
-    public Long getContactId() {
-        return contactId;
-    }
+    public Long getContactId() { return this.contactId; }
 
     /* Get the identifier for the account on the quote. */
-    public Long getAccountId() {
-        return accountId;
-    }
+    public Long getAccountId() { return this.accountId; }
 
     /* Get the identifier for the owner of the quote. */
-    public Long getOwnerId() {
-        return ownerId;
-    }
+    public Long getOwnerId() { return this.ownerId; }
 
     /* Get the identifier for the creator of the quote. */
-    public Long getCreatedBy() {
-        return createdBy;
-    }
+    public Long getCreatedBy() { return this.createdBy; }
 
     /* Get the time stamp of when the quote was created. */
-    public Timestamp getCreated() {
-        return created;
-    }
+    public Timestamp getCreated() { return this.created; }
 
     /* Get the time stamp of when the quote was last modified. */
-    public Timestamp getLastModified() { return lastModified; }
+    public Timestamp getLastModified() { return this.lastModified; }
 
     /* Get the identifier for the person who last modified the quote. */
-    public Long getLastModifiedById() { return lastModifiedById; }
+    public Long getLastModifiedById() { return this.lastModifiedById; }
 
     /* Set the identifier for the quote. */
     public void setQuoteId(Long quoteId) {

@@ -68,50 +68,50 @@ public class SalesOrder {
     public SalesOrder() { }
 
     /* Get the identifier for the sales order. */
-    public Long getSalesOrderId() { return salesOrderId; }
+    public Long getSalesOrderId() { return this.salesOrderId; }
 
     /* Get the identifier for the quote on the sales order. */
-    public Long getQuoteId() { return quoteId; }
+    public Long getQuoteId() { return this.quoteId; }
 
     /* Get the tax percent ammount for the sales order. */
-    public float getTaxPercent() { return taxPercent; }
+    public float getTaxPercent() { return this.taxPercent; }
 
     /* Get the the invoice number on the sales order. */
-    public Long getInvoiceNumber() { return invoiceNumber; }
+    public Long getInvoiceNumber() { return this.invoiceNumber; }
 
     /* Get the identifier for the contract on the sales order. */
-    public Long getContractId() { return contractId; }
+    public Long getContractId() { return this.contractId; }
 
     /* Get the identifier for the owner of the sales order. */
-    public Long getOwnerId() { return ownerId; }
+    public Long getOwnerId() { return this.ownerId; }
 
     /* Get the identifier for the creator of the sales order. */
     public Long getCreatedBy() {
-        return createdBy;
+        return this.createdBy;
     }
 
     /* Get the time stamp of when the sales order was created. */
     public Timestamp getCreated() {
-        return created;
+        return this.created;
     }
 
     /* Get the time stamp of when the sales order was last modified. */
-    public Timestamp getLastModified() { return lastModified; }
+    public Timestamp getLastModified() { return this.lastModified; }
 
     /* Get the identifier for the person who last modified the sales order. */
-    public Long getLastModifiedById() { return lastModifiedById; }
+    public Long getLastModifiedById() { return this.lastModifiedById; }
 
     /* Get the billing address information the sales order is associated with. */
-    public Address getBillingAddress() { return billingAddress; }
+    public Address getBillingAddress() { return this.billingAddress; }
 
     /* Get the shipping address information the sales order is associated with. */
-    public Address getShippingAddress() { return shippingAddress; }
+    public Address getShippingAddress() { return this.shippingAddress; }
 
     /* Get the identifier for the contact on the sales order. */
-    public Long getContactId() { return contactId; }
+    public Long getContactId() { return this.contactId; }
 
     /* Get the identifier for the account on the sales order. */
-    public Long getAccountId() { return accountId; }
+    public Long getAccountId() { return this.accountId; }
 
     /* Set the identifier for the sales order. */
     public void setSalesOrderId(Long salesOrderId) { this.salesOrderId = salesOrderId; }

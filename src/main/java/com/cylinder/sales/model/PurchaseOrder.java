@@ -43,42 +43,42 @@ public class PurchaseOrder {
 
     /* Get the identifier for the purchase order. */
     public Long getPurchaseOrderId() {
-        return purchaseOrderId;
+        return this.purchaseOrderId;
     }
 
     /* Get the identifier for the contact on the purchase order. */
     public Long getContactId() {
-        return contactId;
+        return this.contactId;
     }
 
     /* Get the identifier for the account on the purchase order. */
     public Long getAccountId() {
-        return accountId;
+        return this.accountId;
     }
 
     /* Get the identifier for the owner of the purchase order. */
     public Long getOwnerId() {
-        return ownerId;
+        return this.ownerId;
     }
 
     /* Get the identifier for the creator of the purchase order. */
     public Long getCreatedBy() {
-        return createdBy;
+        return this.createdBy;
     }
 
     /* Get the time stamp of when the purchase order was created. */
     public Timestamp getCreated() {
-        return created;
+        return this.created;
     }
 
     /* Get the time stamp of when the purchase order was last modified. */
     public Timestamp getLastModified() {
-        return lastModified;
+        return this.lastModified;
     }
 
     /* Get the identifier for the person who last modified the purchase order. */
     public Long getLastModifiedById() {
-        return lastModifiedById;
+        return this.lastModifiedById;
     }
 
     /* Set the identifier for the purchase order. */
