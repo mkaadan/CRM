@@ -1,0 +1,249 @@
+<!--suppress CheckTagEmptyBody -->
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/account/single.css}" rel="stylesheet"></link>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+            <div class="spacer">
+                <div class="row">
+                    <div class="col-lg-12 metaBar">
+                        <div class="pull-left">
+                            <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
+                        </div>
+                        <div class="pull-right">
+                            <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="single-space row"></div>
+                <form th:object="${accountData}" th:action="@{/account/records}" method="post" class="form-horizontal">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 title-gap">
+                                <h3>General Information</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="accountName">Account Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="accountName" placeholder="Enter account name"
+                                   th:field="*{accountName}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="rating">Rating:</label>
+                        <div class="col-sm-10">
+                            <input type="number" min="0" max="5" step="0.5" class="form-control" id="rating"
+                                   placeholder="Enter rating" th:field="*{rating}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="phone">Primary Phone:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="phone" placeholder="Enter primary phone number"
+                                   th:field="*{phone}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="otherPhone">Secondary Phone:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="otherPhone"
+                                   placeholder="Enter secondary phone number" th:field="*{otherPhone}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="fax">Fax:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="fax" placeholder="Enter fax number"
+                                   th:field="*{fax}"></input>
+                        </div>
+                    </div>
+                    <!-- parent -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="parent">Parent:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="parent" th:field="*{parent}">
+                                <option th:each="type:${accountData}"
+                                        th:value="${accountData.getAccountId()}"
+                                        th:text="${accountData.getAccountName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- type -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="type">Type:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="type" th:field="*{type}">
+                                <option th:each="type:${accountType}"
+                                        th:value="${type.getTypeId()}"
+                                        th:text="${type.getDescriptor()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- ticker symbol -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="tickerSymbol">Ticker Symbol:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="tickerSymbol" placeholder="Enter ticker symbol"
+                                   th:field="*{tickerSymbol}"></input>
+                        </div>
+                    </div>
+                    <!-- website -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="website">Website:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="website" placeholder="Enter website"
+                                   th:field="*{website}"></input>
+                        </div>
+                    </div>
+                    <!-- num empl -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="numEmployees">Number of Employees:</label>
+                        <div class="col-sm-10">
+                            <input type="number" min="1" step="1" class="form-control" id="numEmployees"
+                                   placeholder="Enter number of employees" th:field="*{numberEmployees}"></input>
+                        </div>
+                    </div>
+                    <!-- owner -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="owner">Parent:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="owner" th:field="*{owner}">
+                                <option th:each="type:${}"
+                                        th:value="${accountData.getAccountId()}"
+                                        th:text="${accountData.getAccountName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 title-gap">
+                                <h3>Billing Address</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="BaptNumber">Apartment Number:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="BaptNumber" placeholder="Enter apartment number"
+                                   th:field="*{billingAddress.apartmentNumber}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="BstAddress">Street Address:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="BstAddress" placeholder="Enter street address"
+                                   th:field="*{billingAddress.streetAddress}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="Bcity">City:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Bcity" placeholder="Enter city"
+                                   th:field="*{billingAddress.city}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="BstateProv">State/Province:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="BstateProv" placeholder="Enter state/province"
+                                   th:field="*{billingAddress.stateProv}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="Bcountry">Country:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Bcountry" placeholder="Enter country"
+                                   th:field="*{billingAddress.country}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="BzipPostal">Zip/Postal Code:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="BzipPostal" placeholder="Enter zip/postal code"
+                                   th:field="*{billingAddress.zipPostal}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="BpoBox">PO Box:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="BpoBox" placeholder="Enter PO box number"
+                                   th:field="*{billingAddress.poBox}"></input>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 title-gap">
+                                <h3>Shipping Address</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="SaptNumber">Apartment Number:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SaptNumber"
+                                   placeholder="Enter apartment number"
+                                   th:field="*{shippingAddress.apartmentNumber}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="SstAddress">Street Address:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SstAddress"
+                                   placeholder="Enter street address"
+                                   th:field="*{shippingAddress.streetAddress}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="Scity">City:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Scity" placeholder="Enter city"
+                                   th:field="*{shippingAddress.city}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="SstateProv">State/Province:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SstateProv"
+                                   placeholder="Enter state/province"
+                                   th:field="*{shippingAddress.stateProv}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="Scountry">Country:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Scountry" placeholder="Enter country"
+                                   th:field="*{shippingAddress.country}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="SzipPostal">Zip/Postal Code:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SzipPostal"
+                                   placeholder="Enter zip/postal code"
+                                   th:field="*{shippingAddress.zipPostal}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="SpoBox">PO Box:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SpoBox" placeholder="Enter PO box number"
+                                   th:field="*{shippingAddress.poBox}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
