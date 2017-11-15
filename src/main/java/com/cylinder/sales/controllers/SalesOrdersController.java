@@ -15,15 +15,15 @@ import com.cylinder.sales.model.*;
 @RequestMapping("/salesorder")
 public class SalesOrdersController {
 
-      @Autowired
-      private SalesOrderRepository salesOrderRepository;
+    @Autowired
+    private SalesOrderRepository salesOrderRepository;
 
-    	@RequestMapping(method=RequestMethod.GET)
-      // Render the list view for Sales Orders.
-    	public String list(Model model){
-        model.addAttribute("moduleName", "Sales Orders");
+    @RequestMapping(method=RequestMethod.GET)
+    // Render the list view for Sales Orders.
+    public String list(Model model){
+        model.addAttribute("moduleName", "SalesOrders");
         Iterable<SalesOrder> salesOrderData =  salesOrderRepository.findAll();
         model.addAttribute("salesOrderData", salesOrderData);
         return "sales/salesorderlist";
-      }
+    }
 }

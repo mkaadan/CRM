@@ -1,6 +1,6 @@
 package com.cylinder.sales.model;
 
-import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.accounts.model.Account;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "sales_orders", schema = "sale")
 public class SalesOrder {
     @Id
-    @Column(name="sales_order")
+    @Column(name="sales_order_id")
     private Long salesOrderId;
 
     /* Billing address information associated to the sales order. */
@@ -25,9 +25,10 @@ public class SalesOrder {
     @Column(name="contact_id")
     private Long contactId;
 
-    /** The identifyer of the account associated with the sales order. */
-    @Column(name="account_id")
-    private Long accountId;
+    /** The account associated with the sales order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private Account account;
 
     /** The identifyer of the quote associated with the sales order. */
     @Column(name="quote_id")
@@ -110,8 +111,8 @@ public class SalesOrder {
     /* Get the identifier for the contact on the sales order. */
     public Long getContactId() { return this.contactId; }
 
-    /* Get the identifier for the account on the sales order. */
-    public Long getAccountId() { return this.accountId; }
+    /* Get the account on the sales order. */
+    public Account getAccount() { return this.account; }
 
     /* Set the identifier for the sales order. */
     public void setSalesOrderId(Long salesOrderId) { this.salesOrderId = salesOrderId; }
@@ -160,6 +161,6 @@ public class SalesOrder {
     /* Set the identifier for the contact on the sales order. */
     public void setContactId(Long contactId) { this.contactId = contactId; }
 
-    /* Set the identifier for the account on the sales order. */
-    public void setAccountId(Long accountId) { this.accountId = accountId; }
+    /* Set the account on the sales order. */
+    public void setAccount(Account account) { this.account = account; }
 }
