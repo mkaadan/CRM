@@ -45,6 +45,16 @@ public class Contract {
         else{return this.contractText;}
     }
 
+    /* Get the preview of the body text of the contract. */
+    public String getContractPreviewText() {
+        String contractPreviewText = "";
+        if(contractText.length() > 100){
+            contractPreviewText = contractText.substring(0,100) + "...";
+            return contractPreviewText;
+        }
+        else{return this.contractText;}
+    }
+
     /* Set the identifier for the lead. */
     public void setContractId(long contractId) {
         this.contractId = contractId;
