@@ -18,7 +18,7 @@
                 <div class="pull-right">
                     <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
                 </div>
-                <a href="new/">
+                <a th:href="@{|/account/new/|}">
                     <button type="button" class="btn btn-primary pull-right">Create Account</button>
                 </a>
             </div>

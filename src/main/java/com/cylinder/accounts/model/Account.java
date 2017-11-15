@@ -3,17 +3,21 @@ package com.cylinder.accounts.model;
 import com.cylinder.crmusers.model.CrmUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "details", schema = "account")
 public class Account {
     @Id
     @Column(name = "account_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long accountId;
 
     @Column(name = "name")
+    @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
     private String accountName;
 
+//    @Pattern(regexp="^([0-9]|10)$", message="Please enter a valid rating.")
     @Column(name = "rating")
     private double rating;
 
