@@ -1,0 +1,9 @@
+.spacer {
+  padding-top: 10%;
+}
+
+@media(max-width: 991px) {
+  .label-match {
+    margin-right: 28px;
+  }
+}
