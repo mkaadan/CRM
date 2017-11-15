@@ -167,4 +167,8 @@ public class SalesOrder {
 
     /* Set the account on the sales order. */
     public void setAccount(Account account) { this.account = account; }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Fixed sales order list view accessing table
