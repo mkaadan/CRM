@@ -15,6 +15,7 @@ public class Quote {
     @Column(name="contact_id")
     private Long contactId;
 
+    /** The account associated with the quote. */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;

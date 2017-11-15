@@ -19,7 +19,7 @@ $(document).ready(function() {
                   url: '/salesorder/records/' + id,
                   type: 'DELETE',
                   success: function(result) {
-                      var table = $('#salesorderList').DataTable();
+                      var table = $('#salesOrderList').DataTable();
                       var row = thisRecord.parents('tr');
                       table.row(row)
                            .remove()
