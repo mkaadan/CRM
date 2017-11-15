@@ -27,87 +27,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="accountName">Account Name:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="accountName" placeholder="Enter account name"
                                    th:field="*{accountName}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('accountName')}"
-                                  th:errors="*{accountName}">
-                            </span>
-                        </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="rating">Rating:</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="rating"
+                            <input type="number" min="0" max="5" step="0.5" class="form-control" id="rating"
                                    placeholder="Enter rating" th:field="*{rating}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('rating')}"
-                                  th:errors="*{rating}">
-                            </span>
-                        </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="phone">Primary Phone:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="phone" placeholder="Enter primary phone number"
                                    th:field="*{phone}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('phone')}"
-                                  th:errors="*{phone}">
-                            </span>
-                        </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="otherPhone">Secondary Phone:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="otherPhone"
                                    placeholder="Enter secondary phone number" th:field="*{otherPhone}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('otherPhone')}"
-                                  th:errors="*{otherPhone}">
-                            </span>
-                        </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="fax">Fax:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="fax" placeholder="Enter fax number"
                                    th:field="*{fax}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('fax')}"
-                                  th:errors="*{fax}">
-                            </span>
-                        </div>
                     </div>
                     <!-- parent -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="parent">Parent:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="parent"
-                                   placeholder="Enter the parent" th:field="*{parent.accountId}"></input>
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('parent.accountId')}"
-                                  th:errors="*{parent.accountId}">
-                            </span>
+                            <select class="form-control" id="parent" th:field="*{parent}">
+                                <option th:each="type:${accountData}"
+                                        th:value="${accountData.getAccountId()}"
+                                        th:text="${accountData.getAccountName()}"></option>
+                            </select>
                         </div>
                     </div>
                     <!-- type -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="type">Type:</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="type" th:field="*{type}">
@@ -118,86 +85,38 @@
                         </div>
                     </div>
                     <!-- ticker symbol -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="tickerSymbol">Ticker Symbol:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="tickerSymbol" placeholder="Enter ticker symbol"
                                    th:field="*{tickerSymbol}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('tickerSymbol')}"
-                                  th:errors="*{tickerSymbol}">
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-2" for="primaryEmail">Primary Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="primaryEmail" placeholder="Enter primary email"
-                                   th:field="*{primaryEmail.email}"></input>
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('primaryEmail.email')}"
-                                  th:errors="*{primaryEmail.email}">
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-2" for="secondaryEmail">Secondary Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="secondaryEmail"
-                                   placeholder="Enter secondary email"
-                                   th:field="*{secondaryEmail.email}"></input>
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('secondaryEmail.email')}"
-                                  th:errors="*{secondaryEmail.email}">
-                            </span>
-                        </div>
                     </div>
                     <!-- website -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="website">Website:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="website" placeholder="Enter website"
                                    th:field="*{website}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('website')}"
-                                  th:errors="*{website}">
-                            </span>
-                        </div>
                     </div>
                     <!-- num empl -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="numEmployees">Number of Employees:</label>
                         <div class="col-sm-10">
                             <input type="number" min="1" step="1" class="form-control" id="numEmployees"
                                    placeholder="Enter number of employees" th:field="*{numberEmployees}"></input>
                         </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('numberEmployees')}"
-                                  th:errors="*{numberEmployees}">
-                            </span>
-                        </div>
                     </div>
                     <!-- owner -->
-                    <div class="form-group row">
-                        <label class="control-label col-sm-2" for="owner">Owner:</label>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="owner">Parent:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="owner"
-                                   placeholder="Enter the owner" th:field="*{owner.accountId}"></input>
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="label label-danger"
-                                  th:if="${#fields.hasErrors('owner.accountId')}"
-                                  th:errors="*{owner.accountId}">
-                            </span>
+                            <select class="form-control" id="owner" th:field="*{owner}">
+                                <option th:each="type:${}"
+                                        th:value="${accountData.getAccountId()}"
+                                        th:text="${accountData.getAccountName()}"></option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-12">
