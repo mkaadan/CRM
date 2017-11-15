@@ -21,6 +21,12 @@
                         <button type="button" class="btn btn-primary pull-right">Create Account</button>
                     </a>
                 </div>
+                <div class="pull-right">
+                    <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
+                </div>
+                <a th:href="@{|/account/new/|}">
+                    <button type="button" class="btn btn-primary pull-right">Create Account</button>
+                </a>
             </div>
             <div class="row">
                 <div class="col-sm-12">

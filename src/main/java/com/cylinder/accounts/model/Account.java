@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "details", schema = "account")
@@ -22,14 +21,10 @@ public class Account extends SimpleAudit {
     @Getter
     @Setter
     @Column(name = "name")
-    @Pattern(regexp = "([a-zA-Z]{1,250})", message = "Please enter a valid account name.")
-    @NotNull(message = "Please enter a name")
+    @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
     private String accountName;
 
-    @Getter
-    @Setter
-    @DecimalMax(value = "10.0", message = "Please enter a valid value between 0 and 10")
-    @DecimalMin(value = "0.0", message = "Please enter a valid value between 0 and 10")
+//    @Pattern(regexp="^([0-9]|10)$", message="Please enter a valid rating.")
     @Column(name = "rating")
     private double rating;
 
