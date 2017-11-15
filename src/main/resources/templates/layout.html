@@ -11,7 +11,7 @@
     <th:block layout:fragment="stylesheets"></th:block>
     <script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/base.js}"></script>
+    <script sec:authorize="isAuthenticated()" th:src="@{/js/logout.js}"></script>
     <th:block layout:fragment="scripts"></th:block>
   </head>
   <body>
