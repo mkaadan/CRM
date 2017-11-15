@@ -1,6 +1,7 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.accounts.model.Account;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
@@ -15,13 +16,15 @@ public class PurchaseOrder {
     @Column(name="contact_id")
     private Long contactId;
 
-    /** The identifyer of the account associated with the purchase order. */
-    @Column(name="account_id")
-    private Long accountId;
+    /** The account associated with the purchase order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private Account account;
 
-    /** The identifyer of the owner of the purchase order. */
-    @Column(name="owner_id")
-    private Long ownerId;
+    /** The owner associated with the purchase order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="owner_id", referencedColumnName="account_id")
+    private CrmUser owner;
 
     /** The identifyer of the creator of the purchase order. */
     @Column(name="created_by")
@@ -51,15 +54,11 @@ public class PurchaseOrder {
         return this.contactId;
     }
 
-    /* Get the identifier for the account on the purchase order. */
-    public Long getAccountId() {
-        return this.accountId;
-    }
+    /* Get the account on the purchase order. */
+    public Account getAccount() { return this.account; }
 
-    /* Get the identifier for the owner of the purchase order. */
-    public Long getOwnerId() {
-        return this.ownerId;
-    }
+    /* Get the owner of the purchase order. */
+    public CrmUser getOwner() { return this.owner; }
 
     /* Get the identifier for the creator of the purchase order. */
     public Long getCreatedBy() {
@@ -91,15 +90,13 @@ public class PurchaseOrder {
         this.contactId = contactId;
     }
 
-    /* Set the identifier for the account on the purchase order. */
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    /* Set the account on the purchase order. */
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    /* Set the identifier for the owner of the purchase order. */
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
+    /* Set the owner of the purchase order. */
+    public void setOwner(CrmUser owner) { this.owner = owner; }
 
     /* Set the identifier for the creator of the purchase order. */
     public void setCreatedBy(Long createdBy) {
