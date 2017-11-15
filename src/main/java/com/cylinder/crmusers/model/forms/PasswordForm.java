@@ -4,6 +4,7 @@ import java.util.Optional;
 import javax.validation.constraints.Pattern;
 import org.springframework.validation.FieldError;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.*;
 
 /**
 * @author Ryan Piper
@@ -25,7 +26,7 @@ public class PasswordForm {
   * The id of the account that will have its password altered.
   *
   * @param accountId the new value to be set as the account id.
-  * @return the account id. 
+  * @return the account id.
   */
   @Getter
   @Setter
