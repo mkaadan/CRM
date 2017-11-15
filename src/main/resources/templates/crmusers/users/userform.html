@@ -17,7 +17,7 @@
           </div>
           <div class="single-space"></div>
           <div class="row">
-            <form th:object="${passForm}" th:action="@{/user/edit/{id}(id=${userData.getAccountId()})}" method="post">
+            <form th:object="${passForm}" th:action="@{|/user/edit/${passForm.getAccountId()}|}" method="post">
             <div class="form-group row">
               <div class="col-lg-12">
                 <div class = "row">
