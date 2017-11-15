@@ -50,9 +50,9 @@
                            th:href="@{|/purchaseorder/records/${purchaseOrder.getId()}|}">
                         </a>
                     </td>
-                  <td th:text="${purchaseOrder.getAccountId() != null} ? ${purchaseOrder.getAccountId()} : ''"></td>
+                  <td th:text="${purchaseOrder.getAccount() != null} ? ${purchaseOrder.getAccount().getAccountName()} : ''"></td>
                   <td th:text="${purchaseOrder.getContactId() != null} ? ${purchaseOrder.getContactId()} : ''"></td>
-                  <td th:text="${purchaseOrder.getOwnerId() != null} ? ${purchaseOrder.getOwnerId()} : ''"></td>
+                  <td th:text="${purchaseOrder.getOwner() != null} ? ${purchaseOrder.getOwner()} : ''"></td>
                 </tr>
               </tbody>
             </table>
