@@ -1,6 +1,7 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.accounts.model.Account;
+import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
@@ -30,11 +31,12 @@ public class SalesOrder {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    /** The identifyer of the quote associated with the sales order. */
-    @Column(name="quote_id")
-    private Long quoteId;
+    /** The quote associated with the sales order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "quote_id", referencedColumnName = "quote_id")
+    private Quote quote;
 
-    /** The tax percent to be charged on the sales order. */
+    /** The tax ammount associated with the sales order. */
     @Column(name="tax_percent")
     private float taxPercent;
 
@@ -42,13 +44,15 @@ public class SalesOrder {
     @Column(name="invoice_number")
     private Long invoiceNumber;
 
-    /** The identifyer of the contract associated with the sales order. */
-    @Column(name="contract_id")
-    private Long contractId;
+    /** The contract associated with the sales order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    private Contract contract;
 
-    /** The identifyer of the owner of the sales order. */
-    @Column(name="owner_id")
-    private Long ownerId;
+    /** The owner associated with the sales order. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="owner_id", referencedColumnName="account_id")
+    private CrmUser owner;
 
     /** The identifyer of the creator of the sales order. */
     @Column(name="created_by")
@@ -71,8 +75,8 @@ public class SalesOrder {
     /* Get the identifier for the sales order. */
     public Long getSalesOrderId() { return this.salesOrderId; }
 
-    /* Get the identifier for the quote on the sales order. */
-    public Long getQuoteId() { return this.quoteId; }
+    /* Get for the quote on the sales order. */
+    public Quote getQuote() { return this.quote; }
 
     /* Get the tax percent ammount for the sales order. */
     public float getTaxPercent() { return this.taxPercent; }
@@ -80,11 +84,11 @@ public class SalesOrder {
     /* Get the the invoice number on the sales order. */
     public Long getInvoiceNumber() { return this.invoiceNumber; }
 
-    /* Get the identifier for the contract on the sales order. */
-    public Long getContractId() { return this.contractId; }
+    /* Get the contract on the sales order. */
+    public Contract getContract() { return this.contract; }
 
-    /* Get the identifier for the owner of the sales order. */
-    public Long getOwnerId() { return this.ownerId; }
+    /* Get the owner of the sales order. */
+    public CrmUser getOwner() { return this.owner; }
 
     /* Get the identifier for the creator of the sales order. */
     public Long getCreatedBy() {
@@ -117,8 +121,8 @@ public class SalesOrder {
     /* Set the identifier for the sales order. */
     public void setSalesOrderId(Long salesOrderId) { this.salesOrderId = salesOrderId; }
 
-    /* Set the identifier for quote on the sales order. */
-    public void setQuoteId(Long quoteId) { this.quoteId = quoteId; }
+    /* Set the quote on the sales order. */
+    public void setQuote(Quote quote) { this.quote = quote; }
 
     /* Set the tax percent ammount for the sales order. */
     public void setTaxPercent(float taxPercent) { this.taxPercent = taxPercent; }
@@ -126,11 +130,11 @@ public class SalesOrder {
     /* Set the the invoice number on the sales order. */
     public void setInvoiceNumber(Long invoiceNumber) { this.invoiceNumber = invoiceNumber; }
 
-    /* Set the identifier for the contract on the sales order. */
-    public void setContractId(Long contractId) { this.contractId = contractId; }
+    /* Set the contract on the sales order. */
+    public void setContract(Contract contract) { this.contract = contract; }
 
-    /* Set the identifier for the owner of the sales order. */
-    public void setOwnerId(Long ownerId) { this.ownerId = ownerId; }
+    /* Set the owner of the sales order. */
+    public void setOwner(CrmUser owner) { this.owner = owner; }
 
     /* Set the identifier for the creator of the sales order. */
     public void setCreatedBy(Long createdBy) {

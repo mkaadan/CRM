@@ -1,6 +1,7 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.accounts.model.Account;
+import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
@@ -20,9 +21,10 @@ public class Quote {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    /** The identifyer of the owner of the quote. */
-    @Column(name="owner_id")
-    private Long ownerId;
+    /** The owner associated with the quote. */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="owner_id", referencedColumnName="account_id")
+    private CrmUser owner;
 
     /** The identifyer of the creator of the quote. */
     @Column(name="created_by")
@@ -51,8 +53,8 @@ public class Quote {
     /* Get the account on the quote. */
     public Account getAccount() { return this.account; }
 
-    /* Get the identifier for the owner of the quote. */
-    public Long getOwnerId() { return this.ownerId; }
+    /* Get the owner of the quote. */
+    public CrmUser getOwner() { return this.owner; }
 
     /* Get the identifier for the creator of the quote. */
     public Long getCreatedBy() { return this.createdBy; }
@@ -81,10 +83,8 @@ public class Quote {
         this.account = account;
     }
 
-    /* Set the identifier for the owner of the quote. */
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
+    /* Set the owner of the quote. */
+    public void setOwner(CrmUser owner) { this.owner = owner; }
 
     /* Set the identifier for the creator of the quote. */
     public void setCreatedBy(Long createdBy) {
