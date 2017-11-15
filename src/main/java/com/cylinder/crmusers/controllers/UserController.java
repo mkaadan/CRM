@@ -68,7 +68,7 @@ public class UserController extends BaseController {
           if (userId == currentUser.getAccountId()) {
             super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
             PasswordForm passForm = new PasswordForm();
-            passForm.setAccountId(currentUser,getAccountId());
+            passForm.setAccountId(currentUser.getAccountId());
             model.addAttribute("passForm", passForm);
             return "crmusers/users/userform";
           } else {
