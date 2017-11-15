@@ -50,7 +50,7 @@
                         </a>
                     </td>
                   <td th:text="${contract.getContractTitle() != null} ? ${contract.getContractTitle()} : ''"></td>
-                  <td th:text="${contract.getContractText() != null} ? ${contract.getContractText()} : ''"></td>
+                  <td th:text="${contract.getContractText() != null} ? ${contract.getContractPreviewText()} : ''"></td>
                 </tr>
               </tbody>
             </table>

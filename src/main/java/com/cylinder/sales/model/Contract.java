@@ -13,12 +13,12 @@ public class Contract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contractId;
 
-    /** The contrac's title. */
+    /** The contract's title. */
     @Column(name="contract_title")
     @Pattern(regexp="[a-zA-Z]{1,250}", message="Please provide a valid title.")
     private String contractTitle;
 
-    /** The contrac's body text. */
+    /** The contract's body text. */
     @Column(name="contract")
     private String contractText;
 
@@ -34,6 +34,16 @@ public class Contract {
 
     /* Get the body text of the contract. */
     public String getContractText() { return this.contractText; }
+
+    /* Get the preview of the body text of the contract. */
+    public String getContractPreviewText() {
+        String contractPreviewText = "";
+        if(contractText.length() > 100){
+            contractPreviewText = contractText.substring(0,100) + "...";
+            return contractPreviewText;
+        }
+        else{return this.contractText;}
+    }
 
     /* Set the identifier for the lead. */
     public void setContractId(long contractId) {
