@@ -93,6 +93,114 @@ public class CrmUser {
     public CrmUser() {}
 
     /**
+     * Gets accountId
+     *
+     * @return value of accountId
+     */
+    public long getAccountId() {
+        return accountId;
+    }
+
+    /**
+     * Sets accountId
+     *
+     * @param accountId value of to be set
+     */
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
+
+    /**
+     * Gets email
+     *
+     * @return value of email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets email
+     *
+     * @param email value of to be set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Gets password
+     *
+     * @return value of password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Sets password
+     *
+     * @param password value of to be set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Gets firstName
+     *
+     * @return value of firstName
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Sets firstName
+     *
+     * @param firstName value of to be set
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Gets lastName
+     *
+     * @return value of lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets lastName
+     *
+     * @param lastName value of to be set
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Gets role
+     *
+     * @return value of role
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Sets role
+     *
+     * @param role value of to be set
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    /**
     * Shortcut method to get the full name of the user.
     * @return the full name of the user.
     */
