@@ -3,8 +3,7 @@ package com.cylinder.accounts.model;
 import com.cylinder.crmusers.model.CrmUser;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "details", schema = "account")
@@ -16,9 +15,11 @@ public class Account {
 
     @Column(name = "name")
     @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
+    @NotNull(message = "Please enter a name")
     private String accountName;
 
-    @DecimalMax("10.0")
+    @DecimalMax(value = "10.0", message = "Please enter a valid value between 0 and 10")
+    @DecimalMin(value = "0.0", message = "Please enter a valid value between 0 and 10")
     @Column(name = "rating")
     private double rating;
 
@@ -46,6 +47,7 @@ public class Account {
     private String website;
 
     @Column(name = "number_of_employees")
+    @Min(value = 1, message = "There must be at least 1 employee")
     private int numberEmployees;
 
     @OneToOne(cascade = CascadeType.ALL)
