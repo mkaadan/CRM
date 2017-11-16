@@ -137,31 +137,32 @@
                     </dl>
                 </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                  <dl class="dl-horizontal col-md-6">
-                    <dt class="col-md-4">Created By:</dt>
-                    <dd th:text="${leadData.getCreatedBy().getName()}"
-                        class="col-md-6">
-                    </dd>
-                    <dt class="col-md-4">Created: </dt>
-                    <dd th:text="${leadData.getCreated()}"
-                        class="col-md-6">
-                    </dd>
-                  </dl>
-                  <dl th:if="${leadData.getLastModifiedBy() == null}"
-                      class="dl-horizontal col-md-6">
-                    <dt class="col-md-4">Last Modified By: </dt>
-                    <dd th:text="${leadData.getLastModifiedBy().getName()}"
-                        class="col-md-6">
-                    </dd>
-                    <dt class="col-md-4">Last Modified: </dt>
-                    <dd th:text="${leadData.getLastModified()}"
-                        class="col-md-6">
-                    </dd>
-                  </dl>
-                </div>
-            </div>
+            <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt class="col-md-4">Created By:</dt>
+                      <dd th:text="${leadData.getCreatedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt class="col-md-4">Created: </dt>
+                      <dd th:text="${leadData.getCreated()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${leadData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${leadData.getLastModifiedBy() != null}"
+                          th:text="${leadData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${leadData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${leadData.getLastModifiedBy() != null}"
+                          th:text="${leadData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
           </div>
         </div>
     </div>
