@@ -3,6 +3,7 @@ package com.cylinder.accounts.model;
 import com.cylinder.crmusers.model.CrmUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -17,7 +18,7 @@ public class Account {
     @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
     private String accountName;
 
-//    @Pattern(regexp="^([0-9]|10)$", message="Please enter a valid rating.")
+    @DecimalMax("10.0")
     @Column(name = "rating")
     private double rating;
 
