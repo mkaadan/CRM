@@ -2,6 +2,22 @@ html, body {
   height: 100%;
 }
 
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+      float: left;
+      width: 200px;
+      overflow: hidden;
+      clear: left;
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
+}
+
+.dl-horizontal dd {
+  margin-left: 0px;
+}
+
 .navLinks {
   font-size: 1.25em;
 }
