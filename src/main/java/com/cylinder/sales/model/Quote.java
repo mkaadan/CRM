@@ -5,11 +5,10 @@ import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import java.util.Set;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "quotes", schema = "sale")
-public class Quote implements Serializable{
+public class Quote{
     @Id
     @Column(name="quote_id")
     private Long quoteId;
@@ -44,7 +43,6 @@ public class Quote implements Serializable{
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
-    @OneToMany(mappedBy = "quotes")
     private Set<ProductQuote> productQuote;
 
     public Quote() { }
@@ -73,6 +71,7 @@ public class Quote implements Serializable{
     /* Get the identifier for the person who last modified the quote. */
     public Long getLastModifiedById() { return this.lastModifiedById; }
 
+    //@OneToMany(mappedBy = "quotes")
     public Set<ProductQuote> getProductQuote() {
         return productQuote;
     }

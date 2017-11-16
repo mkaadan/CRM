@@ -4,6 +4,7 @@ import com.cylinder.accounts.model.Account;
 import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import lombok.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,6 +14,20 @@ public class ProductQuote implements Serializable{
     @Id
     private ProductQuoteId productQuoteId = new ProductQuoteId();
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private TempProduct product;
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name="quote_id")
+    private Quote quote;
+
+    @Column
+    private Long quantity;
 
     public ProductQuoteId getProductQuoteId() {
         return productQuoteId;
@@ -22,25 +37,21 @@ public class ProductQuote implements Serializable{
         this.productQuoteId = productQuoteId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    public TempProduct getProduct(){
-        return getProductQuoteId().getTempProduct();
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "quote_id")
-    public Quote getQuote(){
-        return getProductQuoteId().getQuote();
-    }
-
-    public void setProduct(TempProduct tempProduct){
-        getProductQuoteId().setTempProduct(tempProduct);
-    }
-
-    public void setQuote(Quote quote){
-        getProductQuoteId().setQuote(quote);
-    }
+//    public TempProduct getTempProduct() {
+//        return product;
+//    }
+//
+//    public void setTempProduct(TempProduct product) {
+//        this.product = product;
+//    }
+//
+//    public Quote getQuote() {
+//        return quote;
+//    }
+//
+//    public void setQuote(Quote quote) {
+//        this.quote = quote;
+//    }
 
     public boolean equals(Object o) {
         if (this == o)

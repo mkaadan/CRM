@@ -5,7 +5,9 @@ import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
+@Embeddable
 public class ProductQuoteId implements Serializable{
 
     private TempProduct tempProduct;
@@ -16,6 +18,8 @@ public class ProductQuoteId implements Serializable{
         super();
     }
 
+    @ManyToOne
+    @Column(name="product_id")
     public TempProduct getTempProduct() {
         return tempProduct;
     }
@@ -24,6 +28,8 @@ public class ProductQuoteId implements Serializable{
         this.tempProduct = tempProduct;
     }
 
+    @ManyToOne
+    @Column(name="quote_id")
     public Quote getQuote() {
         return quote;
     }
@@ -52,5 +58,12 @@ public class ProductQuoteId implements Serializable{
         } else if (!quote.equals(other.quote))
             return false;
         return true;
+    }
+
+    public int hashCode() {
+        int result;
+        result = (tempProduct != null ? tempProduct.hashCode() : 0);
+        result = 31 * result + (quote != null ? quote.hashCode() : 0);
+        return result;
     }
 }
