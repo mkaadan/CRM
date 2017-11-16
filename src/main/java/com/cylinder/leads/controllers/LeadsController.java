@@ -126,9 +126,6 @@ public class LeadsController extends BaseController {
                                      Model model,
                                      Authentication auth) {
          if (result.hasErrors()) {
-             for(FieldError err: result.getFieldErrors()) {
-               System.out.println(err.toString()); 
-             }
              this.bindUserForm(model, auth);
              model.addAttribute("action","edit/" + lead.getLeadId());
              return "leads/editsingle";
