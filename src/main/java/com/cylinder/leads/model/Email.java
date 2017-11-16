@@ -2,7 +2,7 @@ package com.cylinder.leads.model;
 
 
 import javax.persistence.*;
-import com.cylinder.shared.SimpleEmail;
+import com.cylinder.shared.model.SimpleEmail;
 
 /**
 * @author Ryan Piper
