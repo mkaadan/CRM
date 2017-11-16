@@ -59,8 +59,6 @@ public class AccountsController extends BaseController {
         }
         Iterable<Account> accountData =  accountRepository.findAll();
         model.addAttribute("accountData", accountData);
-        Iterable<Account> userData =  .findAll();
-        model.addAttribute("accountData", accountData);
         Iterable<Type> typeData = typeRepository.findAll();
         model.addAttribute("accountType", typeData);
         model.addAttribute("moduleName", "Accounts");

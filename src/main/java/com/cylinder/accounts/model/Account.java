@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -24,7 +25,7 @@ public class Account extends SimpleAudit {
     @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
     private String accountName;
 
-//    @Pattern(regexp="^([0-9]|10)$", message="Please enter a valid rating.")
+    @DecimalMax("10.0")
     @Column(name = "rating")
     private double rating;
 
@@ -94,12 +95,15 @@ public class Account extends SimpleAudit {
     @JoinColumn(name = "owner_id", referencedColumnName = "account_id")
     private CrmUser owner;
 
-    @Getter
-    @Setter
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "primary_email_id", referencedColumnName = "email_id")
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="primary_email_id", referencedColumnName="email_id")
     private Email primaryEmail;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="secondary_email_id", referencedColumnName="email_id")
+    private Email  secondaryEmail;
+
+    public Account() {
 
     @Getter
     @Setter
@@ -108,6 +112,131 @@ public class Account extends SimpleAudit {
     @JoinColumn(name = "secondary_email_id", referencedColumnName = "email_id")
     private Email secondaryEmail;
 
-    public Account() {
+    public Email getPrimaryEmail() {
+        return primaryEmail;
+    }
+
+    public void setPrimaryEmail(Email primaryEmail) {
+        this.primaryEmail = primaryEmail;
+    }
+
+    public Email getSecondaryEmail() {
+        return secondaryEmail;
+    }
+
+    public void setSecondaryEmail(Email secondaryEmail) {
+        this.secondaryEmail = secondaryEmail;
+    }
+
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getOtherPhone() {
+        return otherPhone;
+    }
+
+    public void setOtherPhone(String otherPhone) {
+        this.otherPhone = otherPhone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public Account getParent() {
+        return parent;
+    }
+
+    public void setParent(Account parent) {
+        this.parent = parent;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getTickerSymbol() {
+        return tickerSymbol;
+    }
+
+    public void setTickerSymbol(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public int getNumberEmployees() {
+        return numberEmployees;
+    }
+
+    public void setNumberEmployees(int numberEmployees) {
+        this.numberEmployees = numberEmployees;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public CrmUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(CrmUser owner) {
+        this.owner = owner;
     }
 }

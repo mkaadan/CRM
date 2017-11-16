@@ -1,7 +1,7 @@
 package com.cylinder.accounts.model;
 
 
-import com.cylinder.shared.model.SimpleEmail;
+import com.cylinder.shared.SimpleEmail;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

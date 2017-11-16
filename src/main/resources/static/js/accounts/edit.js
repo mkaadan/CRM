@@ -1,3 +1,16 @@
 $(document).ready(function() {
-    deleteRecord("#deleteRecord", "/account/records/", "/account/");
+    $("#deleteRecord").click(function(event) {
+        var thisRecord = $(this);
+        if (confirm("Are you sure you wish to delete this record?")) {
+          var id = thisRecord.data("id");
+          $.ajax({
+                  url: '/account/records/' + id,
+                  type: 'DELETE',
+                  success: function(result) {
+                    var hostName = window.location.hostname;
+                    window.location.replace("/account/");
+                  }
+              });
+        }
+    });
 });

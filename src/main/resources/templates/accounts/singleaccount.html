@@ -3,10 +3,7 @@
     <link th:href="@{/css/account/single.css}" rel="stylesheet"></link>
 </th:block>
 <th:block layout:fragment="scripts">
-    <script th:src="@{/js/crud.js}"></script>
     <script th:src="@{/js/accounts/edit.js}"></script>
-</th:block>
-
 <th:block layout:fragment="content">
     <div class="wrapper">
         <div class="container">
@@ -63,164 +60,76 @@
                         </dl>
                     </div>
                 </div>
-                <div class="row single-view">
-                    <h3 class="section-headers">Phone Information</h3>
-                    <div class="col-md-12">
-                        <dl class="dl-horizontal">
-                            <dt class="col-md-2">Primary Phone:</dt>
-                            <dd class="col-md-2"
-                                th:text="${accountData.getPhone() != null}?${accountData.getPhone()}:''">
-                            </dd>
-                            <dt class="col-md-2">Secondary Phone:</dt>
-                            <dd class="col-md-2"
-                                th:text="${accountData.getOtherPhone() != null}?${accountData.getOtherPhone()}:''">
-                            </dd>
-                            <dt class="col-md-2">Fax:</dt>
-                            <dd class="col-md-2"
-                                th:text="${accountData.getFax() != null}?${accountData.getFax()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="row single-view">
-                    <h3 class="section-headers">Email Information</h3>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt class="col-md-2">Primary Email:</dt>
-                            <dd>
-                                <a th:if="${accountData.getPrimaryEmail()?.getEmail() != null}"
-                                   th:text="${accountData.getPrimaryEmail().getEmail()}"
-                                   th:href="'mailto:' + ${accountData.getPrimaryEmail().getEmail()}">
-                                </a>
-                            </dd>
-                            <dt class="col-md-2">Secondary Email:</dt>
-                            <dd>
-                                <a th:if="${accountData.getSecondaryEmail()?.getEmail() != null}"
-                                   th:text="${accountData.getSecondaryEmail().getEmail()}"
-                                   th:href="'mailto:' + ${accountData.getSecondaryEmail().getEmail()}">
-                                </a>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="row single-view">
-                    <h3 class="section-headers">Billing Address Information</h3>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt class="col-md-1">Apartment Number:</dt>
-                            <dd class="col-md-1"
-                                th:text="${accountData.getBillingAddress()?.getApartmentNumber() != null}?
-                                ${accountData.getBillingAddress()?.getApartmentNumber()}:''">
-                            </dd>
-                            <dt class="col-md-1">Street Address:</dt>
-                            <dd class="col-md-1"
-                                th:text="${accountData.getBillingAddress()?.getStreetAddress() != null}?
-                                ${accountData.getBillingAddress()?.getStreetAddress()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt>City:</dt>
-                            <dd th:text="${accountData.getBillingAddress()?.getCity() != null}?
-                                ${accountData.getBillingAddress()?.getCity()}:''">
-                            </dd>
-                            <dt>State/Province:</dt>
-                            <dd th:text="${accountData.getBillingAddress()?.getStateProv() != null}?
-                                ${accountData.getBillingAddress()?.getStateProv()}:''">
-                            </dd>
-                            <dt>Country:</dt>
-                            <dd th:text="${accountData.getBillingAddress()?.getCountry() != null}?
-                                ${accountData.getBillingAddress()?.getCountry()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt>Zip/Postal Code:</dt>
-                            <dd th:text="${accountData.getBillingAddress()?.getZipPostal() != null}?
-                                ${accountData.getBillingAddress().getZipPostal()}:''">
-                            </dd>
-                            <dt>P.O. Box:</dt>
-                            <dd th:text="${accountData.getBillingAddress()?.getPoBox() != null}?
-                                ${accountData.getBillingAddress()?.getPoBox()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="row single-view">
-                    <h3 class="section-headers">Shipping Address Information</h3>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt class="col-md-1">Apartment Number:</dt>
-                            <dd class="col-md-1"
-                                th:text="${accountData.getShippingAddress()?.getApartmentNumber() != null}?
-                                ${accountData.getShippingAddress()?.getApartmentNumber()}:''">
-                            </dd>
-                            <dt class="col-md-1">Street Address:</dt>
-                            <dd class="col-md-1"
-                                th:text="${accountData.getShippingAddress()?.getStreetAddress() != null}?
-                                ${accountData.getShippingAddress()?.getStreetAddress()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt>City:</dt>
-                            <dd th:text="${accountData.getShippingAddress()?.getCity() != null}?
-                                ${accountData.getShippingAddress()?.getCity()}:''">
-                            </dd>
-                            <dt>State/Province:</dt>
-                            <dd th:text="${accountData.getShippingAddress()?.getStateProv() != null}?
-                                ${accountData.getShippingAddress()?.getStateProv()}:''">
-                            </dd>
-                            <dt>Country:</dt>
-                            <dd th:text="${accountData.getShippingAddress()?.getCountry() != null}?
-                                ${accountData.getShippingAddress()?.getCountry()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt>Zip/Postal Code:</dt>
-                            <dd th:text="${accountData.getShippingAddress()?.getZipPostal() != null}?
-                                ${accountData.getShippingAddress().getZipPostal()}:''">
-                            </dd>
-                            <dt>P.O. Box:</dt>
-                            <dd th:text="${accountData.getShippingAddress()?.getPoBox() != null}?
-                                ${accountData.getShippingAddress()?.getPoBox()}:''">
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="row spacer">
-                    <div class="col-md-12">
-                        <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
-                            <dt class="col-md-4">Created By:</dt>
-                            <dd th:text="${accountData.getCreatedBy().getName()}"
-                                class="col-md-6">
-                            </dd>
-                            <dt class="col-md-4">Created:</dt>
-                            <dd th:text="${accountData.getCreated()}"
-                                class="col-md-6">
-                            </dd>
-                            <dt th:if="${accountData.getLastModifiedBy() != null}"
-                                class="col-md-4">Last Modified By:
-                            </dt>
-                            <dd th:if="${accountData.getLastModifiedBy() != null}"
-                                th:text="${accountData.getLastModifiedBy().getName()}"
-                                class="col-md-6">
-                            </dd>
-                            <dt th:if="${accountData.getLastModifiedBy() != null}"
-                                class="col-md-4">Last Modified:
-                            </dt>
-                            <dd th:if="${accountData.getLastModifiedBy() != null}"
-                                th:text="${accountData.getLastModified()}"
-                                class="col-md-6">
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
+                <div class="single-space row"></div>
+
+                <table class="table no-border">
+                    <tbody>
+                    <tr>
+                        <td><strong>Name:</strong></td>
+                        <td th:text="${accountData.getAccountName()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Owner:</strong></td>
+                        <td th:text="${accountData.getOwner()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rating:</strong></td>
+                        <td th:text="${accountData.getRating()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Phone:</strong></td>
+                        <td th:text="${accountData.getPhone()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Secondary Phone:</strong></td>
+                        <td th:text="${accountData.getOtherPhone()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fax:</strong></td>
+                        <td th:text="${accountData.getFax()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parent:</strong></td>
+                        <td th:text="${accountData.getParent()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type:</strong></td>
+                        <td th:text="${accountData.getType().getDescriptor()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ticker Symbol:</strong></td>
+                        <td th:text="${accountData.getTickerSymbol()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Website:</strong></td>
+                        <td th:text="${accountData.getWebsite()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Employees:</strong></td>
+                        <td th:text="${accountData.getNumberEmployees()}"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Billing Address:</strong></td>
+                        <td th:if="${accountData.getBillingAddress() != null}" th:with="billingAddress=${accountData.getBillingAddress()}">
+                            <span th:if="${billingAddress.getApartmentNumber() != null}" th:text="${billingAddress.getApartmentNumber()+' -'}"></span>
+                            <span th:text="${billingAddress.getStreetAddress()}"></span><br/>
+                            <span th:text="${billingAddress.getCity()+', '+billingAddress.getStateProv()+' '+billingAddress.getZipPostal()}"></span><br/>
+                            <span th:text="${billingAddress.getCountry()}"></span>
+                            <span th:if="${billingAddress.getPoBox() != null}" th:utext="${'PO Box: '+billingAddress.getPoBox()}"></span><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shipping Address:</strong></td>
+                        <td th:if="${accountData.getShippingAddress() != null}" th:with="shippingAddress=${accountData.getShippingAddress()}">
+                            <span th:if="${shippingAddress.getApartmentNumber() != null}" th:text="${shippingAddress.getApartmentNumber()+' -'}"></span>
+                            <span th:text="${shippingAddress.getStreetAddress()}"></span><br/>
+                            <span th:text="${shippingAddress.getCity()+', '+shippingAddress.getStateProv()+' '+shippingAddress.getZipPostal()}"></span><br/>
+                            <span th:text="${shippingAddress.getCountry()}"></span>
+                            <span th:if="${shippingAddress.getPoBox() != null}" th:text="${'PO Box: '+shippingAddress.getPoBox()}"></span><br/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
