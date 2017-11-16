@@ -71,7 +71,7 @@ public class Quote{
     /* Get the identifier for the person who last modified the quote. */
     public Long getLastModifiedById() { return this.lastModifiedById; }
 
-    //@OneToMany(mappedBy = "quotes")
+    @OneToMany(mappedBy = "quotes")
     public Set<ProductQuote> getProductQuote() {
         return productQuote;
     }
