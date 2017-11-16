@@ -101,4 +101,94 @@ public class AdminUserForm {
   public void setIsEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
   }
+
+  /**
+   * Gets accountId
+   *
+   * @return value of accountId
+   */
+  public long getAccountId() {
+    return accountId;
+  }
+
+  /**
+   * Sets accountId
+   *
+   * @param accountId value of to be set
+   */
+  public void setAccountId(long accountId) {
+    this.accountId = accountId;
+  }
+
+  /**
+   * Gets email
+   *
+   * @return value of email
+   */
+  public String getEmail() {
+    return email;
+  }
+
+  /**
+   * Sets email
+   *
+   * @param email value of to be set
+   */
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  /**
+   * Gets firstName
+   *
+   * @return value of firstName
+   */
+  public String getFirstName() {
+    return firstName;
+  }
+
+  /**
+   * Sets firstName
+   *
+   * @param firstName value of to be set
+   */
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  /**
+   * Gets lastName
+   *
+   * @return value of lastName
+   */
+  public String getLastName() {
+    return lastName;
+  }
+
+  /**
+   * Sets lastName
+   *
+   * @param lastName value of to be set
+   */
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  /**
+   * Gets role
+   *
+   * @return value of role
+   */
+  public Role getRole() {
+    return role;
+  }
+
+  /**
+   * Sets role
+   *
+   * @param role value of to be set
+   */
+  public void setRole(Role role) {
+    this.role = role;
+  }
 }
