@@ -40,6 +40,10 @@
                 <h3> Basic Information </h3>
                 <div class="col-md-12">
                     <dl class="dl-horizontal">
+                      <dt class="col-md-2">Lead Owner: </dt>
+                      <dd class="col-md-2"
+                          th:text="${leadData.getOwner().getName()}">
+                      </dd>
                       <dt class="col-md-2">First Name: </dt>
                       <dd class="col-md-2"
                           th:text="${leadData.getFirstName() != null}
@@ -144,6 +148,30 @@
                                     ? ${leadData.getAddress().getPoBox()} : ''">
                       </dd>
                     </dl>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <dl>
+                    <dt class="col-md-2">Created By:</dt>
+                    <dd th:text="${leadData.getCreatedBy().getName()}"
+                        class="col-md-3">
+                    </dd>
+                    <dt>Created: </dt>
+                    <dd th:text="${leadData.getCreated()}"
+                        class="col-md-3">
+                    </dd>
+                    <dt th:if="${leadData.getLastModifiedBy() != null}">Last Modified By: </dt>
+                    <dd th:if="${leadData.getLastModifiedBy() != null}"
+                        th:text="${leadData.getLastModifiedBy().getName()}"
+                        class="col-md-3">
+                    </dd>
+                    <dt th:if="${leadData.getLastModified() != null}">Last Modified: </dt>
+                    <dd th:if="${leadData.getLastModified() != null}"
+                        th:text="${leadData.getLastModified()}"
+                        class="col-md-3">
+                    </dd>
+                  </dl>
                 </div>
             </div>
           </div>
