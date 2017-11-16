@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.cylinder.leads.model.*;
-import com.cylinder.shared.BaseController;
+import com.cylinder.shared.controllers.BaseController;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.CrmUser;
 
