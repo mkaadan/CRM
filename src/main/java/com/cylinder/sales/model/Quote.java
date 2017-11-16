@@ -4,10 +4,12 @@ import com.cylinder.accounts.model.Account;
 import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import java.util.Set;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "quotes", schema = "sale")
-public class Quote {
+public class Quote implements Serializable{
     @Id
     @Column(name="quote_id")
     private Long quoteId;
@@ -42,6 +44,9 @@ public class Quote {
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
+    @OneToMany(mappedBy = "quotes")
+    private Set<ProductQuote> productQuote;
+
     public Quote() { }
 
     /* Get the identifier for the quote. */
@@ -67,6 +72,10 @@ public class Quote {
 
     /* Get the identifier for the person who last modified the quote. */
     public Long getLastModifiedById() { return this.lastModifiedById; }
+
+    public Set<ProductQuote> getProductQuote() {
+        return productQuote;
+    }
 
     /* Set the identifier for the quote. */
     public void setQuoteId(Long quoteId) {
@@ -104,5 +113,9 @@ public class Quote {
     /* Set the identifier for the person who last modified the quote. */
     public void setLastModifiedById(Long lastModifiedById) {
         this.lastModifiedById = lastModifiedById;
+    }
+
+    public void setProductQuote(Set<ProductQuote> productQuote) {
+        this.productQuote = productQuote;
     }
 }
