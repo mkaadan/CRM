@@ -3,163 +3,162 @@
     <div class="wrapper">
         <div class="container">
           <div class="spacer">
-            <div class="row">
-                <div class="col-lg-12 metaBar">
-                    <div class="pull-left">
-                      <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
-                    </div>
-                    <div class="pull-right">
-                      <p th:text="${welcomeMessage}" class= "text-right welcomeMessage"></p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
             </div>
           </div>
           <div class="single-space"></div>
-          <form th:object="${leadData}" th:action="@{/lead/records}" method="post">
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <div class = "row">
-                   <div class="col-lg-12 title-gap">
-                     <h3> Basic Information </h3>
-                   </div>
+          <form  class="row" th:object="${leadData}" th:action="@{|/lead/${action}|}" method="post">
+            <div class="col-lg-12">
+              <div class = "row">
+                 <div class="col-lg-12 title-gap">
+                   <h3> Basic Information </h3>
                  </div>
-                <div class="form-group row">
-                  <label for="firstName" class="col-lg-2 col-form-label">First Name: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="text"
-                             name="firstName"
-                             th:field="*{firstName}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('firstName')}"
-                          th:errors="*{title}">
-                    </span>
-                  </div>
+               </div>
+              <div class="form-group row">
+                 <label for="source" class="col-lg-2 col-form-label">Lead Owner: </label>
+                 <div class="col-lg-6">
+                   <select class="form-control" name="source" th:field="*{owner}">
+                     <option th:each="user : ${userData}"
+                             th:value="${user.getAccountId()}"
+                             th:text="${user.getName()}">
+                     </option>
+                   </select>
+                 </div>
+              </div>
+              <div class="form-group row">
+                <label for="firstName" class="col-lg-2 col-form-label">First Name: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="text"
+                           name="firstName"
+                           th:field="*{firstName}">
+                    </input>
                 </div>
-                <div class="form-group row">
-                  <label for="lastName" class="col-lg-2 col-form-label">Last Name: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="text"
-                             name="lastName"
-                             th:field="*{lastName}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('lastName')}"
-                          th:errors="*{lastName}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="phone" class="col-lg-2 col-form-label">Phone: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="tel"
-                             name="phone"
-                             th:field="*{phone}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('phone')}"
-                          th:errors="*{phone}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="mobile" class="col-lg-2 col-form-label">Mobile: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="tel"
-                             name="mobile"
-                             th:field="*{mobile}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('mobile')}"
-                          th:errors="*{mobile}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="companyName" class="col-lg-2 col-form-label">Company Name: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="text"
-                             name="companyName"
-                             th:field="*{companyName}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('companyName')}"
-                          th:errors="*{companyName}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="title" class="col-lg-2 col-form-label">Title: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="text"
-                             name="title"
-                             th:field="*{title}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('title')}"
-                          th:errors="*{title}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="twitter" class="col-lg-2 col-form-label">Twitter: </label>
-                  <div class="col-lg-6">
-                      <input class="form-control"
-                             type="text"
-                             name="twitter"
-                             th:field="*{twitter}">
-                      </input>
-                  </div>
-                  <div class="col-lg-4">
-                    <span class="label label-danger"
-                          th:if="${#fields.hasErrors('twitter')}"
-                          th:errors="*{twitter}">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="status" class="col-lg-2 col-form-label">Lead Status: </label>
-                  <div class="col-lg-6">
-                    <select class="form-control" name="status" th:field="*{status}">
-                      <option th:each="status : ${leadStatus}"
-                              th:value="${status.getStatusId()}"
-                              th:text="${status.getDescriptor()}"></option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="source" class="col-lg-2 col-form-label">Lead Source: </label>
-                  <div class="col-lg-6">
-                    <select class="form-control" name="source" th:field="*{source.sourceId}">
-                      <option th:each="source : ${leadSource}"
-                              th:value="${source.getSourceId()}"
-                              th:text="${source.getDescriptor()}">
-                      </option>
-                    </select>
-                  </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('firstName')}"
+                        th:errors="*{firstName}">
+                  </span>
                 </div>
               </div>
-            </div>
-            <div class="form-group row">
+              <div class="form-group row">
+                <label for="lastName" class="col-lg-2 col-form-label">Last Name: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="text"
+                           name="lastName"
+                           th:field="*{lastName}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('lastName')}"
+                        th:errors="*{lastName}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="phone" class="col-lg-2 col-form-label">Phone: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="tel"
+                           name="phone"
+                           th:field="*{phone}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('phone')}"
+                        th:errors="*{phone}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="mobile" class="col-lg-2 col-form-label">Mobile: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="tel"
+                           name="mobile"
+                           th:field="*{mobile}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('mobile')}"
+                        th:errors="*{mobile}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="companyName" class="col-lg-2 col-form-label">Company Name: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="text"
+                           name="companyName"
+                           th:field="*{companyName}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('companyName')}"
+                        th:errors="*{companyName}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="title" class="col-lg-2 col-form-label">Title: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="text"
+                           name="title"
+                           th:field="*{title}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('title')}"
+                        th:errors="*{title}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="twitter" class="col-lg-2 col-form-label">Twitter: </label>
+                <div class="col-lg-6">
+                    <input class="form-control"
+                           type="text"
+                           name="twitter"
+                           th:field="*{twitter}">
+                    </input>
+                </div>
+                <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('twitter')}"
+                        th:errors="*{twitter}">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="status" class="col-lg-2 col-form-label">Lead Status: </label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="status" th:field="*{status}">
+                    <option th:each="status : ${leadStatus}"
+                            th:value="${status.getStatusId()}"
+                            th:text="${status.getDescriptor()}"></option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="source" class="col-lg-2 col-form-label">Lead Source: </label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="source" th:field="*{source}">
+                    <option th:each="source : ${leadSource}"
+                            th:value="${source.getSourceId()}"
+                            th:text="${source.getDescriptor()}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
                 <div class="col-lg-12">
                     <div class="row">
                       <div class="col-lg-12 title-gap">
@@ -200,7 +199,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+              <div class="form-group row">
               <div class="col-lg-12">
                  <div class = "row">
                   <div class="col-lg-12 title-gap">
@@ -341,9 +340,10 @@
                     </input>
               </div>
             </div>
-            <div class="row">
+              <div class="row">
               <div class="col-lg-7"></div>
               <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
             </div>
           </form>
         </div>

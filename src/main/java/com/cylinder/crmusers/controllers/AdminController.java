@@ -23,7 +23,7 @@ import javax.validation.Valid;
 
 import com.cylinder.crmusers.model.*;
 import com.cylinder.crmusers.model.forms.*;
-import com.cylinder.shared.BaseController;
+import com.cylinder.shared.controllers.BaseController;
 
 import org.springframework.validation.FieldError;
 import org.springframework.validation.BindingResult;

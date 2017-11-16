@@ -1,4 +1,4 @@
-package com.cylinder.shared;
+package com.cylinder.shared.controllers;
 
 import org.springframework.ui.Model;
 import org.springframework.security.core.Authentication;

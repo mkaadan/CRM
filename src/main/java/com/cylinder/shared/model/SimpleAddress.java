@@ -1,4 +1,4 @@
-package com.cylinder.shared;
+package com.cylinder.shared.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

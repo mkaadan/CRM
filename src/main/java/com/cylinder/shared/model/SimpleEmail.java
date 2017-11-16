@@ -1,4 +1,4 @@
-package com.cylinder.shared;
+package com.cylinder.shared.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
