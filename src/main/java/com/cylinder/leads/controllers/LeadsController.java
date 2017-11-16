@@ -106,14 +106,8 @@ public class LeadsController extends BaseController {
                response.setStatus(404);
                return "redirect:/404.html";
           }
-          Iterable<Source> sourceData = sourceRespository.findAll();
-          Iterable<Status> statusData = statusRespository.findAll();
-          super.setCommonModelAttributes(model,auth,userRepository, this.moduleName);
-          model.addAttribute("userData", userRepository.findAll());
-          model.addAttribute("leadStatus", statusData);
-          model.addAttribute("leadSource", sourceData);
+          this.bindUserForm(model, auth);
           model.addAttribute("leadData", lead);
-          model.addAttribute("toList", "/lead");
           model.addAttribute("action", "edit/" + id);
           return "leads/editsingle";
       }
@@ -127,11 +121,25 @@ public class LeadsController extends BaseController {
       */
       @PostMapping(value="/edit/{id}")
       public String saveEditableLead(@PathVariable("id") Long id,
-                             @Valid @ModelAttribute("leadData") Lead lead,
-                             BindingResult result,
-                             Model model,
-                             Authentication auth) {
-        return this.saveNewLead(lead, result, model, auth);
+                                     @Valid @ModelAttribute("leadData") Lead lead,
+                                     BindingResult result,
+                                     Model model,
+                                     Authentication auth) {
+         if (result.hasErrors()) {
+             for(FieldError err: result.getFieldErrors()) {
+               System.out.println(err.toString()); 
+             }
+             this.bindUserForm(model, auth);
+             model.addAttribute("action","edit/" + lead.getLeadId());
+             return "leads/editsingle";
+         }
+         if (lead.getAddress().areFieldsNull()) {
+           lead.setAddress(null);
+         }
+         CrmUser user = userRepository.findByEmail(auth.getName());
+         lead.setLastModifiedBy(user);
+         Long assignedId = leadRepository.save(lead).getLeadId();
+         return "redirect:/lead/records/" + assignedId.toString() ;
       }
 
       /**
@@ -143,15 +151,9 @@ public class LeadsController extends BaseController {
       @GetMapping("/new/")
       public String newRecord(Model model,
                               Authentication auth) {
-          Iterable<Source> sourceData = sourceRespository.findAll();
-          Iterable<Status> statusData = statusRespository.findAll();
-          super.setCommonModelAttributes(model,auth,userRepository, this.moduleName);
+          this.bindUserForm(model,auth);
           model.addAttribute("action","new/");
-          model.addAttribute("userData", userRepository.findAll());
-          model.addAttribute("leadStatus", statusData);
-          model.addAttribute("leadSource", sourceData);
           model.addAttribute("leadData", new Lead());
-          model.addAttribute("toList", "/lead");
           return "leads/editsingle";
       }
 
@@ -169,28 +171,15 @@ public class LeadsController extends BaseController {
                                 Model model,
                                 Authentication auth) {
         if (result.hasErrors()) {
-            Iterable<Source> sourceData = sourceRespository.findAll();
-            Iterable<Status> statusData = statusRespository.findAll();
-            super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
-            model.addAttribute("userData", userRepository.findAll());
-            model.addAttribute("leadStatus", statusData);
-            model.addAttribute("leadSource", sourceData);
-            model.addAttribute("toList", "/lead");
-            if (lead.getLeadId() == null) {
-              model.addAttribute("action","new/");
-            } else {
-              model.addAttribute("action","/edit/" + lead.getLeadId());
-            }
+            this.bindUserForm(model,auth);
+            model.addAttribute("action","new/");
             return "leads/editsingle";
         }
         if (lead.getAddress().areFieldsNull()) {
           lead.setAddress(null);
         }
         CrmUser user = userRepository.findByEmail(auth.getName());
-        lead.setLastModifiedBy(user);
-        if (lead.getLeadId() == null) {
-          lead.setCreatedBy(user);
-        }
+        lead.setCreatedBy(user);
         Long assignedId = leadRepository.save(lead).getLeadId();
         return "redirect:/lead/records/" + assignedId.toString() ;
       }
@@ -213,7 +202,18 @@ public class LeadsController extends BaseController {
 
       }
 
-
+      /**
+      * Helper function to bind common model attributes whener generating a list form.
+      * @param model the view model object that is used to render the html.
+      * @param auth the authentication context that manages which users are logged in.
+      */
+      private void bindUserForm(Model model, Authentication auth) {
+        super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
+        model.addAttribute("userData", userRepository.findAll());
+        model.addAttribute("leadSource", sourceRespository.findAll());
+        model.addAttribute("leadStatus",  statusRespository.findAll());
+        model.addAttribute("toList", "/lead");
+      }
       /**
       * Maps empty string to null when a form is submitted.
       * @param binder The object that allows for empty strings to be turned into nulls.
