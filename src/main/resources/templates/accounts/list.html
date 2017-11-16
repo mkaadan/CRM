@@ -31,15 +31,25 @@
                             <th>Phone</th>
                             <th>Website</th>
                             <th>Owner</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="account : ${accountData}">
                             <td><a th:text="${account.getAccountName()}"
                                    th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
-                            <td th:text="${account.getPhone()}"></td>
-                            <td th:text="${account.getWebsite()}"></td>
-                            <td th:text="${account.getOwner()}"></td>
+                            <td th:text="${account.getPhone() != null}?${account.getPhone()}:${''}"></td>
+                            <td th:text="${account.getWebsite() != null}?${account.getWebsite()}:${''}"></td>
+                            <td th:text="${account.getOwner() != null}?${account.getOwner()}:${''}"></td>
+                            <td>
+                                <a class="edit-link icon-spacer" th:href="@{|/account/edit/${account.getAccountId()}|}" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <span th:attr="data-id=${account.getAccountId()}"
+                                      class="glyphicon glyphicon-trash icon-spacer btn-cursor"
+                                      title="Delete">
+                                </span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

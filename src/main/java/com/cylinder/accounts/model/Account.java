@@ -3,6 +3,7 @@ package com.cylinder.accounts.model;
 import com.cylinder.crmusers.model.CrmUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -17,7 +18,7 @@ public class Account {
     @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
     private String accountName;
 
-//    @Pattern(regexp="^([0-9]|10)$", message="Please enter a valid rating.")
+    @DecimalMax("10.0")
     @Column(name = "rating")
     private double rating;
 
@@ -59,8 +60,32 @@ public class Account {
     @JoinColumn(name="owner_id", referencedColumnName="account_id")
     private CrmUser owner;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="primary_email_id", referencedColumnName="email_id")
+    private Email primaryEmail;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="secondary_email_id", referencedColumnName="email_id")
+    private Email  secondaryEmail;
+
     public Account() {
 
+    }
+
+    public Email getPrimaryEmail() {
+        return primaryEmail;
+    }
+
+    public void setPrimaryEmail(Email primaryEmail) {
+        this.primaryEmail = primaryEmail;
+    }
+
+    public Email getSecondaryEmail() {
+        return secondaryEmail;
+    }
+
+    public void setSecondaryEmail(Email secondaryEmail) {
+        this.secondaryEmail = secondaryEmail;
     }
 
     public long getAccountId() {
@@ -167,8 +192,8 @@ public class Account {
         this.shippingAddress = shippingAddress;
     }
 
-    public String getOwner() {
-        return owner.getName();
+    public CrmUser getOwner() {
+        return owner;
     }
 
     public void setOwner(CrmUser owner) {
