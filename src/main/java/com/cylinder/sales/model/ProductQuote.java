@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "quote_product_lookup", schema = "sale")
 public class ProductQuote implements Serializable{
 
-    @Id
+
     private ProductQuoteId productQuoteId = new ProductQuoteId();
 
     @Getter
@@ -29,6 +29,7 @@ public class ProductQuote implements Serializable{
     @Column
     private Long quantity;
 
+    @Id
     public ProductQuoteId getProductQuoteId() {
         return productQuoteId;
     }
