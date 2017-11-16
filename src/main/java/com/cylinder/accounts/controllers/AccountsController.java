@@ -3,6 +3,8 @@ package com.cylinder.accounts.controllers;
 import java.lang.Iterable;
 
 import com.cylinder.accounts.model.Account;
+import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.crmusers.model.CrmUserRepository;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class AccountsController {
       private AccountRepository accountRepository;
       @Autowired
       private TypeRepository typeRepository;
+      @Autowired
+      private CrmUserRepository userRepository;
 
     	@RequestMapping(method=RequestMethod.GET)
       // Render the list view for Accounts.
@@ -52,10 +56,19 @@ public class AccountsController {
         } else {
             return "redirect:/errors";
         }
+
         Iterable<Account> accountData =  accountRepository.findAll();
         model.addAttribute("accountData", accountData);
+
         Iterable<Type> typeData = typeRepository.findAll();
         model.addAttribute("accountType", typeData);
+
+        Iterable<CrmUser> userData = userRepository.findAll();
+        model.addAttribute("users", userData);
+
+        Iterable<Account> parentData = accountRepository.findAll();
+        model.addAttribute("parentData", parentData);
+
         model.addAttribute("moduleName", "Accounts");
         model.addAttribute("accountData", account);
         model.addAttribute("toList", "/account");
@@ -63,10 +76,16 @@ public class AccountsController {
     }
 
     @RequestMapping(value="/new/", method=RequestMethod.GET)
-    public String newRecord(@ModelAttribute("accountData") Account account,
-                            Model model) {
+    public String newRecord(@ModelAttribute("accountData") Account account, Model model) {
         Iterable<Type> typeData = typeRepository.findAll();
         model.addAttribute("accountType", typeData);
+
+        Iterable<CrmUser> userData = userRepository.findAll();
+        model.addAttribute("users", userData);
+
+        Iterable<Account> parentData = accountRepository.findAll();
+        model.addAttribute("parentData", parentData);
+
         model.addAttribute("moduleName", "Accounts");
         model.addAttribute("accountData", new Account());
         model.addAttribute("toList", "/account");
@@ -92,6 +111,13 @@ public class AccountsController {
             model.addAttribute("moduleName", "Accounts");
             Iterable<Type> typeData = typeRepository.findAll();
             model.addAttribute("accountType", typeData);
+
+            Iterable<CrmUser> userData = userRepository.findAll();
+            model.addAttribute("users", userData);
+
+            Iterable<Account> parentData = accountRepository.findAll();
+            model.addAttribute("parentData", parentData);
+
             model.addAttribute("toList", "/account");
             return "accounts/editsingle";
         }
