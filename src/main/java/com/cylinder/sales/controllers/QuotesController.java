@@ -26,4 +26,13 @@ public class QuotesController {
         model.addAttribute("quoteData", quoteData);
         return "sales/quotelist";
       }
+
+    @RequestMapping(value="/records/{id}", method=RequestMethod.GET)
+    public String singleRecord(@PathVariable("id") Long id, Model model) {
+        Quote quoteData = quoteRepository.findOne(id);
+        model.addAttribute("moduleName", "Quotes");
+        model.addAttribute("quoteData", quoteData);
+        model.addAttribute("toList", "/quote");
+        return "sales/singlequote";
+    }
 }
