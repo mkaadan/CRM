@@ -18,6 +18,9 @@ public class QuotesController {
       @Autowired
       private QuoteRepository quoteRepository;
 
+      @Autowired
+      private ProductQuoteRepository productQuoteRepository;
+
     	@RequestMapping(method=RequestMethod.GET)
       // Render the list view for Quotes.
     	public String list(Model model){
@@ -33,6 +36,19 @@ public class QuotesController {
         model.addAttribute("moduleName", "Quotes");
         model.addAttribute("quoteData", quoteData);
         model.addAttribute("toList", "/quote");
+        Iterable<ProductQuote> productQuoteData = findAllProductsForQuote(quoteData);
+        model.addAttribute("productQuoteData", productQuoteData);
         return "sales/singlequote";
+    }
+
+    //Find all the products for a single quote
+    private Iterable<ProductQuote> findAllProductsForQuote(Quote quoteData){
+        Iterable<ProductQuote> productQuoteData =  productQuoteRepository.findAll();
+        for(ProductQuote productQuote : productQuoteData){
+            if(productQuote.getQuote() != quoteData){
+                productQuoteRepository.delete(productQuote);
+            }
+        }
+        return productQuoteData;
     }
 }
