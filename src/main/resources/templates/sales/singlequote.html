@@ -7,7 +7,7 @@
   <th:block layout:fragment="stylesheets">
       <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
       <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
-    <link th:href="@{/css/quote/quotesingle.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/sale/quotesingle.css}" rel="stylesheet"></link>
   </th:block>
   <th:block layout:fragment="content">
     <div class="wrapper">
@@ -31,7 +31,7 @@
                                     ? ${quoteData.getContactId} : ''">
                           </dd>
                           <dt class="col-md-1">Created: </dt>
-                          <dd class="col-md-1"
+                          <dd class="col-md-5"
                               th:text="${quoteData.getCreated()}">
                           </dd>
                       </dl>
