@@ -3,14 +3,8 @@ package com.cylinder.leads.model;
 import com.cylinder.global.Industry;
 import com.cylinder.crmusers.model.CrmUser;
 
-import java.util.List;
-import java.sql.Timestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.*;
 import com.cylinder.shared.model.SimpleAudit;
