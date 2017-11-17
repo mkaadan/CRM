@@ -77,8 +77,8 @@ public class SalesOrdersController extends BaseController{
         model.addAttribute("toList", "/salesorder");
         Iterable<ProductSalesOrder> productSalesOrderData = findAllProductsForSalesOrder(salesOrderData);
         model.addAttribute("productSalesOrderData", productSalesOrderData);
-//        boolean showShippingAddress = showShipping(salesOrderData);
-//        model.addAttribute("showShippingAddress", showShippingAddress);
+        boolean showShippingAddress = showShipping(salesOrderData);
+        model.addAttribute("showShippingAddress", showShippingAddress);
         return "sales/singlesalesorder";
     }
 
@@ -97,14 +97,14 @@ public class SalesOrdersController extends BaseController{
         return productSalesOrderData;
     }
 
-//    private Boolean showShipping(SalesOrder salesOrder){
-//        if(salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null){
-//            return true;
-//        }
-//        if(salesOrder.getShippingAddress() == null ||
-//                salesOrder.getBillingAddress().equals(salesOrder.getShippingAddress())){
-//            return false;
-//        }
-//        return true;
-//    }
+    private Boolean showShipping(SalesOrder salesOrder){
+        if(salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null){
+            return true;
+        }
+        if(salesOrder.getShippingAddress() == null ||
+                salesOrder.getBillingAddress().equals(salesOrder.getShippingAddress())){
+            return false;
+        }
+        return true;
+    }
 }
