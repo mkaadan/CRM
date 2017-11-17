@@ -115,4 +115,17 @@ abstract public class SimpleAddress {
     (this.zipPostal == null) &&
     (this.poBox == null);
   }
+
+  /*
+  * If two address are the same
+  **/
+  public boolean equals(SimpleAddress simpleAddress){
+    return (this.apartmentNumber == simpleAddress.apartmentNumber) &&
+    (this.city == simpleAddress.city) &&
+    (this.streetAddress == simpleAddress.streetAddress) &&
+    (this.stateProv == simpleAddress.stateProv) &&
+    (this.country == simpleAddress.country) &&
+    (this.zipPostal == simpleAddress.zipPostal) &&
+    (this.poBox == simpleAddress.poBox);
+  }
 }
