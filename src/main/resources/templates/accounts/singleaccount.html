@@ -3,22 +3,24 @@
     <link th:href="@{/css/account/single.css}" rel="stylesheet"></link>
 </th:block>
 <th:block layout:fragment="scripts">
+    <script th:src="@{/js/crud.js}"></script>
     <script th:src="@{/js/accounts/edit.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
     <div class="wrapper">
         <div class="container">
             <div class="spacer">
-                <div class="row">
-                    <div class="col-lg-12 metaBar">
-                        <div class="pull-left">
-                            <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
-                        </div>
-                        <div class="pull-right">
-                            <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+                <div th:replace="fragments/welcomemessage :: welcomeMessage">
+                </div>
+                <div class="row pull-right">
+                    <a class="btn btn-primary"
+                       role="button"
+                       th:href="@{|/account/edit/${accountData.getAccountId()}|}">Edit
+                    </a>
+                    <button id="deleteRecord"
+                            th:attr="data-id=${accountData.getAccountId()}"
+                            class="btn btn-primary">Delete
+                    </button>
                 </div>
                 <div class="single-space row"></div>
 
@@ -30,7 +32,7 @@
                     </tr>
                     <tr>
                         <td><strong>Owner:</strong></td>
-                        <td th:text="${accountData.getOwner()}"></td>
+                        <td th:text="${accountData.getOwner() != null}?${accountData.getOwner().getName()}:${''}"></td>
                     </tr>
                     <tr>
                         <td><strong>Rating:</strong></td>
@@ -50,7 +52,7 @@
                     </tr>
                     <tr>
                         <td><strong>Parent:</strong></td>
-                        <td th:text="${accountData.getParent()}"></td>
+                        <td th:text="${accountData.getParent() != null}?${accountData.getParent().getAccountName()}:${''}"></td>
                     </tr>
                     <tr>
                         <td><strong>Type:</strong></td>
@@ -70,22 +72,28 @@
                     </tr>
                     <tr>
                         <td><strong>Billing Address:</strong></td>
-                        <td th:if="${accountData.getBillingAddress() != null}" th:with="billingAddress=${accountData.getBillingAddress()}">
-                            <span th:if="${billingAddress.getApartmentNumber() != null}" th:text="${billingAddress.getApartmentNumber()+' -'}"></span>
+                        <td th:if="${accountData.getBillingAddress() != null}"
+                            th:with="billingAddress=${accountData.getBillingAddress()}">
+                            <span th:if="${billingAddress.getApartmentNumber() != null}"
+                                  th:text="${billingAddress.getApartmentNumber()+' -'}"></span>
                             <span th:text="${billingAddress.getStreetAddress()}"></span><br/>
                             <span th:text="${billingAddress.getCity()+', '+billingAddress.getStateProv()+' '+billingAddress.getZipPostal()}"></span><br/>
                             <span th:text="${billingAddress.getCountry()}"></span>
-                            <span th:if="${billingAddress.getPoBox() != null}" th:utext="${'PO Box: '+billingAddress.getPoBox()}"></span><br/>
+                            <span th:if="${billingAddress.getPoBox() != null}"
+                                  th:utext="${'PO Box: '+billingAddress.getPoBox()}"></span><br/>
                         </td>
                     </tr>
                     <tr>
                         <td><strong>Shipping Address:</strong></td>
-                        <td th:if="${accountData.getShippingAddress() != null}" th:with="shippingAddress=${accountData.getShippingAddress()}">
-                            <span th:if="${shippingAddress.getApartmentNumber() != null}" th:text="${shippingAddress.getApartmentNumber()+' -'}"></span>
+                        <td th:if="${accountData.getShippingAddress() != null}"
+                            th:with="shippingAddress=${accountData.getShippingAddress()}">
+                            <span th:if="${shippingAddress.getApartmentNumber() != null}"
+                                  th:text="${shippingAddress.getApartmentNumber()+' -'}"></span>
                             <span th:text="${shippingAddress.getStreetAddress()}"></span><br/>
                             <span th:text="${shippingAddress.getCity()+', '+shippingAddress.getStateProv()+' '+shippingAddress.getZipPostal()}"></span><br/>
                             <span th:text="${shippingAddress.getCountry()}"></span>
-                            <span th:if="${shippingAddress.getPoBox() != null}" th:text="${'PO Box: '+shippingAddress.getPoBox()}"></span><br/>
+                            <span th:if="${shippingAddress.getPoBox() != null}"
+                                  th:text="${'PO Box: '+shippingAddress.getPoBox()}"></span><br/>
                         </td>
                     </tr>
                     </tbody>
