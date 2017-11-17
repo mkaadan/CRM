@@ -28,7 +28,12 @@
                           <dt class="col-md-1">Contact Name: </dt>
                           <dd class="col-md-1"
                               th:text="${salesOrderData.getContactId() != null}
-                                    ? ${salesOrderData.getContactId} : ''">
+                                    ? ${salesOrderData.getContactId()} : ''">
+                          </dd>
+                          <dt class="col-md-1">Contract ID: </dt>
+                          <dd class="col-md-1"
+                              th:text="${salesOrderData.getContract() != null}
+                                    ? ${salesOrderData.getContract().getContractId} : ''">
                           </dd>
                           <dt class="col-md-1">Created: </dt>
                           <dd class="col-md-5"
@@ -45,6 +50,10 @@
                           <dt>Invoice Order #: </dt>
                           <dd th:text="${salesOrderData.getInvoiceNumber() != null}
                                   ? ${salesOrderData.getSalesOrderId()} : ''">
+                          </dd>
+                          <dt>Quote #: </dt>
+                          <dd th:text="${salesOrderData.getQuote() != null}
+                                  ? ${salesOrderData.getQuote().getQuoteId()} : ''">
                           </dd>
                           <dt>Created By: </dt>
                           <dd th:text="${salesOrderData.getCreatedBy() != null}
@@ -98,51 +107,51 @@
                       </dl>
                   </div>
               </div>
-              <!--<div class="row single-view">-->
-                  <!--<h3 class="section-headers"> Shipping Address (If Different) </h3>-->
-                  <!--<div class="col-md-4">-->
-                      <!--<dl class="dl-horizontal">-->
-                          <!--<dt class="col-md-1">Apartment Number: </dt>-->
-                          <!--<dd class="col-md-1"-->
-                              <!--th:text="${showShippingAddress == true}-->
-                                    <!--? ${salesOrderData.getShippingAddress().getApartmentNumber()} : ''">-->
-                          <!--</dd>-->
-                          <!--<dt class="col-md-1">Street Address: </dt>-->
-                          <!--<dd class="col-md-1"-->
-                              <!--th:text="${showShippingAddress == true}-->
-                                    <!--? ${salesOrderData.getShippingAddress().getStreetAddress()} : ''">-->
-                          <!--</dd>-->
-                      <!--</dl>-->
-                  <!--</div>-->
-                  <!--<div class="col-md-4">-->
-                      <!--<dl class="dl-horizontal">-->
-                          <!--<dt>City: </dt>-->
-                          <!--<dd th:text="${showShippingAddress == true}-->
-                                  <!--? ${salesOrderData.getShippingAddress().getCity()} : ''">-->
-                          <!--</dd>-->
-                          <!--<dt>State/Province: </dt>-->
-                          <!--<dd th:text="${showShippingAddress == true}-->
-                                  <!--? ${salesOrderData.getShippingAddress().getStateProv()} : ''">-->
-                          <!--</dd>-->
-                          <!--<dt>Country: </dt>-->
-                          <!--<dd th:text="${showShippingAddress == true}-->
-                                  <!--? ${salesOrderData.getShippingAddress().getCountry()} : ''">-->
-                          <!--</dd>-->
-                      <!--</dl>-->
-                  <!--</div>-->
-                  <!--<div class="col-md-4">-->
-                      <!--<dl class="dl-horizontal">-->
-                          <!--<dt>Zip/Postal Code: </dt>-->
-                          <!--<dd th:text="${showShippingAddress == true}-->
-                                    <!--? ${salesOrderData.getShippingAddress().getZipPostal()} : ''">-->
-                          <!--</dd>-->
-                          <!--<dt>P.O. Box: </dt>-->
-                          <!--<dd th:text="${showShippingAddress == true}-->
-                                    <!--? ${salesOrderData.getShippingAddress().getPoBox()} : ''">-->
-                          <!--</dd>-->
-                      <!--</dl>-->
-                  <!--</div>-->
-              <!--</div>-->
+              <div class="row single-view">
+                  <h3 class="section-headers"> Shipping Address (If Different) </h3>
+                  <div class="col-md-4">
+                      <dl class="dl-horizontal">
+                          <dt class="col-md-1">Apartment Number: </dt>
+                          <dd class="col-md-1"
+                              th:text="${showShippingAddress == true}
+                                    ? ${salesOrderData.getShippingAddress().getApartmentNumber()} : ''">
+                          </dd>
+                          <dt class="col-md-1">Street Address: </dt>
+                          <dd class="col-md-1"
+                              th:text="${showShippingAddress == true}
+                                    ? ${salesOrderData.getShippingAddress().getStreetAddress()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+                  <div class="col-md-4">
+                      <dl class="dl-horizontal">
+                          <dt>City: </dt>
+                          <dd th:text="${showShippingAddress == true}
+                                  ? ${salesOrderData.getShippingAddress().getCity()} : ''">
+                          </dd>
+                          <dt>State/Province: </dt>
+                          <dd th:text="${showShippingAddress == true}
+                                  ? ${salesOrderData.getShippingAddress().getStateProv()} : ''">
+                          </dd>
+                          <dt>Country: </dt>
+                          <dd th:text="${showShippingAddress == true}
+                                  ? ${salesOrderData.getShippingAddress().getCountry()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+                  <div class="col-md-4">
+                      <dl class="dl-horizontal">
+                          <dt>Zip/Postal Code: </dt>
+                          <dd th:text="${showShippingAddress == true}
+                                    ? ${salesOrderData.getShippingAddress().getZipPostal()} : ''">
+                          </dd>
+                          <dt>P.O. Box: </dt>
+                          <dd th:text="${showShippingAddress == true}
+                                    ? ${salesOrderData.getShippingAddress().getPoBox()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+              </div>
               <div class="row">
                   <div class="col-sm-12">
                       <h3 class="section-headers"> Product Information </h3>
@@ -164,7 +173,7 @@
                               <td th:text="${productSalesOrder.getQuantity() != null} ? ${productSalesOrder.getQuantity()} : ''"></td>
                               <td th:text="${productSalesOrder.getProduct().getProductId() != null} ? ${productSalesOrder.getProduct().getProductId()} : ''"></td>
                               <td th:text="${productSalesOrder.getDiscount() != null} ? ${productSalesOrder.getDiscount()} : ''"></td>
-                              <td th:text="${productSalesOrder.getProduct().getProductId() != null} ? ${productSalesOrder.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productSalesOrder.getQuantity() != null} ? ${productSalesOrder.getQuantity()} : ''"></td>
                           </tr>
                           </tbody>
                       </table>
