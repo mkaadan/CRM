@@ -6,6 +6,8 @@ import javax.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
 import com.cylinder.crmusers.model.CrmUser;
@@ -14,7 +16,6 @@ import lombok.*;
 
 @MappedSuperclass
 public abstract class SimpleAudit {
-
   /**
   * Get the user that last created this lead.
   *
@@ -23,6 +24,7 @@ public abstract class SimpleAudit {
   */
   @Getter
   @Setter
+  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="created_by", referencedColumnName = "account_id", updatable=false)
   protected CrmUser createdBy;
@@ -35,6 +37,7 @@ public abstract class SimpleAudit {
   */
   @Getter
   @Setter
+  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="last_modified_by_id", referencedColumnName = "account_id")
   protected CrmUser lastModifiedBy;
@@ -45,6 +48,7 @@ public abstract class SimpleAudit {
   * @return the timestamp of when this lead was added.
   */
   @Getter
+  @JsonIgnore
   @CreationTimestamp
   @Column(updatable=false)
   protected Timestamp created;
@@ -55,6 +59,7 @@ public abstract class SimpleAudit {
   * @return the timestamp of when this lead was last modified.
   */
   @Getter
+  @JsonIgnore
   @UpdateTimestamp
   @Column(name = "last_modified")
   protected Timestamp lastModified;
