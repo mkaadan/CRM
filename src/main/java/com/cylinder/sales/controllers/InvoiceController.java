@@ -26,4 +26,13 @@ public class InvoiceController {
         model.addAttribute("invoiceData", invoiceData);
         return "sales/invoicelist";
     }
+
+    @RequestMapping(value="/records/{id}", method=RequestMethod.GET)
+    public String singleRecord(@PathVariable("id") Long id, Model model) {
+        SalesOrder invoiceData = invoiceRepository.findOne(id);
+        model.addAttribute("moduleName", "SalesOrders");
+        model.addAttribute("invoiceData", invoiceData);
+        model.addAttribute("toList", "/invoice");
+        return "sales/singleinvoice";
+    }
 }

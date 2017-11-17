@@ -26,4 +26,13 @@ public class PurchaseOrdersController {
         model.addAttribute("purchaseOrderData", purchaseOrderData);
         return "sales/purchaseorderlist";
       }
+
+    @RequestMapping(value="/records/{id}", method=RequestMethod.GET)
+    public String singleRecord(@PathVariable("id") Long id, Model model) {
+        PurchaseOrder purchaseOrderData = purchaseOrderRepository.findOne(id);
+        model.addAttribute("moduleName", "PurchaseOrders");
+        model.addAttribute("purchaseOrderData", purchaseOrderData);
+        model.addAttribute("toList", "/purchaseorder");
+        return "sales/singlepurchaseorder";
+    }
 }
