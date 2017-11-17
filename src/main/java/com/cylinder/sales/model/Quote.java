@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "quotes", schema = "sale")
 public class Quote{
+    /** The identifyer of the quote. */
     @Id
     @Column(name="quote_id")
     private Long quoteId;
@@ -43,6 +44,8 @@ public class Quote{
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
+    /** The set of products for the quote. */
+    @OneToMany(mappedBy = "quote")
     private Set<ProductQuote> productQuote;
 
     public Quote() { }
@@ -71,7 +74,7 @@ public class Quote{
     /* Get the identifier for the person who last modified the quote. */
     public Long getLastModifiedById() { return this.lastModifiedById; }
 
-    @OneToMany(mappedBy = "quotes")
+    /** Get the set of products for the quote */
     public Set<ProductQuote> getProductQuote() {
         return productQuote;
     }
@@ -114,6 +117,7 @@ public class Quote{
         this.lastModifiedById = lastModifiedById;
     }
 
+    /** Set the set of products for the quote */
     public void setProductQuote(Set<ProductQuote> productQuote) {
         this.productQuote = productQuote;
     }
