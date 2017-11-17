@@ -4,6 +4,7 @@ import com.cylinder.accounts.model.Account;
 import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import lombok.*;
 import java.util.Set;
 
 @Entity
