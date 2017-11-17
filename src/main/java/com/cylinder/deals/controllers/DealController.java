@@ -66,6 +66,7 @@ public class DealController extends BaseController {
   * @param auth the authentication context that manages which users are logged in.
   * @return the name of the template to render.
   */
+  @GetMapping("/")
   public String renderListView(Model model, Authentication auth) {
     super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
     model.addAttribute("dealData", dealRepository.findAll());
