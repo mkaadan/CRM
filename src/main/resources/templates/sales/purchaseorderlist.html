@@ -46,13 +46,13 @@
               <tbody>
                 <tr th:each="purchaseOrder : ${purchaseOrderData}">
                     <td>
-                        <a th:text="${quote.getPurchaseOrderId()}"
-                           th:href="@{|/purchaseorder/records/${purchaseOrder.getId()}|}">
+                        <a th:text="${purchaseOrder.getPurchaseOrderId()}"
+                           th:href="@{|/purchaseorder/records/${purchaseOrder.getPurchaseOrderId()}|}">
                         </a>
                     </td>
                   <td th:text="${purchaseOrder.getAccount() != null} ? ${purchaseOrder.getAccount().getAccountName()} : ''"></td>
                   <td th:text="${purchaseOrder.getContactId() != null} ? ${purchaseOrder.getContactId()} : ''"></td>
-                  <td th:text="${purchaseOrder.getOwner() != null} ? ${purchaseOrder.getOwner().getName} : ''"></td>
+                  <td th:text="${purchaseOrder.getOwner() != null} ? ${purchaseOrder.getOwner().getName()} : ''"></td>
                 </tr>
               </tbody>
             </table>

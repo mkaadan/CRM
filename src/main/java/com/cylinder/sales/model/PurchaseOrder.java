@@ -1,7 +1,9 @@
 package com.cylinder.sales.model;
 
-import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
+import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.shared.model.SimpleAudit;
+
 import java.sql.Timestamp;
 import javax.persistence.*;
 import lombok.*;
@@ -9,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "purchase_orders", schema = "sale")
-public class PurchaseOrder {
+public class PurchaseOrder extends SimpleAudit{
+    /** The identifyer of the  purchase order. */
     @Id
     @Getter
     @Setter
@@ -35,30 +38,6 @@ public class PurchaseOrder {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="owner_id", referencedColumnName="account_id")
     private CrmUser owner;
-
-    /** The identifyer of the creator of the purchase order. */
-    @Getter
-    @Setter
-    @Column(name="created_by")
-    private Long createdBy;
-
-    /** The time stamp of when the purchase order was created. */
-    @Getter
-    @Setter
-    @Column(name="created")
-    private Timestamp created;
-
-    /** The time stamp of when the purchase order was last modified. */
-    @Getter
-    @Setter
-    @Column(name="last_modified")
-    private Timestamp lastModified;
-
-    /** The identifyer of who last modified the purchase order. */
-    @Getter
-    @Setter
-    @Column(name="last_modified_by_id")
-    private Long lastModifiedById;
 
     /** The set of products for the purchase order. */
     @Getter

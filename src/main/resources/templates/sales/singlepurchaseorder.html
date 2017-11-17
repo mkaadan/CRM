@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="scripts">
+      <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
+      <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+      <script th:src="@{/js/sales/purchaseOrdersSingle.js}"></script>
+  </th:block>
+  <th:block layout:fragment="stylesheets">
+      <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
+      <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/sale/purchaseordersingle.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="single-space row"></div>
+              <div class="row single-view">
+                  <h3 class="section-headers"> Basic Information </h3>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt class="col-md-1">Account: </dt>
+                          <dd class="col-md-1"
+                              th:text="${purchaseOrderData.getAccount() != null}
+                                    ? ${purchaseOrderData.getAccount().getAccountName()} : ''">
+                          </dd>
+                          <dt class="col-md-1">Contact Name: </dt>
+                          <dd class="col-md-1"
+                              th:text="${purchaseOrderData.getContactId() != null}
+                                    ? ${purchaseOrderData.getContactId} : ''">
+                          </dd>
+                          <dt class="col-md-1">Created: </dt>
+                          <dd class="col-md-5"
+                              th:text="${purchaseOrderData.getCreated()}">
+                          </dd>
+                      </dl>
+                  </div>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt>Purchase Order #: </dt>
+                          <dd th:text="${purchaseOrderData.getPurchaseOrderId() != null}
+                                  ? ${purchaseOrderData.getPurchaseOrderId()} : ''">
+                          </dd>
+                          <dt>Created By: </dt>
+                          <dd th:text="${purchaseOrderData.getCreatedBy() != null}
+                                  ? ${purchaseOrderData.getCreatedBy().getName()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-12">
+                      <h3 class="section-headers"> Product Information </h3>
+                      <table id ="purchaseOrderSingle" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                          <thead>
+                          <tr>
+                              <th>Product Number</th>
+                              <th>Description</th>
+                              <th>Quantity</th>
+                              <th>Unit Price</th>
+                              <th>Discount</th>
+                              <th>Unit Total</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="productPurchaseOrder : ${productPurchaseOrderData}">
+                              <td th:text="${productPurchaseOrder.getProduct() != null} ? ${productPurchaseOrder.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productPurchaseOrder.getProduct().getProductId() != null} ? ${productPurchaseOrder.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productPurchaseOrder.getQuantity() != null} ? ${productPurchaseOrder.getQuantity()} : ''"></td>
+                              <td th:text="${productPurchaseOrder.getProduct().getProductId() != null} ? ${productPurchaseOrder.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productPurchaseOrder.getDiscount() != null} ? ${productPurchaseOrder.getDiscount()} : ''"></td>
+                              <td th:text="${productPurchaseOrder.getProduct().getProductId() != null} ? ${productPurchaseOrder.getProduct().getProductId()} : ''"></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <div class ="row">
+                  <div class="col-sm-12">
+                      <dl class="dl-horizontal pull-right">
+                          <dt class="col-md-1">Purchase Order Total: </dt>
+                          <dd class="col-md-1"
+                              th:text="${purchaseOrderData.getPurchaseOrderId() != null}
+                                    ? ${purchaseOrderData.getPurchaseOrderId()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+              </div>
+              <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt th:if="${purchaseOrderData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${purchaseOrderData.getLastModifiedBy() != null}"
+                          th:text="${purchaseOrderData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${purchaseOrderData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${purchaseOrderData.getLastModifiedBy() != null}"
+                          th:text="${purchaseOrderData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>
