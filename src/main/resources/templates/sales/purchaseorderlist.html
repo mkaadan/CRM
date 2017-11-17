@@ -52,7 +52,7 @@
                     </td>
                   <td th:text="${purchaseOrder.getAccount() != null} ? ${purchaseOrder.getAccount().getAccountName()} : ''"></td>
                   <td th:text="${purchaseOrder.getContactId() != null} ? ${purchaseOrder.getContactId()} : ''"></td>
-                  <td th:text="${purchaseOrder.getOwner() != null} ? ${purchaseOrder.getOwner()} : ''"></td>
+                  <td th:text="${purchaseOrder.getOwner() != null} ? ${purchaseOrder.getOwner().getName} : ''"></td>
                 </tr>
               </tbody>
             </table>
