@@ -4,6 +4,7 @@ import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "purchase_orders", schema = "sale")
