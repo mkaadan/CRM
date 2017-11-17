@@ -48,10 +48,19 @@ public interface CrmUserRepository extends JpaRepository<CrmUser, Long> {
   /**
   * Delete a record that is associated with a specific account id.
   * @param accountId the id of the record one wants to delete.
-  * @return the amount of records altered by the query. 
+  * @return the amount of records altered by the query.
   */
   @Transactional
   @Modifying
   @Query(value="DELETE FROM crmuser.accounts WHERE account_id=:accountId", nativeQuery=true)
   int deleteByAccountId(@Param("accountId") Long accountId);
+
+  /**
+  * Does there exist a user with the given id and email?
+  * @param accountId the id of the record one wants to comfirm is real.
+  * @param email the email of lead the one wants to comfirm is real.
+  * @return does the record exist?
+  */
+  boolean existsByAccountIdAndEmail(Long accountId, String email);
+
 }
