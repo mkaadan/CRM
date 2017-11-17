@@ -21,12 +21,6 @@
                         <button type="button" class="btn btn-primary pull-right">Create Account</button>
                     </a>
                 </div>
-                <div class="pull-right">
-                    <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
-                </div>
-                <a th:href="@{|/account/new/|}">
-                    <button type="button" class="btn btn-primary pull-right">Create Account</button>
-                </a>
             </div>
             <div class="row">
                 <div class="col-sm-12">
@@ -46,9 +40,10 @@
                                    th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
                             <td th:text="${account.getPhone() != null}?${account.getPhone()}:${''}"></td>
                             <td th:text="${account.getWebsite() != null}?${account.getWebsite()}:${''}"></td>
-                            <td th:text="${account.getOwner() != null}?${account.getOwner()}:${''}"></td>
+                            <td th:text="${account.getOwner() != null}?${account.getOwner().getName()}:${''}"></td>
                             <td>
-                                <a class="edit-link icon-spacer" th:href="@{|/account/edit/${account.getAccountId()}|}" title="Edit">
+                                <a class="edit-link icon-spacer" th:href="@{|/account/edit/${account.getAccountId()}|}"
+                                   title="Edit">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                                 <span th:attr="data-id=${account.getAccountId()}"

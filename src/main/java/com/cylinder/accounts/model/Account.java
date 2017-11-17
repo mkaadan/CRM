@@ -1,6 +1,7 @@
 package com.cylinder.accounts.model;
 
 import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.shared.model.SimpleAudit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "details", schema = "account")
-public class Account {
+public class Account extends SimpleAudit {
     @Getter
     @Setter
     @Id
