@@ -30,7 +30,7 @@ public class SalesOrdersController extends BaseController{
     private SalesOrderRepository salesOrderRepository;
 
     /**
-     * Sql interface for productQuote entites.
+     * Sql interface for productSalesOrder entites.
      */
     @Autowired
     private ProductSalesOrderRepository productSalesOrderRepository;
