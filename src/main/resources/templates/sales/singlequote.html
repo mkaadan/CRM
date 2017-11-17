@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/quote/quotesingle.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="single-space row"></div>
+              <div class="row single-view">
+                  <h3 class="section-headers"> Basic Information </h3>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt class="col-md-1">Account: </dt>
+                          <dd class="col-md-1"
+                              th:text="${quoteData.getAccount() != null}
+                                    ? ${quoteData.getAccount().getAccountName()} : ''">
+                          </dd>
+                          <dt class="col-md-1">Contact: </dt>
+                          <dd class="col-md-1"
+                              th:text="${quoteData.getContactId() != null}
+                                    ? ${quoteData.getContactId} : ''">
+                          </dd>
+                          <dt class="col-md-1">Created: </dt>
+                          <dd class="col-md-1"
+                              th:text="${quoteData.getCreated()}">
+                          </dd>
+                      </dl>
+                  </div>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt>Quote #: </dt>
+                          <dd th:text="${quoteData.getQuoteId() != null}
+                                  ? ${quoteData.getQuoteId()} : ''">
+                          </dd>
+                          <dt>Quoted By: </dt>
+                          <dd th:text="${quoteData.getCreatedBy() != null}
+                                  ? ${quoteData.getCreatedBy().getName()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+              </div>
+            <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt th:if="${quoteData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${quoteData.getLastModifiedBy() != null}"
+                          th:text="${quoteData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${quoteData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${quoteData.getLastModifiedBy() != null}"
+                          th:text="${quoteData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>
