@@ -4,6 +4,7 @@ import com.cylinder.accounts.model.Account;
 import com.cylinder.crmusers.model.CrmUser;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "sales_orders", schema = "sale")
@@ -70,6 +71,10 @@ public class SalesOrder {
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
+    /** The set of products for the sales order. */
+    @OneToMany(mappedBy = "salesOrder")
+    private Set<ProductSalesOrder> productSalesOrder;
+
     public SalesOrder() { }
 
     /* Get the identifier for the sales order. */
@@ -117,6 +122,11 @@ public class SalesOrder {
 
     /* Get the account on the sales order. */
     public Account getAccount() { return this.account; }
+
+    /** Get the set of products for the quote */
+    public Set<ProductSalesOrder> getProductSalesOrder() {
+        return productSalesOrder;
+    }
 
     /* Set the identifier for the sales order. */
     public void setSalesOrderId(Long salesOrderId) { this.salesOrderId = salesOrderId; }
@@ -167,4 +177,9 @@ public class SalesOrder {
 
     /* Set the account on the sales order. */
     public void setAccount(Account account) { this.account = account; }
+
+    /** Set the set of products for the sales order */
+    public void setProductSalesOrder(Set<ProductSalesOrder> productSalesOrder) {
+        this.productSalesOrder = productSalesOrder;
+    }
 }

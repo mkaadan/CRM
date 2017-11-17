@@ -42,6 +42,10 @@ public class PurchaseOrder {
     @Column(name="last_modified_by_id")
     private Long lastModifiedById;
 
+    /** The set of products for the purchase order. */
+    @OneToMany(mappedBy = "purchaseOrder")
+    private Set<ProductPurchaseOrder> productPurchaseOrder;
+
     public PurchaseOrder() { }
 
     /* Get the identifier for the purchase order. */
@@ -80,6 +84,11 @@ public class PurchaseOrder {
         return this.lastModifiedById;
     }
 
+    /** Get the set of products for the quote */
+    public Set<ProductPurchaseOrder> getProductPurchaseOrder() {
+        return productPurchaseOrder;
+    }
+
     /* Set the identifier for the purchase order. */
     public void setPurchaseOrderId(Long purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
@@ -116,5 +125,10 @@ public class PurchaseOrder {
     /* Set the identifier for the person who last modified the purchase order. */
     public void setLastModifiedById(Long lastModifiedById) {
         this.lastModifiedById = lastModifiedById;
+    }
+
+    /** Set the set of products for the sales order */
+    public void setProductPurchaseOrder(Set<ProductPurchaseOrder> productPurchaseOrder) {
+        this.productPurchaseOrder = productPurchaseOrder;
     }
 }
