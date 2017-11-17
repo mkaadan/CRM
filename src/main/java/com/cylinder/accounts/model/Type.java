@@ -14,15 +14,10 @@ public class Type {
     @Id
     @Column(name="type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long typdId;
+    protected Long typeId;
+
+    @Getter
+    @Setter
     @Column
     protected String descriptor;
-
-    public Long getTypeId() {
-        return this.typdId;
-    }
-
-    public String getDescriptor() {
-        return this.descriptor;
-    }
 }
