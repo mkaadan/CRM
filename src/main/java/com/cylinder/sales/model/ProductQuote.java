@@ -1,8 +1,5 @@
 package com.cylinder.sales.model;
 
-import com.cylinder.accounts.model.Account;
-import com.cylinder.crmusers.model.CrmUser;
-import java.sql.Timestamp;
 import javax.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -11,63 +8,54 @@ import java.io.Serializable;
 @Table(name = "quote_product_lookup", schema = "sale")
 public class ProductQuote implements Serializable{
 
+    /** The identifyer of the quote-product relation. */
+    @Getter
+    @Setter
+    @Id
+    @Column(name="quote_product_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long quoteProductId;
 
-    private ProductQuoteId productQuoteId = new ProductQuoteId();
-
+    /** The identifyer of the product. */
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name="product_id")
     private TempProduct product;
 
+    /** The identifyer of the quote. */
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name="quote_id")
     private Quote quote;
 
+    /** The quantity of the product on the quote. */
+    @Getter
+    @Setter
     @Column
     private Long quantity;
 
-    @Id
-    public ProductQuoteId getProductQuoteId() {
-        return productQuoteId;
-    }
+    /** The discount on the product on the quote. */
+    @Getter
+    @Setter
+    @Column
+    private float discount;
 
-    public void setProductQuoteId(ProductQuoteId productQuoteId) {
-        this.productQuoteId = productQuoteId;
-    }
-
-//    public TempProduct getTempProduct() {
-//        return product;
-//    }
+//    public boolean equals(Object o) {
+//        if (this == o)
+//            return true;
+//        if (o == null || getClass() != o.getClass())
+//            return false;
 //
-//    public void setTempProduct(TempProduct product) {
-//        this.product = product;
-//    }
+//        ProductQuote that = (ProductQuote) o;
 //
-//    public Quote getQuote() {
-//        return quote;
-//    }
+//        if (getProductQuoteId() != null ? !getProductQuoteId().equals(that.getProductQuoteId())
+//                : that.getProductQuoteId() != null)
+//            return false;
 //
-//    public void setQuote(Quote quote) {
-//        this.quote = quote;
+//        return true;
 //    }
-
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        ProductQuote that = (ProductQuote) o;
-
-        if (getProductQuoteId() != null ? !getProductQuoteId().equals(that.getProductQuoteId())
-                : that.getProductQuoteId() != null)
-            return false;
-
-        return true;
-    }
 
 
 }
