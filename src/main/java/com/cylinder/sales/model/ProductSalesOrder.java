@@ -5,7 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "sale_product_lookup", schema = "sale")
+@Table(name = "sale_product_lookups", schema = "sale")
 public class ProductSalesOrder implements Serializable{
 
     /** The identifyer of the sales order-product relation. */
