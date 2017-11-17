@@ -2,6 +2,8 @@ package com.cylinder.sales.model;
 
 import com.cylinder.accounts.model.Account;
 import com.cylinder.crmusers.model.CrmUser;
+import com.cylinder.shared.model.SimpleAudit;
+
 import java.sql.Timestamp;
 import javax.persistence.*;
 import lombok.*;
@@ -9,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "quotes", schema = "sale")
-public class Quote{
+public class Quote extends SimpleAudit{
     /** The identifyer of the quote. */
     @Id
     @Getter
@@ -36,30 +38,6 @@ public class Quote{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="owner_id", referencedColumnName="account_id")
     private CrmUser owner;
-
-    /** The identifyer of the creator of the quote. */
-    @Getter
-    @Setter
-    @Column(name="created_by")
-    private Long createdBy;
-
-    /** The time stamp of when the quote was created. */
-    @Getter
-    @Setter
-    @Column(name="created")
-    private Timestamp created;
-
-    /** The time stamp of when the quote was last modified. */
-    @Getter
-    @Setter
-    @Column(name="last_modified")
-    private Timestamp lastModified;
-
-    /** The identifyer of who last modified the quote. */
-    @Getter
-    @Setter
-    @Column(name="last_modified_by_id")
-    private Long lastModifiedById;
 
     /** The set of products for the quote. */
     @Getter
