@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+            <div class="spacer">
+                <div th:replace="fragments/welcomemessage :: welcomeMessage">
+                </div>
+            </div>
+            <div class="single-space"></div>
+            <form  class="row" th:object="${contractData}" th:action="@{|/contract/${action}|}" method="post">
+                <div class="col-lg-12">
+                    <div class = "row">
+                        <div class="col-lg-12 title-gap">
+                            <h3> Basic Information </h3>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="title" class="col-lg-2 col-form-label">Title: </label>
+                        <div class="col-lg-6">
+                            <input class="form-control"
+                                   type="text"
+                                   name="contractTitle"
+                                   th:field="*{contractTitle}">
+                            </input>
+                        </div>
+                        <div class="col-lg-4">
+                  <span class="label label-danger"
+                        th:if="${#fields.hasErrors('contractTitle')}"
+                        th:errors="*{contractTitle}">
+                  </span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <div class = "row">
+                                <div class="col-lg-12 title-gap">
+                                    <h3> Body </h3>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <textarea class="form-control"
+                                           name="contractText"
+                                           rows="30"
+                                           cols="50"
+                                           th:field="*{contractText}">
+                                    </textarea>
+                                </div>
+                                <div class="col-lg-4">
+                     <span class="label label-danger"
+                           th:if="${#fields.hasErrors('contractText')}"
+                           th:errors="*{contractText}">
+                     </span>
+                                </div>
+                            </div>
+                            <input type="hidden"
+                                   name="contractId"
+                                   th:if="${contractData.getContractId() != null}"
+                                   th:field="*{contractId}">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7"></div>
+                        <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</html>
+
