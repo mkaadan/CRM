@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<th:block layout:fragment="scripts">
+    <script type="text/javascript"
+            th:src="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.js}"></script>
+    <script th:src="@{/js/accounts/accountsList.js}"></script>
+</th:block>
+<th:block layout:fragment="stylesheets">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.css}"></link>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="container">
+        <div class="spacer">
+            <div class="row">
+                <div class="pull-left">
+                    <h1 th:text="${moduleName}" class="moduleName"></h1>
+                </div>
+                <div class="pull-right">
+                    <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
+                </div>
+                <a href="new/">
+                    <button type="button" class="btn btn-primary pull-right">Create Account</button>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="accountList" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>Owner</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="account : ${accountData}">
+                            <td><a th:text="${account.getAccountName()}"
+                                   th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
+                            <td th:text="${account.getPhone()}"></td>
+                            <td th:text="${account.getWebsite()}"></td>
+                            <td th:text="${account.getOwner()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
