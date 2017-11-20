@@ -9,6 +9,7 @@ import lombok.*;
 import com.cylinder.shared.model.SimpleAudit;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
+import javax.validation.Valid;
 
 /**
 * @author Ryan Piper
@@ -180,6 +181,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="mailing_address_id", referencedColumnName="address_id")
     private Address mailingAddress;
@@ -192,6 +194,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="other_address_id", referencedColumnName="address_id")
     private Address otherAddress;
@@ -204,6 +207,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="primary_email_id", referencedColumnName="email_id")
     private Email  primaryEmail;
@@ -216,6 +220,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="secondary_email_id", referencedColumnName="email_id")
     private Email  secondaryEmail;
