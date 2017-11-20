@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 @Entity
@@ -21,7 +22,7 @@ public class Account extends SimpleAudit {
     @Getter
     @Setter
     @Column(name = "name")
-    @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid account name.")
+    @Pattern(regexp = "([a-zA-Z]{1,250})", message = "Please enter a valid account name.")
     @NotNull(message = "Please enter a name")
     private String accountName;
 
@@ -34,16 +35,19 @@ public class Account extends SimpleAudit {
 
     @Getter
     @Setter
+    @Pattern(regexp = "[0-9\\+\\-]{1,20}", message = "Please provide a valid phone number.")
     @Column(name = "phone")
     private String phone;
 
     @Getter
     @Setter
+    @Pattern(regexp = "[0-9\\+\\-]{1,20}", message = "Please provide a valid phone number.")
     @Column(name = "other_phone")
     private String otherPhone;
 
     @Getter
     @Setter
+    @Pattern(regexp = "[0-9\\+\\-]{1,20}", message = "Please provide a valid phone number.")
     @Column(name = "fax")
     private String fax;
 
@@ -77,12 +81,14 @@ public class Account extends SimpleAudit {
 
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id", referencedColumnName = "address_id")
     private Address billingAddress;
 
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_address_id", referencedColumnName = "address_id")
     private Address shippingAddress;
@@ -95,15 +101,18 @@ public class Account extends SimpleAudit {
 
     @Getter
     @Setter
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="primary_email_id", referencedColumnName="email_id")
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "primary_email_id", referencedColumnName = "email_id")
     private Email primaryEmail;
 
     @Getter
     @Setter
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="secondary_email_id", referencedColumnName="email_id")
-    private Email  secondaryEmail;
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "secondary_email_id", referencedColumnName = "email_id")
+    private Email secondaryEmail;
 
-    public Account() {}
+    public Account() {
+    }
 }
