@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.*;
 import com.cylinder.shared.model.SimpleAudit;
+import javax.validation.Valid;
 
 @Entity
 @Table(name="details", schema="lead")
@@ -124,6 +125,7 @@ public class Lead extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="address_id")
     protected Address address;
@@ -148,6 +150,7 @@ public class Lead extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="primary_email_id", referencedColumnName="email_id")
     protected Email  primaryEmail;
@@ -160,6 +163,7 @@ public class Lead extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Valid
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="secondary_email_id", referencedColumnName="email_id")
     protected Email  secondaryEmail;
