@@ -40,9 +40,10 @@
                                    th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
                             <td th:text="${account.getPhone() != null}?${account.getPhone()}:${''}"></td>
                             <td th:text="${account.getWebsite() != null}?${account.getWebsite()}:${''}"></td>
-                            <td th:text="${account.getOwner() != null}?${account.getOwner().getName()}:${''}"></td>
+                            <td th:text="${account.getOwner()?.getName() != null}?${account.getOwner().getName()}:${''}"></td>
                             <td>
-                                <a class="edit-link icon-spacer" th:href="@{|/account/edit/${account.getAccountId()}|}"
+                                <a class="edit-link icon-spacer"
+                                   th:href="@{|/account/edit/${account.getAccountId()}|}"
                                    title="Edit">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
