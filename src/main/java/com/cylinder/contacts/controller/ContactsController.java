@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import java.text.SimpleDateFormat;
-import java.sql.Date; 
+import java.sql.Date;
 
 /**
 * @author Ryan Piper
-* @author Justin
 *
 */
 @Controller
@@ -51,6 +50,7 @@ public class ContactsController extends BaseController {
     * @param model the view model object that is used to render the html.
     * @param auth the authentication context that manages which users are logged in.
     * @return the name of the template to render.
+    * @author Justin
     */
     @GetMapping
     public String list(Model model, Authentication auth) {
