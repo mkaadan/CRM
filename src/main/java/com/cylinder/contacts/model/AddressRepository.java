@@ -2,5 +2,9 @@ package com.cylinder.contacts.model;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface AddressRepository extends CrudRepository<Contact, Long> {
+/**
+* @author Ryan Piper
+* Sql interface the contact's address information. 
+*/
+public interface AddressRepository extends CrudRepository<Address, Long> {
 }
