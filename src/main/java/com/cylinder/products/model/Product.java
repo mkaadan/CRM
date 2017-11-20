@@ -1,209 +1,109 @@
-package com.cylinder.product.model ;
+package com.cylinder.products.model ;
 
 import javax.persistence.*;
+import lombok.*;
+import com.cylinder.shared.model.SimpleAudit;
+import java.sql.Date;
+import javax.validation.constraints.*;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import java.text.SimpleDateFormat;
+
 
 
 @Entity
 @Table(name="details", schema="product")
-public class Product {
+public class Product extends SimpleAudit {
 
+  @Getter
+  @Setter
   @Id
   @Column(name="product_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   protected Long productId;
+
+  @Getter
+  @Setter
   @Column(name="code")
+  @Pattern(regexp="([a-zA-Z0-9]{1,250})", message="Please enter a valid code.")
   protected String code;
+
+  @Getter
+  @Setter
   @Column(name="name")
+  @Pattern(regexp="(.{1,250})", message="Please enter a valid name.")
   protected String name;
+
+  @Getter
+  @Setter
   @Column(name="is_active")
-  protected boolean isActive;
+  protected Boolean isActive;
+
+  @Getter
+  @Setter
   @Column(name="category")
+  @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid category.")
   protected String category;
+
+  @Getter
+  @Setter
   @Column(name="sales_start")
-  protected String salesStart;
+  protected Date salesStart;
+
+  @Getter
+  @Setter
   @Column(name="sales_end")
-  protected String salesEnd;
+  protected Date salesEnd;
+
+  @Getter
+  @Setter
   @Column(name="support_start")
-  protected String supportStart;
+  protected Date supportStart;
+
+  @Getter
+  @Setter
   @Column(name="support_end")
-  protected String supportEnd;
+  protected Date supportEnd;
+
+  @Getter
+  @Setter
   @Column(name="unit_price")
-  protected int unitPrice;
+  protected Integer unitPrice;
+
+  @Getter
+  @Setter
   @Column(name="taxable")
-  protected boolean taxable;
+  protected Boolean taxable;
+
+  @Getter
+  @Setter
   @Column(name="commission_rate_percent")
-  protected int commissionRatePercent;
+  protected Integer commissionRatePercent;
+
+  @Getter
+  @Setter
   @Column(name="qty_in_stock")
+  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
   protected String qtyInStock;
+
+  @Getter
+  @Setter
   @Column(name="qty_in_order")
+  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
   protected String qtyInOrder;
+
+  @Getter
+  @Setter
   @Column(name="qty_in_demand")
+  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
   protected String qtyInDemand;
+
+  @Getter
+  @Setter
   @Column(name="description")
   protected String description;
-  @Column(name="created")
-  protected String created;
-  @Column(name="last_modified")
-  protected String lastModified;
-  @Column(name="last_modified_by_id")
-  protected String lastModifiedById;
+
 
   public Product(){}
 
-  public Long getproductId() {
-      return this.productId;
-  }
-
-  public String getCode() {
-      return this.code;
-  }
-
-  public String getName() {
-      return this.name;
-  }
-
-  public boolean getIsActive() {
-      return this.isActive;
-  }
-
-  public String getCategory() {
-      return this.category;
-  }
-
-  public String getSalesStart() {
-      return this.salesStart;
-  }
-
-  public String getSalesEnd() {
-      return this.salesEnd;
-  }
-
-  public String getSupportStart() {
-      return this.supportStart;
-  }
-
-  public String getSupportEnd() {
-      return this.supportEnd;
-  }
-
-  public int getUnitPrice() {
-      return this.unitPrice;
-  }
-
-  public boolean getTaxable() {
-      return this.taxable;
-  }
-
-  public int getCommissionRatePercent() {
-      return this.commissionRatePercent;
-  }
-
-  public String getQtyInStock() {
-      return this.qtyInStock;
-  }
-
-  public String getQtyInOrder() {
-      return this.qtyInOrder;
-  }
-
-  public String getQtyInDemand() {
-      return this.qtyInDemand;
-  }
-
-  public String getDescription() {
-      return this.description;
-  }
-
-  public String getCreated() {
-      return this.created;
-  }
-
-  public String getLastModified() {
-      return this.lastModified;
-  }
-
-  public String getLastModifiedById() {
-      return this.lastModifiedById;
-  }
-
-  public void setproductId(Long productId) {
-       this.productId = productId;
-  }
-
-  public void setCode(String code) {
-       this.code = code ;
-  }
-
-  public void setName(String name) {
-       this.name = name;
-  }
-
-  public void setIsActive(boolean isActive) {
-       this.isActive = isActive;
-  }
-
-  public void setCategory(String category) {
-       this.category = category;
-  }
-
-  public void setSalesStart(String salesStart) {
-       this.salesStart = salesStart;
-  }
-
-  public void setSalesEnd(String salesEnd) {
-       this.salesEnd = salesEnd;
-  }
-
-  public void setSupportStart(String supportStart) {
-       this.supportStart = supportStart;
-  }
-
-  public void setSupportEnd(String supportEnd) {
-       this.supportEnd = supportEnd;
-  }
-
-  public void setUnitPrice(int unitPrice){
-      this.unitPrice = unitPrice ;
-  }
-
-  public void setTaxable(boolean taxable) {
-       this.taxable = taxable;
-  }
-
-  public void setCommissionRatePercent(int commissionRatePercent) {
-       this.commissionRatePercent = commissionRatePercent;
-  }
-
-  public void setQtyInStock(String qtyInStock) {
-       this.qtyInStock = qtyInStock;
-  }
-
-  public void setQtyInOrder(String qtyInOrder) {
-       this.qtyInOrder = qtyInOrder;
-  }
-
-  public void setQtyInDemand(String qtyinDemand) {
-       this.qtyInDemand = qtyinDemand;
-  }
-
-  public void setDescription(String description) {
-       this.description = description;
-  }
-
-  public void setCreated(String created) {
-       this.created = created;
-  }
-
-  public void setLastModified(String lastModified) {
-       this.lastModified = lastModified;
-  }
-
-  public void setLastModifiedById(String lastModifiedById) {
-       this.lastModifiedById = lastModifiedById;
-  }
-
-  @Override
-  public String toString() {
-    return this.name;
-  }
 
 }

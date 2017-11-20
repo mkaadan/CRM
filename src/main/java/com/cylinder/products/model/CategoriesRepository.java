@@ -1,4 +1,4 @@
-package com.cylinder.product.model;
+package com.cylinder.products.model;
 
 import java.util.List;
 
