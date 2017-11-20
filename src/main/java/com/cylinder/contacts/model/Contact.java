@@ -101,6 +101,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Pattern(regexp="[0-9\\+\\-]{1,20}", message="Please provide a valid phone number.")
     @Column
     private String phone;
 
@@ -112,6 +113,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Pattern(regexp="[0-9\\+\\-]{1,20}", message="Please provide a valid phone number.")
     @Column(name="other_phone")
     private String otherPhone;
 
@@ -124,6 +126,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Pattern(regexp="[0-9\\+\\-]{1,20}", message="Please provide a valid phone number.")
     @Column
     private String mobile;
 
@@ -135,6 +138,7 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
+    @Pattern(regexp="[0-9\\+\\-]{1,20}", message="Please provide a valid fax number.")
     @Column
     private String fax;
 
