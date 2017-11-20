@@ -1,0 +1,257 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/accounts/single.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="scripts">
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/contacts/edit.js}"></script>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="row pull-right">
+              <a  class="btn btn-primary"
+                  role="button"
+                  th:href="@{|/contact/edit/${contactData.getContactId()}|}">Edit
+              </a>
+              <button id="deleteRecord"
+                      th:attr="data-id=${contactData.getContactId()}"
+                      class="btn btn-primary">Delete
+              </button>
+            </div>
+            <div class="single-space row"></div>
+            <div class="row single-view">
+                <h3> Basic Information </h3>
+                <div class="col-md-12">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-2">Contact Owner: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getOwner()?.getName()}">
+                      </dd>
+                      <dt class="col-md-2">First Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getFirstName() != null}
+                                      ? ${contactData.getFirstName()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Last Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getLastName() != null}
+                                    ? ${contactData.getLastName()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Birthday: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getDateOfBirth() != null}
+                                    ? ${contactData.getDateOfBirth()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Title: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getTitle() != null}
+                                    ? ${contactData.getTitle()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Department: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getDepartment() != null}
+                                    ? ${contactData.getDepartment()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Works For: </dt>
+                      <dd class="col-md-2">
+                        <a th:if="${contactData.getAccount() != null}"
+                           th:href="@{|/account/records/${contactData.getAccount().getAccountId()}|}"
+                           th:text="${contactData.getAccount().getAccountName()}"></a>
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3> Phone Information </h3>
+                <div class="col-md-12">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Phone: </dt>
+                    <dd class="col-md-2"
+                        th:text="${contactData.getPhone() != null}
+                                  ? ${contactData.getPhone()} : ''" >
+                    </dd>
+                    <dt class="col-md-2">Alternative Phone Number: </dt>
+                    <dd class="col-md-2"
+                        th:text="${contactData.getOtherPhone() != null}
+                                  ? ${contactData.getOtherPhone()} : ''" >
+                    </dd>
+                    <dt class="col-md-2">Mobile: </dt>
+                    <dd class="col-md-2"
+                        th:text="${contactData.getMobile() != null}
+                                  ? ${contactData.getMobile()} : ''">
+                    </dd>
+                    <dt class="col-md-2">Fax: </dt>
+                    <dd class="col-md-2"
+                        th:text="${contactData.getFax() != null}
+                                  ? ${contactData.getFax()} : ''">
+                    </dd>
+                  </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers">Email Information</h3>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Primary Email: </dt>
+                    <dd>
+                        <a th:if="${contactData.getPrimaryEmail()?.getEmail()}"
+                           th:text="${contactData.getPrimaryEmail()?.getEmail()}"
+                           th:href="'mailto:' + ${contactData.getPrimaryEmail()?.getEmail()}">
+                        </a>
+                    </dd>
+                    <dt class="col-md-2">Secondary Email: </dt>
+                    <dd>
+                        <a th:if="${contactData.getSecondaryEmail()?.getEmail()}"
+                           th:text="${contactData.getSecondaryEmail()?.getEmail()}"
+                           th:href="'mailto:' + ${contactData.getSecondaryEmail()?.getEmail()}">
+                        </a>
+                    </dd>
+                  </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers">Related Contacts</h3>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Reports To: </dt>
+                    <dd>
+                        <a th:if="${contactData.getReportsTo()?.getFullName()}"
+                           th:text="${contactData.getReportsTo()?.getFullName()}"
+                           th:href="@{|/contact/records/${contactData.getReportsTo()?.getContactId()}|}">
+                        </a>
+                    </dd>
+                    <dt class="col-md-2">Assistant: </dt>
+                    <dd>
+                        <a th:if="${contactData.getAssistant()?.getFullName()}"
+                           th:text="${contactData.getAssistant()?.getFullName()}"
+                           th:href="@{|/contact/records/${contactData.getAssistant()?.getContactId()}|}">
+                        </a>
+                    </dd>
+                  </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers"> Mailing Address Information </h3>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-1">Apartment Number: </dt>
+                      <dd class="col-md-1"
+                          th:text="${contactData.getMailingAddress()?.getApartmentNumber() != null}
+                                    ? ${contactData.getMailingAddress().getApartmentNumber()} : ''">
+                      </dd>
+                      <dt class="col-md-1">Street Address: </dt>
+                      <dd class="col-md-1"
+                          th:text="${contactData.getMailingAddress()?.getStreetAddress() != null}
+                                    ? ${contactData.getMailingAddress().getStreetAddress()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt>City: </dt>
+                    <dd th:text="${contactData.getMailingAddress()?.getCity() != null}
+                                  ? ${contactData.getMailingAddress().getCity()} : ''">
+                    </dd>
+                    <dt>State/Province: </dt>
+                    <dd th:text="${contactData.getMailingAddress()?.getStateProv() != null}
+                                  ? ${contactData.getMailingAddress().getStateProv()} : ''">
+                    </dd>
+                    <dt>Country: </dt>
+                    <dd th:text="${contactData.getMailingAddress()?.getCountry() != null}
+                                  ? ${contactData.getMailingAddress().getCountry()} : ''">
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt>Zip/Postal Code: </dt>
+                      <dd th:text="${contactData.getMailingAddress()?.getZipPostal() != null}
+                                    ? ${contactData.getMailingAddress().getZipPostal()} : ''">
+                      </dd>
+                      <dt>P.O. Box: </dt>
+                      <dd th:text="${contactData.getMailingAddress()?.getPoBox() != null}
+                                    ? ${contactData.getMailingAddress().getPoBox()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row single-view" th:if="${contactData.getOtherAddress() != null}">
+                <h3 class="section-headers">Other Address Information </h3>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-1">Apartment Number: </dt>
+                      <dd class="col-md-1"
+                          th:text="${contactData.getOtherAddress()?.getApartmentNumber() != null}
+                                    ? ${contactData.getOtherAddress().getApartmentNumber()} : ''">
+                      </dd>
+                      <dt class="col-md-1">Street Address: </dt>
+                      <dd class="col-md-1"
+                          th:text="${contactData.getOtherAddress()?.getStreetAddress() != null}
+                                    ? ${contactData.getOtherAddress().getStreetAddress()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt>City: </dt>
+                    <dd th:text="${contactData.getOtherAddress()?.getCity() != null}
+                                  ? ${contactData.getOtherAddress().getCity()} : ''">
+                    </dd>
+                    <dt>State/Province: </dt>
+                    <dd th:text="${contactData.getOtherAddress()?.getStateProv() != null}
+                                  ? ${contactData.getOtherAddress().getStateProv()} : ''">
+                    </dd>
+                    <dt>Country: </dt>
+                    <dd th:text="${contactData.getOtherAddress()?.getCountry() != null}
+                                  ? ${contactData.getOtherAddress().getCountry()} : ''">
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt>Zip/Postal Code: </dt>
+                      <dd th:text="${contactData.getOtherAddress()?.getZipPostal() != null}
+                                    ? ${contactData.getOtherAddress().getZipPostal()} : ''">
+                      </dd>
+                      <dt>P.O. Box: </dt>
+                      <dd th:text="${contactData.getOtherAddress()?.getPoBox() != null}
+                                    ? ${contactData.getOtherAddress().getPoBox()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt class="col-md-4">Created By:</dt>
+                      <dd th:text="${contactData.getCreatedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt class="col-md-4">Created: </dt>
+                      <dd th:text="${contactData.getCreated()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${contactData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${contactData.getLastModifiedBy() != null}"
+                          th:text="${contactData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${contactData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${contactData.getLastModifiedBy() != null}"
+                          th:text="${contactData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>
