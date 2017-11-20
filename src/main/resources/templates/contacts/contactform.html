@@ -1,0 +1,495 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+          </div>
+          <div class="single-space"></div>
+          <form  class="row" th:object="${contactData}" th:action="@{|/contact/${action}|}" method="post">
+            <div class="col-lg-12">
+              <div class = "row">
+                 <div class="col-lg-12 title-gap">
+                   <h3>Basic Information </h3>
+                 </div>
+               </div>
+              <div class="form-group row">
+                 <label for="source" class="col-lg-2 col-form-label">Contact Owner: </label>
+                 <div class="col-lg-6">
+                   <select class="form-control" name="source" th:field="*{owner}">
+                     <option th:each="user : ${userData}"
+                             th:value="${user.getAccountId()}"
+                             th:text="${user.getName()}">
+                     </option>
+                   </select>
+                 </div>
+              </div>
+              <div class="form-group row">
+                <label for="firstName" class="col-lg-2 col-form-label">First Name: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="firstName"
+                           th:field="*{firstName}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('firstName')}"
+                          th:errors="*{firstName}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="lastName" class="col-lg-2 col-form-label">Last Name: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('lastName')?'has-error':''}">
+                    <input class="form-control"
+                           type="text"
+                           name="lastName"
+                           th:field="*{lastName}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('lastName')}"
+                          th:errors="*{lastName}">...
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="dateOfBirth" class="col-lg-2 col-form-label">Birthday: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('dateOfBirth')?'has-error':''}">
+                    <input class="form-control"
+                           type="date"
+                           name="dateOfBirth"
+                           th:field="*{dateOfBirth}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('dateOfBirth')}"
+                          th:errors="*{dateOfBirth}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="title" class="col-lg-2 col-form-label">Title: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('title')?'has-error':''}">
+                    <input class="form-control"
+                           type="text"
+                           name="title"
+                           th:field="*{title}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('title')}"
+                          th:errors="*{title}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="skype" class="col-lg-2 col-form-label">Skype: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('skype')?'has-error':''}">
+                    <input class="form-control"
+                           type="skype"
+                           name="skype"
+                           th:field="*{skype}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('skype')}"
+                          th:errors="*{skype}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="skype" class="col-lg-2 col-form-label">Twitter: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('twitter')?'has-error':''}">
+                    <input class="form-control"
+                           type="twitter"
+                           name="twitter"
+                           th:field="*{twitter}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('twitter')}"
+                          th:errors="*{twitter}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="department" class="col-lg-2 col-form-label">Department: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('department')?'has-error':''}">
+                    <input class="form-control"
+                           type="text"
+                           name="department"
+                           th:field="*{department}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('department')}"
+                          th:errors="*{department}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="phone" class="col-lg-2 col-form-label">Phone: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('phone')?'has-error':''}">
+                    <input class="form-control"
+                           type="tel"
+                           name="phone"
+                           th:field="*{phone}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('phone')}"
+                          th:errors="*{phone}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="otherPhone" class="col-lg-2 col-form-label">Other Phone: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherPhone')?'has-error':''}">
+                    <input class="form-control"
+                           type="tel"
+                           name="otherPhone"
+                           th:field="*{otherPhone}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('otherPhone')}"
+                          th:errors="*{otherPhone}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="mobile" class="col-lg-2 col-form-label">Mobile: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('mobile')?'has-error':''}">
+                    <input class="form-control"
+                           type="tel"
+                           name="mobile"
+                           th:field="*{mobile}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('mobile')}"
+                          th:errors="*{mobile}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="fax" class="col-lg-2 col-form-label">Fax: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('fax')?'has-error':''}">
+                    <input class="form-control"
+                           type="tel"
+                           name="fax"
+                           th:field="*{fax}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('fax')}"
+                          th:errors="*{fax}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="account" class="col-lg-2 col-form-label">Works For: </label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="status" th:field="*{account}">
+                    <option th:value="null">Not Known</option>
+                    <option th:each="account : ${accountData}"
+                            th:value="${account.getAccountId()}"
+                            th:text="${account.getAccountName()}"></option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="source" class="col-lg-2 col-form-label">Reports To: </label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="source" th:field="*{reportsTo}">
+                    <option th:value="null">No One</option>
+                    <option th:each="contact : ${otherContactData}"
+                            th:value="${contact.getContactId()}"
+                            th:text="${contact.getFullName()}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="source" class="col-lg-2 col-form-label">Assistant: </label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="source" th:field="*{assistant}">
+                    <option th:value="null">No one</option>
+                    <option th:each="contact : ${otherContactData}"
+                            th:value="${contact.getContactId()}"
+                            th:text="${contact.getFullName()}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12 title-gap">
+                        <h3> Email </h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="primaryEmail" class="col-lg-2 col-form-label"> Primary Email: </label>
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('primaryEmail')}?'has-error':''">
+                          <input class="form-control"
+                                 type="email"
+                                 name="primaryEmail"
+                                 th:field="*{primaryEmail.email}">
+                          </input>
+                          <span class="help-block"
+                                th:if="${#fields.hasErrors('primaryEmail.email')}"
+                                th:errors="*{primaryEmail.email}">
+                          </span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="secondaryEmail" class="col-lg-2 col-form-label"> Secondary Email: </label>
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('secondaryEmail')}?'has-error':''">
+                          <input class="form-control"
+                                 type="email"
+                                 name="secondaryEmail"
+                                 th:field="*{secondaryEmail.email}">
+                          </input>
+                          <span class="help-block"
+                                th:if="${#fields.hasErrors('secondaryEmail.email')}"
+                                th:errors="*{secondaryEmail.email}">
+                          </span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+              <div class="form-group row">
+                <div class="col-lg-12">
+                 <div class = "row">
+                  <div class="col-lg-12 title-gap">
+                    <h3> Mailing Address </h3>
+                  </div>
+                </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.apartmentNumber"
+                          class="col-lg-2 col-form-label">Apartment Number: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.apartmentNumber')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.apartmentNumber"
+                              th:field="*{mailingAddress.apartmentNumber}">
+                        </input>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('mailingAddress.apartmentNumber')}"
+                              th:errors="*{mailingAddress.apartmentNumber}">
+                        </span>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.streetAddress"
+                          class="col-lg-2 col-form-label">Street: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.streetAddress')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.streetAddress"
+                              th:field="*{mailingAddress.streetAddress}">
+                       </input>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('mailingAddress.streetAddress')}"
+                             th:errors="*{mailingAddress.streetAddress}">
+                       </span>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.city" class="col-lg-2 col-form-label">City: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.city')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.city"
+                              th:field="*{mailingAddress.city}">
+                       </input>
+                       <span class="label label-danger"
+                             th:if="${#fields.hasErrors('mailingAddress.city')}"
+                             th:errors="*{mailingAddress.city}">
+                       </span>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.stateProv" class="col-lg-2 col-form-label">Province/State: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.stateProv')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.stateProv"
+                              th:field="*{mailingAddress.stateProv}">
+                        </input>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('mailingAddress.stateProv')}"
+                              th:errors="*{mailingAddress.stateProv}">
+                        </span>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.country" class="col-lg-2 col-form-label">Country: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.country')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.country"
+                              th:field="*{mailingAddress.country}">
+                        </input>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('mailingAddress.country')}"
+                              th:errors="*{mailingAddress.country}">
+                        </span>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="mailingAddress.zipPostal"
+                          class="col-lg-2 col-form-label">Zip/Postal: </label>
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('mailingAddress.zipPostal')}?'has-error':''">
+                       <input class="form-control"
+                              type="text"
+                              name="mailingAddress.zipPostal"
+                              th:field="*{mailingAddress.zipPostal}">
+                       </input>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('mailingAddress.zipPostal')}"
+                             th:errors="*{mailingAddress.zipPostal}">
+                       </span>
+                   </div>
+                 </div>
+              </div>
+             </div>
+             <div class="form-group row">
+               <div class="col-lg-12">
+                <div class = "row">
+                  <div class="col-lg-12 title-gap">
+                   <h3>Other Address </h3>
+                 </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.apartmentNumber"
+                         class="col-lg-2 col-form-label">Apartment Number: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.apartmentNumber')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.apartmentNumber"
+                             th:field="*{otherAddress.apartmentNumber}">
+                       </input>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('otherAddress.apartmentNumber')}"
+                             th:errors="*{otherAddress.apartmentNumber}">
+                       </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.streetAddress"
+                         class="col-lg-2 col-form-label">Street: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.streetAddress')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.streetAddress"
+                             th:field="*{otherAddress.streetAddress}">
+                      </input>
+                      <span class="label label-danger"
+                            th:if="${#fields.hasErrors('otherAddress.streetAddress')}"
+                            th:errors="*{otherAddress.streetAddress}">
+                      </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.city" class="col-lg-2 col-form-label">City: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.city')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.city"
+                             th:field="*{otherAddress.city}">
+                      </input>
+                      <span class="label label-danger"
+                            th:if="${#fields.hasErrors('otherAddress.city')}"
+                            th:errors="*{otherAddress.city}">
+                      </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.stateProv" class="col-lg-2 col-form-label">Province/State: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.stateProv')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.stateProv"
+                             th:field="*{otherAddress.stateProv}">
+                       </input>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('otherAddress.stateProv')}"
+                             th:errors="*{otherAddress.stateProv}">
+                       </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.country" class="col-lg-2 col-form-label">Country: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.country')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.country"
+                             th:field="*{otherAddress.country}">
+                       </input>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('otherAddress.country')}"
+                             th:errors="*{otherAddress.country}">
+                       </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="otherAddress.zipPostal"
+                         class="col-lg-2 col-form-label">Zip/Postal: </label>
+                  <div class="col-lg-6" th:classappend="${#fields.hasErrors('otherAddress.zipPostal')}?'has-error':''">
+                      <input class="form-control"
+                             type="text"
+                             name="otherAddress.zipPostal"
+                             th:field="*{otherAddress.zipPostal}">
+                      </input>
+                      <span class="help-block"
+                            th:if="${#fields.hasErrors('otherAddress.zipPostal')}"
+                            th:errors="*{otherAddress.zipPostal}">
+                      </span>
+                  </div>
+                </div>
+               </div>
+            </div>
+              <div class="row">
+              <div class="col-lg-7"></div>
+              <input type="hidden"
+                       name="contactId"
+                       th:if="${contactData.getContactId() != null}"
+                       th:field="*{contactId}">
+              </input>
+              <input type="hidden"
+                     name="mailingAddress.addressId"
+                     th:if="${contactData.getOtherAddress()?.getAddressId() != null}"
+                     th:field="*{mailingAddress.addressId}">
+               </input>
+               <input type="hidden"
+                      name="otherAddress.addressId"
+                      th:if="${contactData.getOtherAddress()?.getAddressId() != null}"
+                      th:field="*{otherAddress.addressId}">
+                </input>
+               <input type="hidden"
+                      name="primaryEmailId"
+                      th:if="${contactData.getPrimaryEmail()?.getEmailId() != null}"
+                      th:field="*{primaryEmail.emailId}">
+                </input>
+                <input type="hidden"
+                       name="secondaryEmailId"
+                       th:if="${contactData.getSecondaryEmail()?.getEmailId() != null}"
+                       th:field="*{secondaryEmail.emailId}">
+                 </input>
+                 <input type="hidden"
+                        name="accountId"
+                        th:if="${contactData.getAccount()?.getAccountId() != null}"
+                        th:field="*{account.accountId}">
+                  </input>
+                  <input type="hidden"
+                         name="reportToId"
+                         th:if="${contactData.getReportsTo()?.getContactId() != null}"
+                         th:field="*{reportsTo.contactId}">
+                   </input>
+                   <input type="hidden"
+                          name="assistantId"
+                          th:if="${contactData.getAssistant()?.getContactId() != null}"
+                          th:field="*{assistant.contactId}">
+                    </input>
+              <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </th:block>
+</html>
