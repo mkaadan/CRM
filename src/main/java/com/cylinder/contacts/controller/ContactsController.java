@@ -22,6 +22,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.security.core.Authentication;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import java.text.SimpleDateFormat;
+import java.sql.Date; 
 
 /**
 * @author Ryan Piper
@@ -189,5 +192,17 @@ public class ContactsController extends BaseController {
       }
       model.addAttribute("userData", userRepository.findAll());
       model.addAttribute("toList", "/contact/");
+    }
+
+    /**
+    * Maps empty string to null when a form is submitted.
+    * @param binder The object that allows for empty strings to be turned into nulls.
+    */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      dateFormat.setLenient(false);
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+      binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 }
