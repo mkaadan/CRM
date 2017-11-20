@@ -27,119 +27,105 @@
               </div>
               <div class="form-group row">
                 <label for="firstName" class="col-lg-2 col-form-label">First Name: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error':''">
                     <input class="form-control"
                            type="text"
                            name="firstName"
                            th:field="*{firstName}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('firstName')}"
-                        th:errors="*{firstName}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('firstName')}"
+                          th:errors="*{firstName}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="lastName" class="col-lg-2 col-form-label">Last Name: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('lastName')}?'has-error':''">
                     <input class="form-control"
                            type="text"
                            name="lastName"
                            th:field="*{lastName}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('lastName')}"
-                        th:errors="*{lastName}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('lastName')}"
+                          th:errors="*{lastName}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="phone" class="col-lg-2 col-form-label">Phone: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('phone')}?'has-error':''">
                     <input class="form-control"
                            type="tel"
                            name="phone"
                            th:field="*{phone}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('phone')}"
-                        th:errors="*{phone}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('phone')}"
+                          th:errors="*{phone}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="mobile" class="col-lg-2 col-form-label">Mobile: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('mobile')}?'has-error':''">
                     <input class="form-control"
                            type="tel"
                            name="mobile"
                            th:field="*{mobile}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('mobile')}"
-                        th:errors="*{mobile}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('mobile')}"
+                          th:errors="*{mobile}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="companyName" class="col-lg-2 col-form-label">Company Name: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('companyName')}?'has-error':''">
                     <input class="form-control"
                            type="text"
                            name="companyName"
                            th:field="*{companyName}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('companyName')}"
-                        th:errors="*{companyName}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('companyName')}"
+                          th:errors="*{companyName}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="title" class="col-lg-2 col-form-label">Title: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('title')}?'has-error':''">
                     <input class="form-control"
                            type="text"
                            name="title"
                            th:field="*{title}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('title')}"
-                        th:errors="*{title}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('title')}"
+                          th:errors="*{title}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="twitter" class="col-lg-2 col-form-label">Twitter: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('twitter')}?'has-error':''">
                     <input class="form-control"
                            type="text"
                            name="twitter"
                            th:field="*{twitter}">
                     </input>
-                </div>
-                <div class="col-lg-4">
-                  <span class="label label-danger"
-                        th:if="${#fields.hasErrors('twitter')}"
-                        th:errors="*{twitter}">
-                  </span>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('twitter')}"
+                          th:errors="*{twitter}">
+                    </span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="status" class="col-lg-2 col-form-label">Lead Status: </label>
-                <div class="col-lg-6">
+                <div class="col-lg-6" >
                   <select class="form-control" name="status" th:field="*{status}">
                     <option th:each="status : ${leadStatus}"
                             th:value="${status.getStatusId()}"
@@ -167,31 +153,27 @@
                     </div>
                     <div class="form-group row">
                         <label for="primaryEmail" class="col-lg-2 col-form-label"> Primary Email: </label>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('primaryEmail')}?'has-error':''">
                           <input class="form-control"
                                  type="email"
                                  name="primaryEmail"
                                  th:field="*{primaryEmail.email}">
                           </input>
-                        </div>
-                        <div class="col-lg-4">
-                          <span class="label label-danger"
+                          <span class="help-block"
                                 th:if="${#fields.hasErrors('primaryEmail.email')}"
                                 th:errors="*{primaryEmail.email}">
                           </span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="secondaryEmail" class="col-lg-2 col-form-label"> Secondary Email: </label>
-                        <div class="col-lg-6">
+                        <label for="secondaryEmail" class="col-lg-2 col-form-label">Secondary Email: </label>
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('mobile')}?'has-error':''">
                           <input class="form-control"
                                  type="email"
                                  name="secondaryEmail"
                                  th:field="*{secondaryEmail.email}">
                           </input>
-                        </div>
-                        <div class="col-lg-4">
-                          <span class="label label-danger"
+                          <span class="help-block"
                                 th:if="${#fields.hasErrors('secondaryEmail.email')}"
                                 th:errors="*{secondaryEmail.email}">
                           </span>
@@ -208,114 +190,100 @@
                 </div>
                  <div class="form-group row">
                    <label for="apartmentNumber" class="col-lg-2 col-form-label">Apartment Number: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.apartmentNumber')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="apartmentNumber"
                               th:field="*{address.apartmentNumber}">
                         </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.apartmentNumber')}"
-                           th:errors="*{address.apartmentNumber}">
-                     </span>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('address.apartmentNumber')}"
+                              th:errors="*{address.apartmentNumber}">
+                        </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="streetAddress" class="col-lg-2 col-form-label">Street: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.streetAddress')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="streetAddress"
                               th:field="*{address.streetAddress}">
                        </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.streetAddress')}"
-                           th:errors="*{address.streetAddress}">
-                     </span>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('address.streetAddress')}"
+                             th:errors="*{address.streetAddress}">
+                       </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="city" class="col-lg-2 col-form-label">City: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.city')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="city"
                               th:field="*{address.city}">
                        </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.city')}"
-                           th:errors="*{address.city}">
-                     </span>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('address.city')}"
+                             th:errors="*{address.city}">
+                       </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="stateProv" class="col-lg-2 col-form-label">Province/State: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.stateProv')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="stateProv"
                               th:field="*{address.stateProv}">
                         </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.stateProv')}"
-                           th:errors="*{address.stateProv}">
-                     </span>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('address.stateProv')}"
+                              th:errors="*{address.stateProv}">
+                        </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="country" class="col-lg-2 col-form-label">Country: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.country')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="country"
                               th:field="*{address.country}">
                         </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.country')}"
-                           th:errors="*{address.country}">
-                     </span>
+                        <span class="help-block"
+                              th:if="${#fields.hasErrors('address.country')}"
+                              th:errors="*{address.country}">
+                        </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="zipPostal" class="col-lg-2 col-form-label">Zip/Postal: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.zipPostal')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="zipPostal"
                               th:field="*{address.zipPostal}">
                        </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.zipPostal')}"
-                           th:errors="*{address.zipPostal}">
-                     </span>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('address.zipPostal')}"
+                             th:errors="*{address.zipPostal}">
+                       </span>
                    </div>
                  </div>
                  <div class="form-group row">
                    <label for="poBox" class="col-lg-2 col-form-label">Po Box: </label>
-                   <div class="col-lg-6">
+                   <div class="col-lg-6" th:classappend="${#fields.hasErrors('address.poBox')}?'has-error':''">
                        <input class="form-control"
                               type="text"
                               name="poBox"
                               th:field="*{address.poBox}">
                        </input>
-                   </div>
-                   <div class="col-lg-4">
-                     <span class="label label-danger"
-                           th:if="${#fields.hasErrors('address.poBox')}"
-                           th:errors="*{address.poBox}">
-                     </span>
+                       <span class="help-block"
+                             th:if="${#fields.hasErrors('address.poBox')}"
+                             th:errors="*{address.poBox}">
+                       </span>
                    </div>
                  </div>
                  <input type="hidden"
