@@ -56,6 +56,16 @@
                           th:text="${contactData.getDepartment() != null}
                                     ? ${contactData.getDepartment()} : ''">
                       </dd>
+                      <dt class="col-md-2">Twitter: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getTwitter() != null}
+                                    ? ${contactData.getTwitter()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Skype: </dt>
+                      <dd class="col-md-2"
+                          th:text="${contactData.getSkype() != null}
+                                    ? ${contactData.getSkype()} : ''">
+                      </dd>
                       <dt class="col-md-2">Works For: </dt>
                       <dd class="col-md-2">
                         <a th:if="${contactData.getAccount() != null}"
