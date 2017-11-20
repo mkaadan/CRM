@@ -173,7 +173,7 @@
                 <label for="account" class="col-lg-2 col-form-label">Works For: </label>
                 <div class="col-lg-6">
                   <select class="form-control" name="status" th:field="*{account}">
-                    <option th:value="null" th:text="Not Known"></option>
+                    <option th:value="null">Not Known</option>
                     <option th:each="account : ${accountData}"
                             th:value="${account.getAccountId()}"
                             th:text="${account.getAccountName()}"></option>
@@ -184,10 +184,10 @@
                 <label for="source" class="col-lg-2 col-form-label">Reports To: </label>
                 <div class="col-lg-6">
                   <select class="form-control" name="source" th:field="*{reportsTo}">
-                    <option th:value="null" th:text="No one"></option>
+                    <option th:value="null">No One</option>
                     <option th:each="contact : ${otherContactData}"
                             th:value="${contact.getContactId()}"
-                            th:text="${source.getFullName()}">
+                            th:text="${contact.getFullName()}">
                     </option>
                   </select>
                 </div>
@@ -196,10 +196,10 @@
                 <label for="source" class="col-lg-2 col-form-label">Assistant: </label>
                 <div class="col-lg-6">
                   <select class="form-control" name="source" th:field="*{assistant}">
-                    <option th:value="null" th:text="No one"></option>
+                    <option th:value="null">No one</option>
                     <option th:each="contact : ${otherContactData}"
                             th:value="${contact.getContactId()}"
-                            th:text="${source.getFullName()}">
+                            th:text="${contact.getFullName()}">
                     </option>
                   </select>
                 </div>
@@ -253,126 +253,104 @@
                   </div>
                 </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.apartmentNumber"
+                   <label for="mailingAddress.apartmentNumber"
                           class="col-lg-2 col-form-label">Apartment Number: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.apartmentNumber"
-                              th:field="*{primaryAddress.apartmentNumber}">
+                              name="mailingAddress.apartmentNumber"
+                              th:field="*{mailingAddress.apartmentNumber}">
                         </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.apartmentNumber')}"
-                           th:errors="*{primaryAddress.apartmentNumber}">
+                           th:if="${#fields.hasErrors('mailingAddress.apartmentNumber')}"
+                           th:errors="*{mailingAddress.apartmentNumber}">
                      </span>
                    </div>
                  </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.streetAddress"
+                   <label for="mailingAddress.streetAddress"
                           class="col-lg-2 col-form-label">Street: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.streetAddress"
-                              th:field="*{primaryAddress.streetAddress}">
+                              name="mailingAddress.streetAddress"
+                              th:field="*{mailingAddress.streetAddress}">
                        </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.streetAddress')}"
-                           th:errors="*{primaryAddress.streetAddress}">
+                           th:if="${#fields.hasErrors('mailingAddress.streetAddress')}"
+                           th:errors="*{mailingAddress.streetAddress}">
                      </span>
                    </div>
                  </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.city" class="col-lg-2 col-form-label">City: </label>
+                   <label for="mailingAddress.city" class="col-lg-2 col-form-label">City: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.city"
-                              th:field="*{primaryAddress.city}">
+                              name="mailingAddress.city"
+                              th:field="*{mailingAddress.city}">
                        </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.city')}"
-                           th:errors="*{primaryAddress.city}">
+                           th:if="${#fields.hasErrors('mailingAddress.city')}"
+                           th:errors="*{mailingAddress.city}">
                      </span>
                    </div>
                  </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.stateProv" class="col-lg-2 col-form-label">Province/State: </label>
+                   <label for="mailingAddress.stateProv" class="col-lg-2 col-form-label">Province/State: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.stateProv"
-                              th:field="*{primaryAddress.stateProv}">
+                              name="mailingAddress.stateProv"
+                              th:field="*{mailingAddress.stateProv}">
                         </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.stateProv')}"
-                           th:errors="*{primaryAddress.stateProv}">
+                           th:if="${#fields.hasErrors('mailingAddress.stateProv')}"
+                           th:errors="*{mailingAddress.stateProv}">
                      </span>
                    </div>
                  </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.country" class="col-lg-2 col-form-label">Country: </label>
+                   <label for="mailingAddress.country" class="col-lg-2 col-form-label">Country: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.country"
-                              th:field="*{primaryAddress.country}">
+                              name="mailingAddress.country"
+                              th:field="*{mailingAddress.country}">
                         </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.country')}"
-                           th:errors="*{primaryAddress.country}">
+                           th:if="${#fields.hasErrors('mailingAddress.country')}"
+                           th:errors="*{mailingAddress.country}">
                      </span>
                    </div>
                  </div>
                  <div class="form-group row">
-                   <label for="primaryAddress.zipPostal"
+                   <label for="mailingAddress.zipPostal"
                           class="col-lg-2 col-form-label">Zip/Postal: </label>
                    <div class="col-lg-6">
                        <input class="form-control"
                               type="text"
-                              name="primaryAddress.zipPostal"
-                              th:field="*{primaryAddress.zipPostal}">
+                              name="mailingAddress.zipPostal"
+                              th:field="*{mailingAddress.zipPostal}">
                        </input>
                    </div>
                    <div class="col-lg-4">
                      <span class="label label-danger"
-                           th:if="${#fields.hasErrors('primaryAddress.zipPostal')}"
-                           th:errors="*{primaryAddress.zipPostal}">
+                           th:if="${#fields.hasErrors('mailingAddress.zipPostal')}"
+                           th:errors="*{mailingAddress.zipPostal}">
                      </span>
                    </div>
                  </div>
-                 <div class="form-group row">
-                   <input type="hidden"
-                          name="contactId"
-                          th:if="${contactData.getContactId() != null}"
-                          th:field="*{contactId}">
-                   </input>
-                   <input type="hidden"
-                          name="addressId"
-                          th:if="${contactData.getPrimaryAddress()?.getAddressId() != null}"
-                          th:field="*{primaryAddress.addressId}">
-                    </input>
-                    <input type="hidden"
-                           name="primaryEmailId"
-                           th:if="${leadData.getPrimaryEmail()?.getEmailId() != null}"
-                           th:field="*{primaryEmail.emailId}">
-                     </input>
-                     <input type="hidden"
-                            name="secondaryEmailId"
-                            th:if="${leadData.getSecondaryEmail()?.getEmailId() != null}"
-                            th:field="*{secondaryEmail.emailId}">
-                      </input>
-                  </div>
               </div>
              </div>
              <div class="form-group row">
@@ -502,9 +480,9 @@
                          th:field="*{contactId}">
                   </input>
                   <input type="hidden"
-                         name="primaryAddress.addressId"
+                         name="mailingAddress.addressId"
                          th:if="${contactData.getOtherAddress()?.getAddressId() != null}"
-                         th:field="*{primaryAddress.addressId}">
+                         th:field="*{mailingAddress.addressId}">
                    </input>
                    <input type="hidden"
                           name="otherAddress.addressId"
@@ -521,6 +499,21 @@
                            th:if="${contactData.getSecondaryEmail()?.getEmailId() != null}"
                            th:field="*{secondaryEmail.emailId}">
                      </input>
+                     <input type="hidden"
+                            name="accountId"
+                            th:if="${contactData.getAccount()?.getAccountId() != null}"
+                            th:field="*{account.accountId}">
+                      </input>
+                      <input type="hidden"
+                             name="reportToId"
+                             th:if="${contactData.getReportsTo()?.getContactId() != null}"
+                             th:field="*{reportsTo.contactId}">
+                       </input>
+                       <input type="hidden"
+                              name="assistantId"
+                              th:if="${contactData.getAssistant()?.getContactId() != null}"
+                              th:field="*{assistant.contactId}">
+                        </input>
                   </div>
                </div>
             </div>
