@@ -1,0 +1,222 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+          </div>
+          <div class="single-space"></div>
+          <form  class="row" th:object="${productData}" th:action="@{|/product/${action}|}" method="post">
+            <div class="col-lg-12">
+              <div class = "row">
+                 <div class="col-lg-12 title-gap">
+                   <h3> Basic Information </h3>
+                 </div>
+               </div>
+              <div class="form-group row">
+                <label for="name" class="col-lg-2 col-form-label">Product Name: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('name')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="name"
+                           th:field="*{name}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('name')}"
+                          th:errors="*{name}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="code" class="col-lg-2 col-form-label">Barcode: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('code')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="code"
+                           th:field="*{code}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('code')}"
+                          th:errors="*{code}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="category" class="col-lg-2 col-form-label">Category: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('category')}?'has-error':''">
+                    <input class="form-control"
+                           type="tel"
+                           name="category"
+                           th:field="*{category}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('category')}"
+                          th:errors="*{category}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="unitPrice" class="col-lg-2 col-form-label">Unit Price: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('unitPrice')}?'has-error':''">
+                    <input class="form-control"
+                           type="tel"
+                           name="unitPrice"
+                           th:field="*{unitPrice}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('unitPrice')}"
+                          th:errors="*{unitPrice}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="taxable" class="col-lg-2 col-form-label">Taxable: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('taxable')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="taxable"
+                           th:field="*{taxable}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('taxable')}"
+                          th:errors="*{taxable}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="commissionRatePercent" class="col-lg-2 col-form-label">Commission Rate: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('commissionRatePercent')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="commissionRatePercent"
+                           th:field="*{commissionRatePercent}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('commissionRatePercent')}"
+                          th:errors="*{commissionRatePercent}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="qtyInStock" class="col-lg-2 col-form-label">Number in Stock: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInStock')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="qtyInStock"
+                           th:field="*{qtyInStock}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('qtyInStock')}"
+                          th:errors="*{qtyInStock}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="qtyInOrder" class="col-lg-2 col-form-label">Number In Order: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInOrder')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="qtyInOrder"
+                           th:field="*{qtyInOrder}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('qtyInOrder')}"
+                          th:errors="*{qtyInOrder}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="qtyInDemand" class="col-lg-2 col-form-label">Number In Demand: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInDemand')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="qtyInDemand"
+                           th:field="*{qtyInDemand}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('qtyInDemand')}"
+                          th:errors="*{qtyInDemand}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="isActive" class="col-lg-2 col-form-label">Is Active : </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('isActive')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="isActive"
+                           th:field="*{isActive}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('isActive')}"
+                          th:errors="*{isActive}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="salesStart" class="col-lg-2 col-form-label">Sales Start: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesStart')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="salesStart"
+                           th:field="*{salesStart}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('salesStart')}"
+                          th:errors="*{salesStart}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="salesEnd" class="col-lg-2 col-form-label">Sales End: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesEnd')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="salesEnd"
+                           th:field="*{salesEnd}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('salesEnd')}"
+                          th:errors="*{salesEnd}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="supportStart" class="col-lg-2 col-form-label">Support Start : </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('supportStart')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="supportStart"
+                           th:field="*{supportStart}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('supportStart')}"
+                          th:errors="*{supportStart}">
+                    </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="supportEnd" class="col-lg-2 col-form-label">Support End : </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('supportEnd')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="supportEnd"
+                           th:field="*{supportEnd}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('supportEnd')}"
+                          th:errors="*{supportEnd}">
+                    </span>
+                </div>
+              </div>
+            </div>
+              <div class="row">
+              <div class="col-lg-7"></div>
+              <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </th:block>
+</html>
