@@ -1,11 +1,7 @@
 .single-space {
-  padding-top: 25px;
-}
-.table {
-    width: auto;
-    background: white;
+    padding-top: 25px;
 }
 
-.table.no-border tr td, .table.no-border tr th {
-    border-width: 0;
+.single-view {
+    font-size: 1.1em;
 }

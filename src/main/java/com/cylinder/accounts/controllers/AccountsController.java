@@ -149,6 +149,7 @@ public class AccountsController extends BaseController {
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
         model.addAttribute("accountType", typeRepository.findAll());
+        model.addAttribute("parentData", accountRepository.findAll());
         model.addAttribute("toList", "/account");
     }
 
