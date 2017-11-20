@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import lombok.*;
 import com.cylinder.shared.model.SimpleAudit;
 import com.cylinder.crmusers.model.CrmUser;
-import com.cylinder.accounts.model.Account; 
+import com.cylinder.accounts.model.Account;
 
 /**
 * @author Ryan Piper
@@ -143,6 +143,9 @@ public class Contact extends SimpleAudit {
     * @param dateOfBirth the new date of birth value.
     * @return the date of birth.
     */
+    @Getter
+    @Setter
+    @Column(name="date_of_birth")
     private Date dateOfBirth;
 
     /**
