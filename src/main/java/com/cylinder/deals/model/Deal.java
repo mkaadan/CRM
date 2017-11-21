@@ -32,7 +32,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonProperty("dealId")
   @Id
   @Column(name="deal_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +45,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonProperty("dealName")
   @NotNull
   @Pattern(regexp=".{1,50}")
   @Column(name="name")
@@ -60,7 +58,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="owner_id", referencedColumnName="account_id")
   private CrmUser owner;
@@ -73,7 +70,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="type_id")
   private Type type;
@@ -86,7 +82,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="stage_id")
   private Stage stage;
@@ -99,7 +94,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @Column(name="expected_rev")
   private BigDecimal expectedRevenue;
 
@@ -109,7 +103,7 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
+  @OneToOne(cascade = CascadeType.ALL)
   @Column(name="contact_id")
   private Long contactId;
 
@@ -121,7 +115,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="account_id")
   private Account account;
@@ -134,7 +127,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @Column(name="amount_earned")
   private BigDecimal actualAmountEarned;
 
@@ -146,7 +138,6 @@ public class Deal extends SimpleAudit {
   */
   @Getter
   @Setter
-  @JsonIgnore
   @Column(name="closing_date")
   private Date closingDate;
 }
