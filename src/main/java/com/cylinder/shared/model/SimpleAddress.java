@@ -22,7 +22,7 @@ abstract public class SimpleAddress {
   @Pattern(regexp="(?:[A-Za-z\\s]){1,250}", message="Please enter a valid city name.")
   protected String city;
   @Column(name="street")
-  @Pattern(regexp="[A-Za-z0-9\\s]{1,250}", message="Please enter a valid street address.")
+  @Pattern(regexp="[A-Za-z0-9\\s\\.]{1,250}", message="Please enter a valid street address.")
   protected String streetAddress;
   @Column(name="prov_state")
   @Pattern(regexp="[A-Za-z0-9\\s]{1,250}", message="Please enter a valid state or province.")
