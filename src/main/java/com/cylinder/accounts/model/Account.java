@@ -121,6 +121,16 @@ public class Account extends SimpleAudit {
     @OneToMany(mappedBy = "account")
     private Set<Contact> contacts = new HashSet<>();
 
+//    @Getter
+//    @Setter
+//    @OneToMany(mappedBy = "account")
+//    private Set<Deal> deals = new HashSet<>();
+//
+//    @Getter
+//    @Setter
+//    @OneToMany(mappedBy = "account")
+//    private Set<Case> cases = new HashSet<>();
+
     public Account() {
     }
 }
