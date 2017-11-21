@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="scripts">
+    <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/leads/list.js}"></script>
+  </th:block>
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
+    <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/lead/list.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="content">
+      <div class="container">
+        <div class="spacer">
+          <div th:replace="fragments/welcomemessage :: welcomeMessage">
+          </div>
+          <div class ="row">
+            <div class="col-sm-12">
+              <a th:href="@{|/lead/new/|}">
+                <button class="btn-primary pull-right btn-list">
+                      <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table id ="leadList" class="table table-striped table-bordered" cellspacing="0" width="100%">
+              <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Company Name</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr th:each="lead : ${leadData}">
+                  <td>
+                       <a th:text="${lead.getFullName()}"
+                         th:href="@{|/lead/records/${lead.getLeadId()}|}">
+                       </a>
+                  </td>
+                  <td th:text="${lead.getTitle() != null} ? ${lead.getTitle()} : ''"></td>
+                  <td th:text="${lead.getCompanyName() != null} ? ${lead.getCompanyName()} : ''"></td>
+                  <td th:text="${lead.getPhone() != null} ? ${lead.getPhone()} : ''"></td>
+                  <td th:text="${lead.getMobile() != null} ? ${lead.getMobile()} : ''"></td>
+                  <td>
+                      <a class="edit-link icon-spacer" th:href="@{|/lead/edit/${lead.getLeadId()}|}" title="Edit">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                      </a>
+                      <span th:attr="data-id=${lead.getLeadId()}"
+                            class="glyphicon glyphicon-trash icon-spacer btn-cursor"
+                            title="Delete">
+                      </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</th:block>
+</html>

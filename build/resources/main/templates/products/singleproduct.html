@@ -1,0 +1,140 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/product/single.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="scripts">
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/products/edit.js}"></script>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="row pull-right">
+              <a  class="btn btn-primary"
+                  role="button"
+                  th:href="@{|/product/edit/${productData.getProductId()}|}">Edit
+              </a>
+              <button id="deleteRecord"
+                      th:attr="data-id=${productData.getProductId()}"
+                      class="btn btn-primary">Delete
+              </button>
+            </div>
+            <div class="single-space row"></div>
+            <div class="row single-view">
+                <h3> Basic Information </h3>
+                <div class="col-md-12">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-2">Product Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getName()}">
+                      </dd>
+                      <dt class="col-md-2">Barcode: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getCode() != null}
+                                      ? ${productData.getCode()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Category: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getCategory() != null}
+                                    ? ${productData.getCategory()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Unit Price: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getUnitPrice() != null}
+                                    ? ${productData.getUnitPrice()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Taxable: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getTaxable() != null}
+                                    ? ${productData.getTaxable()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Commision Rate: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getCommissionRatePercent() != null}
+                                    ? ${productData.getCommissionRatePercent()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Number In Stock: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getQtyInStock() != null}
+                                    ? ${productData.getQtyInStock()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Number In Order: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getQtyInOrder() != null}
+                                    ? ${productData.getQtyInOrder()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Number In Demand: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getQtyInDemand() != null}
+                                    ? ${productData.getQtyInDemand()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Is Active: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getIsActive() != null}
+                                    ? ${productData.getIsActive()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Sales Start: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getSalesStart() != null}
+                                    ? ${productData.getQSalesStart()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Sales End: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getSalesEnd() != null}
+                                    ? ${productData.getSalesEnd()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Support Start: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getSupportStart() != null}
+                                    ? ${productData.getSupportStart()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Support End: </dt>
+                      <dd class="col-md-2"
+                          th:text="${productData.getSupportEnd() != null}
+                                    ? ${productData.getSupportEnd()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3> Description </h3>
+                <div class="col-md-12">
+                  <p th:text="${productData.getDescription() != null}
+                            ? ${productData.getDescription()} : ''" >
+                  </p>
+                </div>
+            </div>
+            <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt class="col-md-4">Created By:</dt>
+                      <dd th:text="${productData.getCreatedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt class="col-md-4">Created: </dt>
+                      <dd th:text="${productData.getCreated()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${productData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${productData.getLastModifiedBy() != null}"
+                          th:text="${productData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${productData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${productData.getLastModifiedBy() != null}"
+                          th:text="${productData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>

@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head th:fragment="htmlhead">
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+   	<title>Cylinder</title>
+  	<link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/base.css}" rel="stylesheet"></link>
+    <th:block layout:fragment="stylesheets"></th:block>
+    <script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
+    <script sec:authorize="isAuthenticated()" th:src="@{/js/logout.js}"></script>
+    <th:block layout:fragment="scripts"></th:block>
+  </head>
+  <body>
+    <div class ="wrapper">
+      <nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Cylinder CRM</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navLinks">
+                <li class="active"><a href="/lead">Leads</a></li>
+                <li><a href="/account">Accounts</a></li>
+                <li><a href="/contact">Contacts</a></li>
+                <li><a href="/product">Products</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/user/overview">Users</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right navLinks">
+                <li class="btn-cursor"><a th:href="@{|/user/edit/${userId}|}">Edit Profile</a></li>
+                <li class="btn-cursor"><a id="logout">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+      </nav>
+      <th:block layout:fragment="content"></th:block>
+    </div>
+    <footer th:fragment="footer" class= "footer">
+      <div class="container">
+        <p class="text-right pull-right">&copy; 2017 Piston</p>
+      </div>
+    </footer>
+  </body>
+</html>
