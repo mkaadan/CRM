@@ -4,7 +4,6 @@ import com.cylinder.shared.model.SimpleAudit;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
 import com.cylinder.contacts.model.Contact;
-
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
