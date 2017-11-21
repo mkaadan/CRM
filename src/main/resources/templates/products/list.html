@@ -26,7 +26,7 @@
           </div>
           <div class ="row">
             <div class="col-sm-12">
-              <a href="new/">
+              <a th:href="@{|/product/new/|}">
                 <button class="btn-primary pull-right btn-list">
                       <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -44,17 +44,26 @@
                     <th>Category</th>
                     <th>Quantity</th>
                     <th>Description</th>
+                    <th>Actions</th>
                   </tr>
               </thead>
               <tbody>
                 <tr th:each="product : ${productData}">
                   <td><a th:text="${product.getName()}" th:href="@{|/product/records/${product.getProductId()}|}"></a></td>
-                  <td th:text="${product.getName()}"></td>
                   <td th:text="${product.getCode()}"></td>
                   <td th:text="${product.getUnitPrice()}"></td>
-                  <td th:text="${product.getCategory()}"></td>
+                  <td th:text="${product.getCategory()?.getDescriptor()}"></td>
                   <td th:text="${product.getQtyInStock()}"></td>
                   <td th:text="${product.getDescription()}"></td>
+                  <td>
+                    <a class="edit-link icon-spacer" th:href="@{|/product/edit/${product.getProductId()}|}" title="Edit">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <span th:attr="data-id=${product.getProductId()}"
+                        class="glyphicon glyphicon-trash icon-spacer btn-cursor"
+                        title="Delete">
+                      </span>
+                  </td>
                 </tr>
               </tbody>
             </table>

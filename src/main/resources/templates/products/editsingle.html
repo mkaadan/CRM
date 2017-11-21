@@ -1,4 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<th:block layout:fragment="stylesheets">
+  <link th:href="@{/css/product/edit.css}" rel="stylesheet"></link>
+</th:block>
   <th:block layout:fragment="content">
     <div class="wrapper">
         <div class="container">
@@ -44,17 +47,12 @@
               </div>
               <div class="form-group row">
                 <label for="category" class="col-lg-2 col-form-label">Category: </label>
-                <div class="col-lg-6" th:classappend="${#fields.hasErrors('category')}?'has-error':''">
-                    <input class="form-control"
-                           type="tel"
-                           name="category"
-                           th:field="*{category}">
-                    </input>
-                    <span class="help-block"
-                          th:if="${#fields.hasErrors('category')}"
-                          th:errors="*{category}">
-                    </span>
-                </div>
+                <select class="form-control" name="source" th:field="*{category}">
+                  <option th:each="category : ${categoryData}"
+                          th:value="${category.getCategoryId()}"
+                          th:text="${category.getDescriptor()}">
+                  </option>
+                </select>
               </div>
               <div class="form-group row">
                 <label for="unitPrice" class="col-lg-2 col-form-label">Unit Price: </label>
@@ -102,7 +100,7 @@
                 <label for="qtyInStock" class="col-lg-2 col-form-label">Number in Stock: </label>
                 <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInStock')}?'has-error':''">
                     <input class="form-control"
-                           type="text"
+                           type="number"
                            name="qtyInStock"
                            th:field="*{qtyInStock}">
                     </input>
@@ -116,7 +114,7 @@
                 <label for="qtyInOrder" class="col-lg-2 col-form-label">Number In Order: </label>
                 <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInOrder')}?'has-error':''">
                     <input class="form-control"
-                           type="text"
+                           type="number"
                            name="qtyInOrder"
                            th:field="*{qtyInOrder}">
                     </input>
@@ -130,7 +128,7 @@
                 <label for="qtyInDemand" class="col-lg-2 col-form-label">Number In Demand: </label>
                 <div class="col-lg-6" th:classappend="${#fields.hasErrors('qtyInDemand')}?'has-error':''">
                     <input class="form-control"
-                           type="text"
+                           type="number"
                            name="qtyInDemand"
                            th:field="*{qtyInDemand}">
                     </input>
@@ -142,17 +140,10 @@
               </div>
               <div class="form-group row">
                 <label for="isActive" class="col-lg-2 col-form-label">Is Active : </label>
-                <div class="col-lg-6" th:classappend="${#fields.hasErrors('isActive')}?'has-error':''">
-                    <input class="form-control"
-                           type="text"
-                           name="isActive"
-                           th:field="*{isActive}">
-                    </input>
-                    <span class="help-block"
-                          th:if="${#fields.hasErrors('isActive')}"
-                          th:errors="*{isActive}">
-                    </span>
-                </div>
+                <select class="form-control" name="source" th:field="*{isActive}">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
               </div>
               <div class="form-group row">
                 <label for="salesStart" class="col-lg-2 col-form-label">Sales Start: </label>
@@ -208,6 +199,30 @@
                           th:if="${#fields.hasErrors('supportEnd')}"
                           th:errors="*{supportEnd}">
                     </span>
+                    <input class="form-control"
+                           type="hidden"
+                           name="productId"
+                           th:field="*{productId}">
+                    </input>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="description" class="col-lg-2 col-form-label">Description : </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('description')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="description"
+                           th:field="*{description}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('description')}"
+                          th:errors="*{description}">
+                    </span>
+                    <input class="form-control"
+                           type="hidden"
+                           name="productId"
+                           th:field="*{productId}">
+                    </input>
                 </div>
               </div>
             </div>
