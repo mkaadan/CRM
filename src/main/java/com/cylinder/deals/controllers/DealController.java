@@ -25,7 +25,6 @@ import com.cylinder.shared.controllers.BaseController;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.deals.model.*;
-<<<<<<< HEAD
 import com.cylinder.deals.model.TypeRepository;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.accounts.model.AccountRepository;
@@ -86,7 +85,6 @@ public class DealController extends BaseController {
   */
 
   @GetMapping
-  @GetMapping("/")
   public String renderListView(Model model, Authentication auth) {
     super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
     model.addAttribute("dealData", dealRepository.findAll());
@@ -203,22 +201,21 @@ public class DealController extends BaseController {
     return "redirect:/deal/records/" + assignedId.toString() ;
   }
 
-  /**
-  * Delete some deal through a delete request.
-  * @param id the id that is associated to some deal.
-  * @return the response body.
-  */
-  @DeleteMapping("/records/{id}")
-  @ResponseBody
-  public String deleteRecord(@PathVariable("id") Long id, HttpServletResponse response) {
-    if (dealRepository.existsByDealId(id)) {
-      dealRepository.deleteByDealId(id);
-      return "";
-    } else {
-      response.setStatus(404);
-      return "Failed to delete record" + id;
+    /**
+     * Delete some deal through a delete request.
+     * @param id the id that is associated to some deal.
+     * @return the name of the template to render.
+     */
+    @DeleteMapping("/records/{id}")
+    @ResponseBody
+    public String deleteRecord(@PathVariable("id") Long id) {
+        if (dealRepository.existsByDealId(id)) {
+            dealRepository.deleteByDealId(id);
+            return "";
+        } else {
+            return "Failed to delete record" + id;
+        }
     }
-  }
 
   /**
   *
