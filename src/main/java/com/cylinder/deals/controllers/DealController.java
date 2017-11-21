@@ -26,6 +26,9 @@ import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.deals.model.*;
 import com.cylinder.deals.model.TypeRepository;
+import com.cylinder.contacts.model.ContactRepository;
+import com.cylinder.accounts.model.AccountRepository;
+
 
 /**
 * @author Ryan Piper
@@ -58,6 +61,18 @@ public class DealController extends BaseController {
   */
   @Autowired
   private TypeRepository typeRepository;
+
+  /**
+  * Sql interface for deal type entites.
+  */
+  @Autowired
+  private AccountRepository accountRepository;
+
+  /**
+  * Sql interface for deal type entites.
+  */
+  @Autowired
+  private ContactRepository contactRepository;
 
   private final String moduleName = "Deals";
 
@@ -222,6 +237,8 @@ public class DealController extends BaseController {
     model.addAttribute("userData", userRepository.findAll());
     model.addAttribute("typeData", typeRepository.findAll());
     model.addAttribute("stageData", stageRepository.findAll());
+    model.addAttribute("accountData", accountRepository.findAll());
+    model.addAttribute("contactData", contactRepository.findAll());
     model.addAttribute("toList", "/deal");
   }
 
