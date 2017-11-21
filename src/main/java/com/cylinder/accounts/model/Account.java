@@ -1,5 +1,6 @@
 package com.cylinder.accounts.model;
 
+import com.cylinder.contacts.model.Contact;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.shared.model.SimpleAudit;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "details", schema = "account")
@@ -112,6 +115,17 @@ public class Account extends SimpleAudit {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "secondary_email_id", referencedColumnName = "email_id")
     private Email secondaryEmail;
+
+    @Getter
+    @Setter
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            schema = "account",
+            name = "contact_lookups",
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "contact_id") }
+    )
+    private Set<Contact> contacts = new HashSet<>();
 
     public Account() {
     }

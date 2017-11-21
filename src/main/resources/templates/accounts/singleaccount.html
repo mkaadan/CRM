@@ -28,6 +28,11 @@
                     <h3>Basic Information</h3>
                     <div class="col-md-12">
                         <dl class="dl-horizontal">
+                            <dt class="col-md-2">Contacts:</dt>
+                            <dd   class="col-md-2" th:each="contact,iterStat : ${accountData.contacts}">
+                                <span th:text="${contact.getFullName()}"></span>
+                                <th:block th:if="${!iterStat.last}">,</th:block>
+                            </dd>
                             <dt class="col-md-2">Account Owner:</dt>
                             <dd class="col-md-2"
                                 th:text="${accountData.getOwner() != null}?${accountData.getOwner().getName()}:${''}">
