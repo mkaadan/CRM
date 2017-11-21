@@ -1,4 +1,4 @@
 $(document).ready(function() {
   readIntoTable("#dealList");
-  tableDelete('/deal/records/', "#leadList");
+  tableDelete('/deal/records/', "#dealList");
 });
