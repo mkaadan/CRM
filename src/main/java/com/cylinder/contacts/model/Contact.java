@@ -91,8 +91,8 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private Account account;
 
     /**
@@ -266,11 +266,6 @@ public class Contact extends SimpleAudit {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="owner_id", referencedColumnName = "account_id")
     private CrmUser owner;
-
-    @Getter
-    @Setter
-    @ManyToMany(mappedBy = "contacts")
-    private Set<Account> accounts = new HashSet<>();
 
     public Contact() {}
 

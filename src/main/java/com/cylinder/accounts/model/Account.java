@@ -118,13 +118,7 @@ public class Account extends SimpleAudit {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            schema = "account",
-            name = "contact_lookups",
-            joinColumns = { @JoinColumn(name = "account_id") },
-            inverseJoinColumns = { @JoinColumn(name = "contact_id") }
-    )
+    @OneToMany(mappedBy = "account")
     private Set<Contact> contacts = new HashSet<>();
 
     public Account() {

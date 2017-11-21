@@ -43,9 +43,6 @@ public class ContactsController extends BaseController {
     @Autowired
     private AccountRepository AccountRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
     private final String moduleName = "Contacts";
 
     /**
@@ -195,7 +192,6 @@ public class ContactsController extends BaseController {
       }
       model.addAttribute("userData", userRepository.findAll());
       model.addAttribute("toList", "/contact/");
-      model.addAttribute("accountList", accountRepository.findAll());
     }
 
     /**
