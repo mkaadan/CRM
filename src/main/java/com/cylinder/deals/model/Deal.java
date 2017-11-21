@@ -3,6 +3,7 @@ package com.cylinder.deals.model;
 import com.cylinder.shared.model.SimpleAudit;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
+import com.cylinder.contacts.model.Contact;
 
 import java.math.BigDecimal;
 
@@ -104,8 +105,8 @@ public class Deal extends SimpleAudit {
   @Getter
   @Setter
   @OneToOne(cascade = CascadeType.ALL)
-  @Column(name="contact_id")
-  private Long contactId;
+  @JoinColumn(name="contact_id")
+  private Contact contactId;
 
   /**
   * The account that is assoicated to the deal.
