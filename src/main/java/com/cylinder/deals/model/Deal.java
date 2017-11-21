@@ -3,7 +3,10 @@ package com.cylinder.deals.model;
 import com.cylinder.shared.model.SimpleAudit;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.accounts.model.Account;
+<<<<<<< HEAD
 import com.cylinder.contacts.model.Contact;
+=======
+>>>>>>> fff638168e5825b471e9d258f1ce18b475abf087
 
 import java.math.BigDecimal;
 
