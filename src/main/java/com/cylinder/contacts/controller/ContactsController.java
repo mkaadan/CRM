@@ -195,6 +195,23 @@ public class ContactsController extends BaseController {
     }
 
     /**
+    * Delete some lead through a delete request.
+    * @param id the id that is associated to some lead.
+    * @return the name of the template to render.
+    */
+    @DeleteMapping("/records/{id}")
+    @ResponseBody
+    public String deleteRecord(@PathVariable("id") Long id) {
+      if (contactRepository.existsByContactId(id)) {
+        contactRepository.deleteByContactId(id);
+        return "";
+      } else {
+        return "Failed to delete record" + id;
+      }
+
+    }
+
+    /**
     * Maps empty string to null when a form is submitted.
     * @param binder The object that allows for empty strings to be turned into nulls.
     */
