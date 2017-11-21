@@ -195,8 +195,8 @@ public class ContactsController extends BaseController {
     }
 
     /**
-    * Delete some lead through a delete request.
-    * @param id the id that is associated to some lead.
+    * Delete some contact through a delete request.
+    * @param id the id that is associated to some contact.
     * @return the name of the template to render.
     */
     @DeleteMapping("/records/{id}")
