@@ -15,7 +15,15 @@ buildscript {
 jar {
     baseName = 'cylinder'
     version =  '0.0.1'
+    manifest {
+      attributes('Main-Class': 'com.cylinder.Application')
+  }
 }
+
+springBoot {
+    mainClass = "com.cylinder.Application"
+}
+
 
 repositories {
     mavenCentral()
