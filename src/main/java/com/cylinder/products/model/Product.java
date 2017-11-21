@@ -7,7 +7,7 @@ import java.sql.Date;
 import javax.validation.constraints.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import java.text.SimpleDateFormat;
-
+import java.math.BigDecimal;
 
 
 @Entity
@@ -40,9 +40,9 @@ public class Product extends SimpleAudit {
 
   @Getter
   @Setter
-  @Column(name="category")
-  @Pattern(regexp="([a-zA-Z]{1,250})", message="Please enter a valid category.")
-  protected String category;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+  protected Categories category;
 
   @Getter
   @Setter
@@ -67,7 +67,7 @@ public class Product extends SimpleAudit {
   @Getter
   @Setter
   @Column(name="unit_price")
-  protected Integer unitPrice;
+  protected BigDecimal unitPrice;
 
   @Getter
   @Setter
@@ -82,20 +82,17 @@ public class Product extends SimpleAudit {
   @Getter
   @Setter
   @Column(name="qty_in_stock")
-  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
-  protected String qtyInStock;
+  protected Integer qtyInStock;
 
   @Getter
   @Setter
   @Column(name="qty_in_order")
-  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
-  protected String qtyInOrder;
+  protected Integer qtyInOrder;
 
   @Getter
   @Setter
   @Column(name="qty_in_demand")
-  @Pattern(regexp="([0-9]{1,250})", message="Please enter a valid Quantity.")
-  protected String qtyInDemand;
+  protected Integer qtyInDemand;
 
   @Getter
   @Setter

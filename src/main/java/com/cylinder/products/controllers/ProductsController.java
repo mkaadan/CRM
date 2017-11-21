@@ -98,6 +98,44 @@ public class ProductsController extends BaseController {
       }
 
       /**
+      * Render a view for a creating a single product.
+      * @param model the view model object that is used to render the html.
+      * @param auth the authentication context that manages which users are logged in.
+      * @return the name of the template to render.
+      */
+      @GetMapping("/new/")
+      public String newRecord(Model model,
+                              Authentication auth) {
+          this.bindProductForm(model,auth);
+          model.addAttribute("action","new/");
+          model.addAttribute("productData", new Product());
+          return "products/editsingle";
+      }
+
+      /**
+      * Process a new product form and potentially send errors back.
+      * @param product The product form object to be processed.
+      * @param result the object that binds the data from the view and validates user.
+      * @param model the view model object that is used to render the html.
+      * @param auth the authentication context that manages which users are logged in.
+      * @return the name of the template to render.
+      */
+      @PostMapping("/new/")
+      public String saveNewProduct(@Valid @ModelAttribute("productData") Product product,
+                                BindingResult result,
+                                Model model,
+                                Authentication auth) {
+        if (result.hasErrors()) {
+            this.bindProductForm(model,auth);
+            model.addAttribute("action","new/");
+            return "products/editsingle";
+        }
+        CrmUser user = userRepository.findByEmail(auth.getName());
+        product.setCreatedBy(user);
+        Long assignedId = productRepository.save(product).getProductId();
+        return "redirect:/product/records/" + assignedId.toString() ;
+      }
+      /**
       * Render a edit view for a single product.
       * @param id the id that is associated to some product.
       * @param model the view model object that is used to render the html.
@@ -145,6 +183,24 @@ public class ProductsController extends BaseController {
          Long assignedId = productRepository.save(product).getProductId();
          return "redirect:/product/records/" + assignedId.toString() ;
       }
+
+      /**
+      * Delete some product through a delete request.
+      * @param id the id that is associated to some product.
+      * @return the name of the template to render.
+      */
+      @DeleteMapping("/records/{id}")
+      @ResponseBody
+      public String deleteRecord(@PathVariable("id") Long id) {
+        if (productRepository.existsByProductId(id)) {
+          productRepository.deleteByProductId(id);
+          return "";
+        } else {
+          return "Failed to delete record" + id;
+        }
+
+      }
+
       /**
       * Helper function to bind common model attributes whener generating a list form.
       * @param model the view model object that is used to render the html.
@@ -153,6 +209,7 @@ public class ProductsController extends BaseController {
       private void bindProductForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
+          model.addAttribute("categoryData", categoriesRepository.findAll());
         model.addAttribute("toList", "/product");
       }
 }
