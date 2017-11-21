@@ -51,10 +51,10 @@
                       </a>
                   </td>
                   <td>
-                      <a th:if="${deal.getContactId() != null}"
-                         th:text="${deal.getContactId()}"
-                         th:href="@{|/contact/records/${deal.getContactId()}|}">
-                      </a>
+                    <a th:if="${deal.getContact() != null}"
+                       th:text="${deal.getContact()?.getFullName()}"
+                       th:href="@{|/contact/records/${deal.getContact()?.getContactId()}|}">
+                    </a>
                   </td>
                   <td th:text="${deal.getExpectedRevenue()}"></td>
                   <td th:text="${deal.getActualAmountEarned()}"></td>

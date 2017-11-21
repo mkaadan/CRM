@@ -1,10 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
   <th:block layout:fragment="stylesheets">
-    <link th:href="@{/css/lead/single.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/deal/single.css}" rel="stylesheet"></link>
   </th:block>
   <th:block layout:fragment="scripts">
     <script th:src="@{/js/crud.js}"></script>
-    <script th:src="@{/js/leads/edit.js}"></script>
+    <script th:src="@{/js/deals/edit.js}"></script>
   </th:block>
   <th:block layout:fragment="content">
     <div class="wrapper">
@@ -15,7 +15,7 @@
             <div class="row pull-right">
               <a  class="btn btn-primary"
                   role="button"
-                  th:href="@{|/lead/edit/${dealData.getDealId()}|}">Edit
+                  th:href="@{|/deal/edit/${dealData.getDealId()}|}">Edit
               </a>
               <button id="deleteRecord"
                       th:attr="data-id=${dealData.getDealId()}"
@@ -54,12 +54,13 @@
                 <div class="col-md-12">
                   <dl class="dl-horizontal">
                     <dt class="col-md-2">Main Contact: </dt>
-                    <dd class="col-md-2"
-                        th:text="${dealData.getContactId() != null}
-                                  ? ${dealData.getContactId()} : ''" >
+                    <dd th:if ="${dealData.getContact()?.getContactId() != null}" class="col-md-2">
+                      <a th:href="@{|/contact/record/${dealData.getContact().getContactId()}|}"
+                         th:text="${dealData.getContact().getFullName()}">
+                      </a>
                     </dd>
                     <dt class="col-md-2">Main Account: </dt>
-                    <dd th:if ="${dealData.getAccount() != null}" class="col-md-2">
+                    <dd th:if ="${dealData.getAccount()?.getAccountId() != null}" class="col-md-2">
                       <a th:href="@{|/account/record/${dealData.getAccount().getAccountId()}|}"
                          th:text="${dealData.getAccount().getAccountName()}">
                       </a>
@@ -84,8 +85,9 @@
             <div class="row spacer">
                 <div class="col-md-12">
                     <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
-                      <dt class="col-md-4">Created By:</dt>
-                      <dd th:text="${dealData.getCreatedBy().getName()}"
+                      <dt th:if="${dealData.getCreatedBy()?.getName() != null}"
+                          class="col-md-4">Created By: </dt>
+                      <dd th:text="${dealData.getCreatedBy()?.getName()}"
                           class="col-md-6">
                       </dd>
                       <dt class="col-md-4">Created: </dt>
