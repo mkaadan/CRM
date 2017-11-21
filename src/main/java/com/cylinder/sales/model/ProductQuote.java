@@ -4,6 +4,8 @@ import javax.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 
+import com.cylinder.products.model.Product;
+
 @Entity
 @Table(name = "quote_product_lookup", schema = "sale")
 public class ProductQuote implements Serializable{
@@ -21,7 +23,7 @@ public class ProductQuote implements Serializable{
     @Setter
     @ManyToOne
     @JoinColumn(name="product_id")
-    private TempProduct product;
+    private Product product;
 
     /** The identifyer of the quote. */
     @Getter

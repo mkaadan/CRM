@@ -7,7 +7,8 @@ import com.cylinder.shared.model.SimpleAudit;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import lombok.*;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "quotes", schema = "sale")
@@ -16,6 +17,7 @@ public class Quote extends SimpleAudit{
     @Id
     @Getter
     @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="quote_id")
     private Long quoteId;
 
@@ -43,7 +45,7 @@ public class Quote extends SimpleAudit{
     @Getter
     @Setter
     @OneToMany(mappedBy = "quote")
-    private Set<ProductQuote> productQuote;
+    private List<ProductQuote> productQuote = new ArrayList<ProductQuote>();
 
     public Quote() { }
 }
