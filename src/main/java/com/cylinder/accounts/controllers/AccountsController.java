@@ -3,6 +3,7 @@ package com.cylinder.accounts.controllers;
 import java.lang.Iterable;
 
 import com.cylinder.accounts.model.Account;
+import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.shared.controllers.BaseController;
@@ -29,6 +30,8 @@ public class AccountsController extends BaseController {
     private AccountRepository accountRepository;
     @Autowired
     private TypeRepository typeRepository;
+    @Autowired
+    private ContactRepository contactRepository;
     @Autowired
     private CrmUserRepository userRepository;
     private final String moduleName = "Accounts";
@@ -150,6 +153,7 @@ public class AccountsController extends BaseController {
         model.addAttribute("userData", userRepository.findAll());
         model.addAttribute("accountType", typeRepository.findAll());
         model.addAttribute("parentData", accountRepository.findAll());
+        model.addAttribute("contactData", contactRepository.findAll());
         model.addAttribute("toList", "/account");
     }
 
