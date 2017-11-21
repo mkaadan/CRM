@@ -106,7 +106,7 @@ public class Deal extends SimpleAudit {
   @Setter
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="contact_id")
-  private Contact contactId;
+  private Contact contact;
 
   /**
   * The account that is assoicated to the deal.
