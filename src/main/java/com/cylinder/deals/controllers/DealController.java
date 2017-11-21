@@ -199,22 +199,21 @@ public class DealController extends BaseController {
     return "redirect:/deal/records/" + assignedId.toString() ;
   }
 
-  /**
-  * Delete some deal through a delete request.
-  * @param id the id that is associated to some deal.
-  * @return the response body.
-  */
-  @DeleteMapping("/records/{id}")
-  @ResponseBody
-  public String deleteRecord(@PathVariable("id") Long id, HttpServletResponse response) {
-    if (dealRepository.existsByDealId(id)) {
-      dealRepository.deleteByDealId(id);
-      return "";
-    } else {
-      response.setStatus(404);
-      return "Failed to delete record" + id;
+    /**
+     * Delete some deal through a delete request.
+     * @param id the id that is associated to some deal.
+     * @return the name of the template to render.
+     */
+    @DeleteMapping("/records/{id}")
+    @ResponseBody
+    public String deleteRecord(@PathVariable("id") Long id) {
+        if (dealRepository.existsByDealId(id)) {
+            dealRepository.deleteByDealId(id);
+            return "";
+        } else {
+            return "Failed to delete record" + id;
+        }
     }
-  }
 
   /**
   *
