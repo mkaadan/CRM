@@ -29,7 +29,6 @@ import com.cylinder.deals.model.TypeRepository;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.accounts.model.AccountRepository;
 
-
 /**
 * @author Ryan Piper
 * Manges the deals requests and responses.
