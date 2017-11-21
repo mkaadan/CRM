@@ -28,11 +28,6 @@
                     <h3>Basic Information</h3>
                     <div class="col-md-12">
                         <dl class="dl-horizontal">
-                            <dt class="col-md-2">Contacts:</dt>
-                            <dd   class="col-md-2" th:each="contact,iterStat : ${accountData.contacts}">
-                                <span th:text="${contact.getFullName()}"></span>
-                                <th:block th:if="${!iterStat.last}">,</th:block>
-                            </dd>
                             <dt class="col-md-2">Account Owner:</dt>
                             <dd class="col-md-2"
                                 th:text="${accountData.getOwner() != null}?${accountData.getOwner().getName()}:${''}">
@@ -64,6 +59,14 @@
                             <dt class="col-md-2">Website:</dt>
                             <dd class="col-md-2"
                                 th:text="${accountData.getWebsite() != null}?${accountData.getWebsite()}:''">
+                            </dd>
+                            <dt class="col-md-2">Contacts:</dt>
+                            <dd class="col-md-2">
+                                <ul class="list-unstyled" th:each="contact,iterStat : ${accountData.contacts}">
+                                    <li><a th:text="${contact.getFullName()}"
+                                        th:href="@{|/contact/records/${contact.getContactId()}|}"></a></li>
+                                    <!--<span th:if="${!iterStat.last}">, </span>-->
+                                </ul>
                             </dd>
                         </dl>
                     </div>
