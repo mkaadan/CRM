@@ -32,14 +32,18 @@
                   <div class="col-md-6">
                       <dl class="dl-horizontal">
                           <dt class="col-md-1">Account: </dt>
-                          <dd class="col-md-1"
-                              th:text="${quoteData.getAccount() != null}
-                                    ? ${quoteData.getAccount().getAccountName()} : ''">
+                          <dd class="col-md-1">
+                              <a th:if="${quoteData.getAccount() != null}"
+                                th:href="@{|/account/records/${quoteData.getAccount().getAccountId()}|}"
+                                th:text="${quoteData.getAccount()?.getAccountName()}">
+                              </a>
                           </dd>
                           <dt class="col-md-1">Contact Name: </dt>
-                          <dd class="col-md-4"
-                              th:text="${quoteData.getContact() != null}
-                                    ? ${quoteData.getContact().getFullName()} : ''">
+                          <dd class="col-md-4">
+                            <a th:if="${quoteData.getContact() != null}"
+                               th:href="@{|/contact/records/${quoteData.getContact().getContactId()}|}"
+                               th:text="${quoteData.getContact()?.getFullName()}">
+                            </a>
                           </dd>
                           <dt class="col-md-1">Created: </dt>
                           <dd class="col-md-5"

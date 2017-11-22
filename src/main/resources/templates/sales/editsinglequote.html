@@ -78,6 +78,10 @@
                           </td>
                           <td>
                             <input type="text" th:field="*{productList[__${rowStat.index}__].discount}" />
+                            <span class="help-block"
+                                  th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
+                                  th:errors="*{quantity}">
+                            </span>
                           </td>
                           <td>
                             <button type="submit" name="removeRow"

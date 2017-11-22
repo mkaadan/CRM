@@ -286,7 +286,7 @@ public class QuotesController extends BaseController{
     }
 
     @RequestMapping(value="/edit/{id}", params={"addRow"})
-    public String addRow(final @ModelAttribute("quoteData") QuoteForm quoteData,
+    public String addRow(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                          @PathVariable("id") Long id,
                          Authentication auth,
                          Model model) {
@@ -297,7 +297,7 @@ public class QuotesController extends BaseController{
     }
 
     @RequestMapping(value="/new/", params={"addRow"})
-    public String addRowToNew(final @ModelAttribute("quoteData") QuoteForm quoteData,
+    public String addRowToNew(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                          Authentication auth,
                          Model model) {
         this.bindUserForm(model,auth);
@@ -307,7 +307,7 @@ public class QuotesController extends BaseController{
     }
 
     @RequestMapping(value="/edit/{id}", params={"removeRow"})
-    public String removeRow(final @ModelAttribute("quoteData") QuoteForm quoteData,
+    public String removeRow(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                          @PathVariable("id") Long id,
                          Authentication auth,
                          Model model,
@@ -320,7 +320,7 @@ public class QuotesController extends BaseController{
     }
 
     @RequestMapping(value="/new/", params={"removeRow"})
-    public String removeRowFromNew(final @ModelAttribute("quoteData") QuoteForm quoteData,
+    public String removeRowFromNew(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                          Authentication auth,
                          Model model,
                          final HttpServletRequest req) {

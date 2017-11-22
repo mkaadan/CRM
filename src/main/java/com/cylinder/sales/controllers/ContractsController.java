@@ -83,9 +83,9 @@ public class ContractsController extends BaseController{
      */
     @GetMapping(value="/edit/{id}")
     public String editContract(@PathVariable("id") Long id,
-                           Model model,
-                           Authentication auth,
-                           HttpServletResponse response) {
+                               Model model,
+                               Authentication auth,
+                               HttpServletResponse response) {
         Contract contract;
         if (contractRepository.existsById(id)) {
             contract = contractRepository.findOne(id);
@@ -108,10 +108,10 @@ public class ContractsController extends BaseController{
      */
     @PostMapping(value="/edit/{id}")
     public String saveEditableContract(@PathVariable("id") Long id,
-                                   @Valid @ModelAttribute("contractData") Contract contract,
-                                   BindingResult result,
-                                   Model model,
-                                   Authentication auth) {
+                                       @Valid @ModelAttribute("contractData") Contract contract,
+                                       BindingResult result,
+                                       Model model,
+                                       Authentication auth) {
         if (result.hasErrors()) {
             this.bindUserForm(model, auth);
             model.addAttribute("action","edit/" + contract.getContractId());
@@ -146,9 +146,9 @@ public class ContractsController extends BaseController{
      */
     @PostMapping("/new/")
     public String saveNewContract(@Valid @ModelAttribute("contractData") Contract contract,
-                              BindingResult result,
-                              Model model,
-                              Authentication auth) {
+                                  BindingResult result,
+                                  Model model,
+                                  Authentication auth) {
         if (result.hasErrors()) {
             this.bindUserForm(model,auth);
             model.addAttribute("action","new/");
