@@ -37,9 +37,9 @@
                                     ? ${quoteData.getAccount().getAccountName()} : ''">
                           </dd>
                           <dt class="col-md-1">Contact Name: </dt>
-                          <dd class="col-md-1"
-                              th:text="${quoteData.getContactId() != null}
-                                    ? ${quoteData.getContactId} : ''">
+                          <dd class="col-md-4"
+                              th:text="${quoteData.getContact() != null}
+                                    ? ${quoteData.getContact().getFullName()} : ''">
                           </dd>
                           <dt class="col-md-1">Created: </dt>
                           <dd class="col-md-5"

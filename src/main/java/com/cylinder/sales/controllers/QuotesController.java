@@ -30,6 +30,10 @@ import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.products.model.ProductRepository;
 import com.cylinder.products.model.Product;
+import com.cylinder.accounts.model.AccountRepository;
+import com.cylinder.accounts.model.Account;
+import com.cylinder.contacts.model.ContactRepository;
+import com.cylinder.contacts.model.Contact;
 import com.cylinder.sales.model.*;
 import com.cylinder.sales.model.forms.QuoteForm;
 
@@ -61,6 +65,18 @@ public class QuotesController extends BaseController{
      */
     @Autowired
     private CrmUserRepository userRepository;
+
+    /**
+     * Sql interface for contact entites.
+     */
+    @Autowired
+    private ContactRepository contactRepository;
+
+    /**
+     * Sql interface for account entites.
+     */
+    @Autowired
+    private AccountRepository accountRepository;
 
     /**
      * The module name that this controller is associated to.
@@ -159,6 +175,8 @@ public class QuotesController extends BaseController{
         }
         CrmUser user = userRepository.findByEmail(auth.getName());
         quoteData.getQuote().setLastModifiedBy(user);
+        Account account = quoteData.getQuote().getAccount();
+        Contact contact = quoteData.getQuote().getContact();
         for(ProductQuote productEntry: quoteData.getProductList()) {
           if (productEntry.getQuote() == null) {
             productEntry.setQuote(quoteData.getQuote());
@@ -213,6 +231,8 @@ public class QuotesController extends BaseController{
         CrmUser user = userRepository.findByEmail(auth.getName());
         quote.setCreatedBy(user);
         Quote savedQuote = quoteRepository.save(quote);
+        Account account = savedQuote.getAccount();
+        Contact contact = savedQuote.getContact();
         Long assignedId = savedQuote.getQuoteId();
         for(ProductQuote productEntry: productList) {
           if (productEntry.getQuote() == null) {
@@ -251,6 +271,8 @@ public class QuotesController extends BaseController{
     private void bindUserForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
+        model.addAttribute("contactData", contactRepository.findAll());
+        model.addAttribute("accountData", accountRepository.findAll());
         model.addAttribute("productData", productQuoteRepository.findAll());
         model.addAttribute("toList", "/quote");
     }

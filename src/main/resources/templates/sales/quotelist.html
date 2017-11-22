@@ -53,7 +53,7 @@
                         </a>
                     </td>
                   <td th:text="${quote.getAccount() != null} ? ${quote.getAccount().getAccountName()} : ''"></td>
-                  <td th:text="${quote.getContactId() != null} ? ${quote.getContactId()} : ''"></td>
+                  <td th:text="${quote.getContact() != null} ? ${quote.getContact().getFullName()} : ''"></td>
                   <td th:text="${quote.getOwner() != null} ? ${quote.getOwner().getName()} : ''"></td>
                   <td>
                       <a class="edit-link icon-spacer" th:href="@{|/quote/edit/${quote.getQuoteId()}|}" title="Edit">
