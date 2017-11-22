@@ -85,4 +85,21 @@ public class AdminUserForm {
     this.role = role;
     this.isEnabled = isEnabled;
   }
+
+  /**
+  * Is the user enabled? If they are not enabled they will not be able to log in.
+  * @return the current value of wheter the user is allowed to log in into the application.
+  */
+  public boolean getIsEnabled() {
+    return this.isEnabled;
+  }
+
+  /**
+  * Is the user enabled? If they are not enabled they will not be able to log in.
+  * @param isEnabled a value that can be used determine if the user can log in.
+  */
+  public void setIsEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
+  }
+
 }
