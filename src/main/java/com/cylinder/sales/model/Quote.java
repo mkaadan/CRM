@@ -1,6 +1,7 @@
 package com.cylinder.sales.model;
 
 import com.cylinder.accounts.model.Account;
+import com.cylinder.contacts.model.Contact;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.shared.model.SimpleAudit;
 
@@ -24,8 +25,9 @@ public class Quote extends SimpleAudit{
     /** The identifyer of the contact associated with the quote. */
     @Getter
     @Setter
-    @Column(name="contact_id")
-    private Long contactId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id", referencedColumnName = "contact_id")
+    private Contact contact;
 
     /** The account associated with the quote. */
     @Getter

@@ -28,10 +28,21 @@
                     <div class="form-group row">
                         <label for="account" class="col-lg-2 col-form-label">Account: </label>
                         <div class="col-lg-6">
-                            <select class="form-control" name="source">
+                            <select class="form-control" name="source" th:field="*{quote.account}">
                                 <option th:each="account : ${accountData}"
                                         th:value="${account.getAccountId()}"
                                         th:text="${account.getAccountName()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="contact" class="col-lg-2 col-form-label">Contact: </label>
+                        <div class="col-lg-6">
+                            <select class="form-control" name="source" th:field="*{quote.contact}">
+                                <option th:each="contact : ${contactData}"
+                                        th:value="${contact.getContactId()}"
+                                        th:text="${contact.getFullName()}">
                                 </option>
                             </select>
                         </div>
@@ -73,6 +84,16 @@
                     </table>
                     <div class="row">
                          <input type="hidden" name="quoteId" th:field="*{quote.quoteId}"></input>
+                         <input type="hidden"
+                                  name="contactId"
+                                  th:if="${quoteData.getQuote().getContact() != null}"
+                                  th:field="*{quote.contact.contactId}">
+                         </input>
+                         <input type="hidden"
+                                  name="accountId"
+                                  th:if="${quoteData.getQuote().getAccount() != null}"
+                                  th:field="*{quote.account.accountId}">
+                         </input>
                         <div class="col-lg-7"></div>
                         <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
                     </div>
