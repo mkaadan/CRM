@@ -63,5 +63,4 @@ public abstract class SimpleAudit {
   @UpdateTimestamp
   @Column(name = "last_modified")
   protected Timestamp lastModified;
-
 }

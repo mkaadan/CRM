@@ -2,44 +2,56 @@
 <th:block layout:fragment="scripts">
     <script type="text/javascript"
             th:src="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.js}"></script>
-    <script th:src="@{/js/accounts/accountsList.js}"></script>
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/accounts/list.js}"></script>
 </th:block>
 <th:block layout:fragment="stylesheets">
     <link rel="stylesheet" type="text/css"
           th:href="@{https://cdn.datatables.net/v/bs/dt-1.10.16/fh-3.1.3/sc-1.4.3/datatables.min.css}"></link>
+    <link th:href="@{/css/account/list.css}" rel="stylesheet"></link>
+
 </th:block>
 <th:block layout:fragment="content">
     <div class="container">
         <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage"></div>
             <div class="row">
-                <div class="pull-left">
-                    <h1 th:text="${moduleName}" class="moduleName"></h1>
+                <div class="col-sm-12">
+                    <a th:href="@{|/account/new/|}">
+                        <button type="button" class="btn btn-primary pull-right">Create Account</button>
+                    </a>
                 </div>
-                <div class="pull-right">
-                    <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
-                </div>
-                <a href="new/">
-                    <button type="button" class="btn btn-primary pull-right">Create Account</button>
-                </a>
             </div>
             <div class="row">
                 <div class="col-sm-12">
                     <table id="accountList" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Account Name</th>
                             <th>Phone</th>
                             <th>Website</th>
                             <th>Owner</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="account : ${accountData}">
                             <td><a th:text="${account.getAccountName()}"
                                    th:href="@{|/account/records/${account.getAccountId()}|}"></a></td>
-                            <td th:text="${account.getPhone()}"></td>
-                            <td th:text="${account.getWebsite()}"></td>
-                            <td th:text="${account.getOwner()}"></td>
+                            <td th:text="${account.getPhone() != null}?${account.getPhone()}:${''}"></td>
+                            <td th:text="${account.getWebsite() != null}?${account.getWebsite()}:${''}"></td>
+                            <td th:text="${account.getOwner()?.getName() != null}?${account.getOwner().getName()}:${''}"></td>
+                            <td>
+                                <a class="edit-link icon-spacer"
+                                   th:href="@{|/account/edit/${account.getAccountId()}|}"
+                                   title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <span th:attr="data-id=${account.getAccountId()}"
+                                      class="glyphicon glyphicon-trash icon-spacer btn-cursor"
+                                      title="Delete">
+                                </span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

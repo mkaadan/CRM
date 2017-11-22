@@ -101,4 +101,5 @@ public class AdminUserForm {
   public void setIsEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
   }
+
 }

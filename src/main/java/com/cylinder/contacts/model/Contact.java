@@ -1,6 +1,8 @@
 package com.cylinder.contacts.model;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -89,8 +91,8 @@ public class Contact extends SimpleAudit {
     */
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private Account account;
 
     /**
