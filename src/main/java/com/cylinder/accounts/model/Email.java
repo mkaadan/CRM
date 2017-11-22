@@ -11,7 +11,8 @@ import javax.persistence.Table;
  * The table mapping for an account's email .
  */
 @Entity
-@Table(name="emails", schema="account")
+@Table(name = "emails", schema = "account")
 public class Email extends SimpleEmail {
-  public Email(){}
+    public Email() {
+    }
 }

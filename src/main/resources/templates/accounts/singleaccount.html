@@ -64,7 +64,7 @@
                             <dd class="col-md-2">
                                 <ul class="list-unstyled" th:each="contact,iterStat : ${accountData.contacts}">
                                     <li><a th:text="${contact.getFullName()}"
-                                        th:href="@{|/contact/records/${contact.getContactId()}|}"></a></li>
+                                           th:href="@{|/contact/records/${contact.getContactId()}|}"></a></li>
                                     <!--<span th:if="${!iterStat.last}">, </span>-->
                                 </ul>
                             </dd>

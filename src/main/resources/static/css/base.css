@@ -1,93 +1,93 @@
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 @media (min-width: 768px) {
-  .dl-horizontal dt {
-      float: left;
-      width: 200px;
-      overflow: hidden;
-      clear: left;
-      text-align: right;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-  }
+    .dl-horizontal dt {
+        float: left;
+        width: 200px;
+        overflow: hidden;
+        clear: left;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .audit-print dd {
-  font-size: .8em;
+    font-size: .8em;
 }
 
 .audit-print dt {
-  font-size: .8em;
+    font-size: .8em;
 }
 
 .audit-location {
-  padding-left: 13%;
+    padding-left: 13%;
 }
 
 @media (min-width: 1200px) {
-  .audit-location {
-    padding-left: 5%;
-  }
+    .audit-location {
+        padding-left: 5%;
+    }
 }
 
-@@media (min-width:992px) {
-  .audit-location {
-    padding-left: 0%;
-    float: left !important; 
-  }
+@
+@media (min-width: 992px) {
+    .audit-location {
+        padding-left: 0%;
+        float: left !important;
+    }
 }
-
 
 .dl-horizontal dd {
-  margin-left: 0px;
+    margin-left: 0px;
 }
 
 .navLinks {
-  font-size: 1.25em;
+    font-size: 1.25em;
 }
 
 .spacer {
-  padding-top: 60px;
+    padding-top: 60px;
 }
 
 .wrapper {
-  min-height: 100%;
-  height: auto;
-  margin: 0 auto -60px;
-  padding: 0 0 60px;
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
 }
 
 .footer {
-  height: 60px;
-  background-color: black;
+    height: 60px;
+    background-color: black;
 }
 
 .moduleName {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .welcomeMessage {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .single-view {
-  font-size: 1.5em
+    font-size: 1.5em
 }
 
 .section-headers {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .backLink {
-  color: black;
+    color: black;
 }
 
 .backLink:hover {
-  color:black;
+    color: black;
 }
 
 .btn-cursor {
-  cursor: pointer;
+    cursor: pointer;
 }

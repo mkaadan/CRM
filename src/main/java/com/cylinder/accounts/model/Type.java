@@ -11,12 +11,12 @@ import javax.persistence.*;
  * The table mapping for an account's type .
  */
 @Entity
-@Table(name="type", schema="account")
+@Table(name = "type", schema = "account")
 public class Type {
     @Getter
     @Setter
     @Id
-    @Column(name="type_id")
+    @Column(name = "type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long typeId;
 

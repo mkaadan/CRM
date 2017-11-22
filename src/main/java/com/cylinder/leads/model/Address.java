@@ -1,14 +1,17 @@
 package com.cylinder.leads.model;
 
-import javax.persistence.*;
 import com.cylinder.shared.model.SimpleAddress;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
-* @author Ryan Piper
-* Maps lead.address table to an object.
-*/
+ * @author Ryan Piper
+ * Maps lead.address table to an object.
+ */
 @Entity
-@Table(name="addresses", schema="lead")
+@Table(name = "addresses", schema = "lead")
 public class Address extends SimpleAddress {
-  public Address(){}
+    public Address() {
+    }
 }

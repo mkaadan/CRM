@@ -1,4 +1,4 @@
-$(document).ready(function() {
-  readIntoTable("#quoteList");
-  tableDelete('/quote/records/', "#quoteList");
+$(document).ready(function () {
+    readIntoTable("#quoteList");
+    tableDelete('/quote/records/', "#quoteList");
 });

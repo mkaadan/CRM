@@ -8,9 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class Application {
 
-// Entry point to the application. Scans all of com.cylinder for springframework
+    // Entry point to the application. Scans all of com.cylinder for springframework
 // annotations and maps the logic. 
-public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
-}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
