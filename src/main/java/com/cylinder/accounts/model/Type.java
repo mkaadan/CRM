@@ -6,6 +6,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * @author Ehtasham Munib
+ * The table mapping for an account's type .
+ */
 @Entity
 @Table(name="type", schema="account")
 public class Type {
