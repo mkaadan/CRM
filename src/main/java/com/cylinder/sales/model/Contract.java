@@ -27,6 +27,7 @@ public class Contract {
     @Getter
     @Setter
     @Column(name="contract")
+    @Pattern(regexp=".*", message="Please enter a proper body.")
     private String contractText;
 
     public Contract() { }
