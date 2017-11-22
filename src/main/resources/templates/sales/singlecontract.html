@@ -1,55 +1,55 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
-  <th:block layout:fragment="stylesheets">
+<th:block layout:fragment="stylesheets">
     <link th:href="@{/css/sale/contractsingle.css}" rel="stylesheet"></link>
-  </th:block>
-  <th:block layout:fragment="scripts">
-      <script th:src="@{/js/crud.js}"></script>
-      <script th:src="@{/js/sales/contractsEdit.js}"></script>
-  </th:block>
-  <th:block layout:fragment="content">
-      <div class="wrapper">
-          <div class="container">
-              <div class="spacer">
-                  <div th:replace="fragments/welcomemessage :: welcomeMessage">
-                  </div>
-                  <div class="row pull-right">
-                      <a  class="btn btn-primary"
-                          role="button"
-                          th:href="@{|/contract/edit/${contractData.getContractId()}|}">Edit
-                      </a>
-                      <button id="deleteRecord"
-                              th:attr="data-id=${contractData.getContractId()}"
-                              class="btn btn-primary">Delete
-                      </button>
-                  </div>
-            <div class="row single-view">
-                <h3> Basic Information </h3>
-                <div class="col-md-12">
-                    <dl class="dl-horizontal">
-                      <dt class="col-md-8">ID Number: </dt>
-                      <dd class="col-md-4"
-                          th:text="${contractData.getContractId() != null}
+</th:block>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/sales/contractsEdit.js}"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+            <div class="spacer">
+                <div th:replace="fragments/welcomemessage :: welcomeMessage">
+                </div>
+                <div class="row pull-right">
+                    <a class="btn btn-primary"
+                       role="button"
+                       th:href="@{|/contract/edit/${contractData.getContractId()}|}">Edit
+                    </a>
+                    <button id="deleteRecord"
+                            th:attr="data-id=${contractData.getContractId()}"
+                            class="btn btn-primary">Delete
+                    </button>
+                </div>
+                <div class="row single-view">
+                    <h3> Basic Information </h3>
+                    <div class="col-md-12">
+                        <dl class="dl-horizontal">
+                            <dt class="col-md-8">ID Number:</dt>
+                            <dd class="col-md-4"
+                                th:text="${contractData.getContractId() != null}
                                       ? ${contractData.getContractId()} : ''">
-                      </dd>
-                      <dt class="col-md-4">Title: </dt>
-                      <dd class="col-md-8"
-                          th:text="${contractData.getContractTitle() != null}
+                            </dd>
+                            <dt class="col-md-4">Title:</dt>
+                            <dd class="col-md-8"
+                                th:text="${contractData.getContractTitle() != null}
                                     ? ${contractData.getContractTitle()} : ''">
-                      </dd>
-                    </dl>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row single-view">
+                    <h3> Body </h3>
+                    <div class="col-md-12">
+                        <dd class="col-md-12"
+                            th:text="${contractData.getContractText() != null}
+                                  ? ${contractData.getContractText()} : ''">
+                        </dd>
+                    </div>
                 </div>
             </div>
-            <div class="row single-view">
-                <h3> Body </h3>
-                <div class="col-md-12">
-                    <dd class="col-md-12"
-                        th:text="${contractData.getContractText() != null}
-                                  ? ${contractData.getContractText()} : ''" >
-                    </dd>
-                </div>
-            </div>
-          </div>
         </div>
     </div>
-  </th:block>
+</th:block>
 </html>

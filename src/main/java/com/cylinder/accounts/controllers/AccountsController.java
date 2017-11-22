@@ -1,23 +1,20 @@
 package com.cylinder.accounts.controllers;
 
-import java.lang.Iterable;
-
 import com.cylinder.accounts.model.Account;
+import com.cylinder.accounts.model.AccountRepository;
+import com.cylinder.accounts.model.AccountTypeRepository;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.shared.controllers.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-import com.cylinder.accounts.model.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -52,8 +49,9 @@ public class AccountsController extends BaseController {
 
     /**
      * Render the list view for all available accounts.
+     *
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @GetMapping
@@ -68,8 +66,9 @@ public class AccountsController extends BaseController {
 
     /**
      * Render the list view for all available accounts.
+     *
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @GetMapping(value = "/records/{id}")
@@ -87,9 +86,10 @@ public class AccountsController extends BaseController {
 
     /**
      * Render a edit view for a single account.
-     * @param id the id that is associated to some account.
+     *
+     * @param id    the id that is associated to some account.
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @GetMapping(value = "/edit/{id}")
@@ -116,9 +116,10 @@ public class AccountsController extends BaseController {
 
     /**
      * Process a form for editing a single record.
-     * @param id the id that is associated to some account.
+     *
+     * @param id    the id that is associated to some account.
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @PostMapping(value = "/edit/{id}")
@@ -148,8 +149,9 @@ public class AccountsController extends BaseController {
 
     /**
      * Render a view for a creating a single account.
+     *
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @GetMapping(value = "/new/")
@@ -162,10 +164,11 @@ public class AccountsController extends BaseController {
 
     /**
      * Process a new account form and potentially send errors back.
+     *
      * @param account The account form object to be processed.
-     * @param result the object that binds the data from the view and validates user.
-     * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param result  the object that binds the data from the view and validates user.
+     * @param model   the view model object that is used to render the html.
+     * @param auth    the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @PostMapping("/new/")
@@ -193,6 +196,7 @@ public class AccountsController extends BaseController {
 
     /**
      * Delete some account through a delete request.
+     *
      * @param id the id that is associated to some lead.
      * @return the name of the template to render.
      */
@@ -209,8 +213,9 @@ public class AccountsController extends BaseController {
 
     /**
      * Helper function to bind common model attributes whenever generating a list form.
+     *
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      */
     private void bindAccountUserForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
@@ -223,6 +228,7 @@ public class AccountsController extends BaseController {
 
     /**
      * Maps empty string to null when a form is submitted.
+     *
      * @param binder The object that allows for empty strings to be turned into nulls.
      */
     @InitBinder

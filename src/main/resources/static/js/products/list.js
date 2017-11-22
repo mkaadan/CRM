@@ -1,4 +1,4 @@
-$(document).ready(function() {
-  readIntoTable("#productsList");
-  tableDelete('/product/records/', "#productsList");
+$(document).ready(function () {
+    readIntoTable("#productsList");
+    tableDelete('/product/records/', "#productsList");
 });

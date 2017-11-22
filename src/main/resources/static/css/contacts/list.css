@@ -5,27 +5,27 @@
 }
 
 .single-space {
-  padding-top: 25px;
+    padding-top: 25px;
 }
 
 .edit-link {
-  color: black;
+    color: black;
 }
 
 .edit-link:visited {
-  color:black;
+    color: black;
 }
 
 .edit-link:hover {
-  color: black;
-  text-decoration: none;
+    color: black;
+    text-decoration: none;
 }
 
 .edit-link:active {
-  color:black;
+    color: black;
 }
 
 .icon-spacer {
-  padding-left: 5px;
-  padding-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
