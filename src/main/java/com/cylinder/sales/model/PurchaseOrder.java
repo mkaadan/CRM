@@ -45,5 +45,6 @@ public class PurchaseOrder extends SimpleAudit{
     @OneToMany(mappedBy = "purchaseOrder")
     private Set<ProductPurchaseOrder> productPurchaseOrder;
 
-    public PurchaseOrder() { }    
+    public PurchaseOrder() { }
+
 }
