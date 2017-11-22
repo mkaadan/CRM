@@ -1,6 +1,7 @@
 package com.cylinder.sales.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import lombok.*;
 import java.io.Serializable;
 
@@ -36,12 +37,15 @@ public class ProductQuote implements Serializable{
     @Getter
     @Setter
     @Column
+    @Pattern(regexp = "[0-9]*[1-9]+",message="Please enter a valid quantity.")
     private Long quantity;
 
     /** The discount on the product on the quote. */
     @Getter
     @Setter
     @Column
+    @DecimalMax(value="0.99",message="Please enter a valid quantity.")
+    @DecimalMin(value="0.00",message="Please enter a valid quantity.")
     private float discount;
 
 //    public boolean equals(Object o) {
