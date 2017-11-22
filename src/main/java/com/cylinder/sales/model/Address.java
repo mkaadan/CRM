@@ -1,10 +1,13 @@
 package com.cylinder.sales.model;
 
-import javax.persistence.*;
 import com.cylinder.shared.model.SimpleAddress;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 @Entity
-@Table(name="addresses", schema="sale")
+@Table(name = "addresses", schema = "sale")
 public class Address extends SimpleAddress {
-  public Address(){}
+    public Address() {
+    }
 }

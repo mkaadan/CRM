@@ -7,9 +7,9 @@
                 </div>
             </div>
             <div class="single-space"></div>
-            <form  class="row" th:object="${quoteData}" th:action="@{|/quote/${action}|}" method="post">
+            <form class="row" th:object="${quoteData}" th:action="@{|/quote/${action}|}" method="post">
                 <div class="col-lg-12">
-                    <div class = "row">
+                    <div class="row">
                         <div class="col-lg-12 title-gap">
                             <h3> Basic Information </h3>
                         </div>
@@ -48,60 +48,61 @@
                         </div>
                     </div>
                     <table>
-                      <thead>
+                        <thead>
                         <tr>
-                          <th >Row</th>
-                          <th >Product</th>
-                          <th >Quantity</th>
-                          <th >Discount</th>
-                          <th>
-                            <button type="submit" name="addRow" >Add row</button>
-                          </th>
+                            <th>Row</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Discount</th>
+                            <th>
+                                <button type="submit" name="addRow">Add row</button>
+                            </th>
                         </tr>
-                      </thead>
-                      <tbody>
+                        </thead>
+                        <tbody>
                         <tr th:each="row,rowStat : *{productList}">
-                          <td th:text="${rowStat.count}">0</td>
-                          <td>
-                            <select th:field="*{productList[__${rowStat.index}__].product}">
-                              <option th:each="var : ${allProducts}"
-                                      th:value="${var.productId}"
-                                      th:text="${var.name}"></option>
-                            </select>
-                          </td>
-                          <td>
-                            <input type="text" th:field="*{productList[__${rowStat.index}__].quantity}" />
-                            <span class="help-block"
-                                  th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
-                                  th:errors="*{quantity}">
+                            <td th:text="${rowStat.count}">0</td>
+                            <td>
+                                <select th:field="*{productList[__${rowStat.index}__].product}">
+                                    <option th:each="var : ${allProducts}"
+                                            th:value="${var.productId}"
+                                            th:text="${var.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${rowStat.index}__].quantity}"/>
+                                <span class="help-block"
+                                      th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
+                                      th:errors="*{quantity}">
                             </span>
-                          </td>
-                          <td>
-                            <input type="text" th:field="*{productList[__${rowStat.index}__].discount}" />
-                            <span class="help-block"
-                                  th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
-                                  th:errors="*{quantity}">
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${rowStat.index}__].discount}"/>
+                                <span class="help-block"
+                                      th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
+                                      th:errors="*{quantity}">
                             </span>
-                          </td>
-                          <td>
-                            <button type="submit" name="removeRow"
-                                    th:value="${rowStat.index}" >Remove row</button>
-                          </td>
+                            </td>
+                            <td>
+                                <button type="submit" name="removeRow"
+                                        th:value="${rowStat.index}">Remove row
+                                </button>
+                            </td>
                         </tr>
-                      </tbody>
+                        </tbody>
                     </table>
                     <div class="row">
-                         <input type="hidden" name="quoteId" th:field="*{quote.quoteId}"></input>
-                         <input type="hidden"
-                                  name="contactId"
-                                  th:if="${quoteData.getQuote().getContact() != null}"
-                                  th:field="*{quote.contact.contactId}">
-                         </input>
-                         <input type="hidden"
-                                  name="accountId"
-                                  th:if="${quoteData.getQuote().getAccount() != null}"
-                                  th:field="*{quote.account.accountId}">
-                         </input>
+                        <input type="hidden" name="quoteId" th:field="*{quote.quoteId}"></input>
+                        <input type="hidden"
+                               name="contactId"
+                               th:if="${quoteData.getQuote().getContact() != null}"
+                               th:field="*{quote.contact.contactId}">
+                        </input>
+                        <input type="hidden"
+                               name="accountId"
+                               th:if="${quoteData.getQuote().getAccount() != null}"
+                               th:field="*{quote.account.accountId}">
+                        </input>
                         <div class="col-lg-7"></div>
                         <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
                     </div>
