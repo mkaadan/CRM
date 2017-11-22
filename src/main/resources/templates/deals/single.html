@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="stylesheets">
+    <link th:href="@{/css/deal/single.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="scripts">
+    <script th:src="@{/js/crud.js}"></script>
+    <script th:src="@{/js/deals/edit.js}"></script>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="row pull-right">
+              <a  class="btn btn-primary"
+                  role="button"
+                  th:href="@{|/deal/edit/${dealData.getDealId()}|}">Edit
+              </a>
+              <button id="deleteRecord"
+                      th:attr="data-id=${dealData.getDealId()}"
+                      class="btn btn-primary">Delete
+              </button>
+            </div>
+            <div class="single-space row"></div>
+            <div class="row single-view">
+                <h3> Basic Information </h3>
+                <div class="col-md-12">
+                    <dl class="dl-horizontal">
+                      <dt class="col-md-2">Deal Owner: </dt>
+                      <dd class="col-md-2"
+                          th:text="${dealData.getOwner().getName()}">
+                      </dd>
+                      <dt class="col-md-2">Deal Name: </dt>
+                      <dd class="col-md-2"
+                          th:text="${dealData.getDealName() != null}
+                                      ? ${dealData.getDealName()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Type: </dt>
+                      <dd class="col-md-2"
+                          th:text="${dealData.getType() != null}
+                                    ? ${dealData.getType()?.getDescriptor()} : ''">
+                      </dd>
+                      <dt class="col-md-2">Stage: </dt>
+                      <dd class="col-md-2"
+                          th:text="${dealData.getStage() != null}
+                                    ? ${dealData.getStage()?.getDescriptor()} : ''">
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3> Contact Details </h3>
+                <div class="col-md-12">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Main Contact: </dt>
+                    <dd th:if ="${dealData.getContact()?.getContactId() != null}" class="col-md-2">
+                      <a th:href="@{|/contact/record/${dealData.getContact().getContactId()}|}"
+                         th:text="${dealData.getContact().getFullName()}">
+                      </a>
+                    </dd>
+                    <dt class="col-md-2">Main Account: </dt>
+                    <dd th:if ="${dealData.getAccount()?.getAccountId() != null}" class="col-md-2">
+                      <a th:href="@{|/account/record/${dealData.getAccount().getAccountId()}|}"
+                         th:text="${dealData.getAccount().getAccountName()}">
+                      </a>
+                    </dd>
+                  </dl>
+                </div>
+            </div>
+            <div class="row single-view">
+                <h3 class="section-headers">Deal Information</h3>
+                <div class="col-md-4">
+                  <dl class="dl-horizontal">
+                    <dt class="col-md-2">Expected Revenue: </dt>
+                    <dd th:text="${dealData.getExpectedRevenue()}">
+                    </dd>
+                    <dt class="col-md-2">Actual Amount Earned: </dt>
+                    <dd th:if="${dealData.getActualAmountEarned() != null}"
+                        th:text="${dealData.getActualAmountEarned()}">
+                    </dd>
+                  </dl>
+                </div>
+            </div>
+            <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt th:if="${dealData.getCreatedBy()?.getName() != null}"
+                          class="col-md-4">Created By: </dt>
+                      <dd th:text="${dealData.getCreatedBy()?.getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt class="col-md-4">Created: </dt>
+                      <dd th:text="${dealData.getCreated()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${dealData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${dealData.getLastModifiedBy() != null}"
+                          th:text="${dealData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${dealData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${dealData.getLastModifiedBy() != null}"
+                          th:text="${dealData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>

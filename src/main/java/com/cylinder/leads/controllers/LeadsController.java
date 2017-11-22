@@ -196,7 +196,6 @@ public class LeadsController extends BaseController {
         } else {
           return "Failed to delete record" + id;
         }
-
       }
 
       /**

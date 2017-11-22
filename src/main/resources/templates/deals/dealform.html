@@ -1,0 +1,129 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+          </div>
+          <div class="single-space"></div>
+          <form  class="row" th:object="${dealData}" th:action="@{|/deal/${action}|}" method="post">
+            <div class="col-lg-12">
+              <div class = "row">
+                 <div class="col-lg-12 title-gap">
+                   <h3> Basic Information </h3>
+                 </div>
+               </div>
+              <div class="form-group row">
+                 <label for="source" class="col-lg-2 col-form-label">Deal Owner: </label>
+                 <div class="col-lg-6">
+                   <select class="form-control" name="source" th:field="*{owner}">
+                     <option th:each="user : ${userData}"
+                             th:value="${user.getAccountId()}"
+                             th:text="${user.getName()}">
+                     </option>
+                   </select>
+                 </div>
+              </div>
+              <div class="form-group row">
+                <label for="dealName" class="col-lg-2 col-form-label">Deal Name: </label>
+                <div class="col-lg-6" th:classappend="${#fields.hasErrors('dealName')}?'has-error':''">
+                    <input class="form-control"
+                           type="text"
+                           name="dealName"
+                           th:field="*{dealName}">
+                    </input>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('dealName')}"
+                          th:errors="*{dealName}">
+                    </span>
+                </div>
+              </div>
+                <div class="form-group row">
+                    <label for="type" class="col-lg-2 col-form-label">Type: </label>
+                    <select class="form-control" name="source" th:field="*{type}">
+                        <option th:each="type : ${typeData}"
+                                th:value="${type.getTypeId()}"
+                                th:text="${type.getDescriptor()}">
+                        </option>
+                    </select>
+                </div>
+              <div class="form-group row">
+                <label for="stage" class="col-lg-2 col-form-label">Stage: </label>
+                <select class="form-control" name="source" th:field="*{stage}">
+                  <option th:each="stage : ${stageData}"
+                          th:value="${stage.getStageId()}"
+                          th:text="${stage.getDescriptor()}">
+                  </option>
+                </select>
+              </div>
+                <div class="col-lg-12">
+                 <div class = "row">
+                  <div class="col-lg-12 title-gap">
+                    <h3> Contact Details </h3>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="contact" class="col-lg-2 col-form-label">Main Contact: </label>
+                  <select class="form-control" name="source" th:field="*{contact}">
+                    <option th:each="contact : ${contactData}"
+                            th:value="${contact.getContactId()}"
+                            th:text="${contact.getFullName()}">
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group row">
+                  <label for="account" class="col-lg-2 col-form-label">Main Account: </label>
+                  <select class="form-control" name="source" th:field="*{account}">
+                    <option th:each="account : ${accountData}"
+                            th:value="${account.getAccountId()}"
+                            th:text="${account.getAccountName()}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+                <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12 title-gap">
+                        <h3> Deal Information </h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="expectedRevenue" class="col-lg-2 col-form-label">Expected Revenue: </label>
+                      <div class="col-lg-6" th:classappend="${#fields.hasErrors('expectedRevenue')}?'has-error':''">
+                          <input class="form-control"
+                                 type="text"
+                                 name="expectedRevenue"
+                                 th:field="*{expectedRevenue}">
+                          </input>
+                          <span class="help-block"
+                                th:if="${#fields.hasErrors('expectedRevenue')}"
+                                th:errors="*{expectedRevenue}">
+                          </span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="actualAmountEarned" class="col-lg-2 col-form-label">Actual Amount Earned: </label>
+                      <div class="col-lg-6" th:classappend="${#fields.hasErrors('actualAmountEarned')}?'has-error':''">
+                          <input class="form-control"
+                                 type="text"
+                                 name="actualAmountEarned"
+                                 th:field="*{actualAmountEarned}">
+                          </input>
+                          <span class="help-block"
+                                th:if="${#fields.hasErrors('actualAmountEarned')}"
+                                th:errors="*{actualAmountEarned}">
+                          </span>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-lg-7"></div>
+              <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </th:block>
+</html>
