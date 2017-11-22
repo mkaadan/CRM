@@ -17,8 +17,8 @@
                     <div class="form-group row">
                         <label for="owner" class="col-lg-2 col-form-label">Quote Owner: </label>
                         <div class="col-lg-6">
-                            <select class="form-control" name="source" th:field="*{quote}">
-                            quantity    <option th:each="user : ${userData}"
+                            <select class="form-control" name="source" th:field="*{quote.owner}">
+                                <option th:each="user : ${userData}"
                                         th:value="${user.getAccountId()}"
                                         th:text="${user.getName()}">
                                 </option>
@@ -40,8 +40,9 @@
                       <thead>
                         <tr>
                           <th >Row</th>
-                          <th >Variety</th>
-                          <th >Seeds per cell</th>
+                          <th >Product</th>
+                          <th >Quantity</th>
+                          <th >Discount</th>
                           <th>
                             <button type="submit" name="addRow" >Add row</button>
                           </th>
@@ -59,6 +60,9 @@
                           </td>
                           <td>
                             <input type="text" th:field="*{productList[__${rowStat.index}__].quantity}" />
+                          </td>
+                          <td>
+                            <input type="text" th:field="*{productList[__${rowStat.index}__].discount}" />
                           </td>
                           <td>
                             <button type="submit" name="removeRow"
