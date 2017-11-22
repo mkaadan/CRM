@@ -17,9 +17,4 @@ public interface ProductQuoteRepository extends CrudRepository<ProductQuote, Lon
   @Modifying
   @Query(value="DELETE FROM sale.quote_product_lookup WHERE quote_id=:quoteId", nativeQuery=true)
   int deleteProductsByQuoteId(@Param("quoteId") Long quoteId);
-  // 
-  // @Transactional
-  // @Modifying
-  // @Query(value="DELETE FROM sale.quote_product_lookup WHERE quote_id=:quoteId", nativeQuery=true)
-  // int deleteProductsByQuoteId(@Param("quoteId") Long quoteId);
 }

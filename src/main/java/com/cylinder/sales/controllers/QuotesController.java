@@ -274,6 +274,16 @@ public class QuotesController extends BaseController{
         return "sales/editsinglequote";
     }
 
+    @RequestMapping(value="/new/", params={"addRow"})
+    public String addRowToNew(final @ModelAttribute("quoteData") QuoteForm quoteData,
+                         Authentication auth,
+                         Model model) {
+        this.bindUserForm(model,auth);
+        model.addAttribute("action","new/");
+        quoteData.getProductList().add(new ProductQuote());
+        return "sales/editsinglequote";
+    }
+
     @RequestMapping(value="/edit/{id}", params={"removeRow"})
     public String removeRow(final @ModelAttribute("quoteData") QuoteForm quoteData,
                          @PathVariable("id") Long id,
@@ -284,6 +294,18 @@ public class QuotesController extends BaseController{
         quoteData.getProductList().remove(rowId.intValue());
         this.bindUserForm(model,auth);
         model.addAttribute("action","edit/" + id);
+        return "sales/editsinglequote";
+    }
+
+    @RequestMapping(value="/new/", params={"removeRow"})
+    public String removeRowFromNew(final @ModelAttribute("quoteData") QuoteForm quoteData,
+                         Authentication auth,
+                         Model model,
+                         final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        quoteData.getProductList().remove(rowId.intValue());
+        this.bindUserForm(model,auth);
+        model.addAttribute("action","new/");
         return "sales/editsinglequote";
     }
 

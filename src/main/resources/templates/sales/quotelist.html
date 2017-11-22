@@ -2,6 +2,7 @@
   <th:block layout:fragment="scripts">
     <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/crud.js}"></script>
     <script th:src="@{/js/sales/quotesList.js}"></script>
   </th:block>
   <th:block layout:fragment="stylesheets">
@@ -25,7 +26,7 @@
           </div>
           <div class ="row">
             <div class="col-sm-12">
-              <a th:href="@{|/quote/#|}">
+              <a th:href="@{|/quote/new/|}">
                 <button class="btn-primary pull-right btn-list">
                       <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -41,6 +42,7 @@
                     <th>Account</th>
                     <th>Contact</th>
                     <th>Owner</th>
+                    <th>Actions</th>
                   </tr>
               </thead>
               <tbody>
@@ -53,6 +55,15 @@
                   <td th:text="${quote.getAccount() != null} ? ${quote.getAccount().getAccountName()} : ''"></td>
                   <td th:text="${quote.getContactId() != null} ? ${quote.getContactId()} : ''"></td>
                   <td th:text="${quote.getOwner() != null} ? ${quote.getOwner().getName()} : ''"></td>
+                  <td>
+                      <a class="edit-link icon-spacer" th:href="@{|/quote/edit/${quote.getQuoteId()}|}" title="Edit">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                      </a>
+                      <span th:attr="data-id=${quote.getQuoteId()}"
+                            class="glyphicon glyphicon-trash icon-spacer btn-cursor"
+                            title="Delete">
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </table>

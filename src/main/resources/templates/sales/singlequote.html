@@ -2,6 +2,7 @@
   <th:block layout:fragment="scripts">
       <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
       <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+      <script th:src="@{/js/crud.js}"></script>
       <script th:src="@{/js/sales/quotesSingle.js}"></script>
   </th:block>
   <th:block layout:fragment="stylesheets">
@@ -14,6 +15,16 @@
         <div class="container">
           <div class="spacer">
             <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="row pull-right">
+                <a  class="btn btn-primary"
+                    role="button"
+                    th:href="@{|/quote/edit/${quoteData.getQuoteId()}|}">Edit
+                </a>
+                <button id="deleteRecord"
+                        th:attr="data-id=${quoteData.getQuoteId()}"
+                        class="btn btn-primary">Delete
+                </button>
             </div>
             <div class="single-space row"></div>
               <div class="row single-view">
@@ -45,6 +56,10 @@
                           <dt>Quoted By: </dt>
                           <dd th:text="${quoteData.getCreatedBy() != null}
                                   ? ${quoteData.getCreatedBy().getName()} : ''">
+                          </dd>
+                          <dt>Owner: </dt>
+                          <dd th:text="${quoteData.getOwner() != null}
+                                  ? ${quoteData.getOwner().getName()} : ''">
                           </dd>
                       </dl>
                   </div>
