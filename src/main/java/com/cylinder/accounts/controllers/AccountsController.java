@@ -35,7 +35,7 @@ public class AccountsController extends BaseController {
      * Sql interface for type entites.
      */
     @Autowired
-    private TypeRepository typeRepository;
+    private AccountTypeRepository typeRepository;
 
     /**
      * Sql interface for contact entites.
