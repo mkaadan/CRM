@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+  <th:block layout:fragment="scripts">
+      <script th:src="@{/webjars/datatables/1.10.12/js/jquery.dataTables.min.js}"></script>
+      <script th:src="@{/webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js}"></script>
+      <script th:src="@{/js/crud.js}"></script>
+      <script th:src="@{/js/sales/quotesSingle.js}"></script>
+  </th:block>
+  <th:block layout:fragment="stylesheets">
+      <link th:href="@{/webjars/datatables/1.10.12/css/jquery.dataTables.css}" rel="stylesheet"></link>
+      <link th:href="@{/webjars/datatables/1.10.12/css/dataTables.bootstrap.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/sale/quotesingle.css}" rel="stylesheet"></link>
+  </th:block>
+  <th:block layout:fragment="content">
+    <div class="wrapper">
+        <div class="container">
+          <div class="spacer">
+            <div th:replace="fragments/welcomemessage :: welcomeMessage">
+            </div>
+            <div class="row pull-right">
+                <a  class="btn btn-primary"
+                    role="button"
+                    th:href="@{|/quote/edit/${quoteData.getQuoteId()}|}">Edit
+                </a>
+                <button id="deleteRecord"
+                        th:attr="data-id=${quoteData.getQuoteId()}"
+                        class="btn btn-primary">Delete
+                </button>
+            </div>
+            <div class="single-space row"></div>
+              <div class="row single-view">
+                  <h3 class="section-headers"> Basic Information </h3>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt class="col-md-1">Account: </dt>
+                          <dd class="col-md-1">
+                              <a th:if="${quoteData.getAccount() != null}"
+                                th:href="@{|/account/records/${quoteData.getAccount().getAccountId()}|}"
+                                th:text="${quoteData.getAccount()?.getAccountName()}">
+                              </a>
+                          </dd>
+                          <dt class="col-md-1">Contact Name: </dt>
+                          <dd class="col-md-4">
+                            <a th:if="${quoteData.getContact() != null}"
+                               th:href="@{|/contact/records/${quoteData.getContact().getContactId()}|}"
+                               th:text="${quoteData.getContact()?.getFullName()}">
+                            </a>
+                          </dd>
+                          <dt class="col-md-1">Created: </dt>
+                          <dd class="col-md-5"
+                              th:text="${quoteData.getCreated()}">
+                          </dd>
+                      </dl>
+                  </div>
+                  <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                          <dt>Quote #: </dt>
+                          <dd th:text="${quoteData.getQuoteId() != null}
+                                  ? ${quoteData.getQuoteId()} : ''">
+                          </dd>
+                          <dt>Quoted By: </dt>
+                          <dd th:text="${quoteData.getCreatedBy() != null}
+                                  ? ${quoteData.getCreatedBy().getName()} : ''">
+                          </dd>
+                          <dt>Owner: </dt>
+                          <dd th:text="${quoteData.getOwner() != null}
+                                  ? ${quoteData.getOwner().getName()} : ''">
+                          </dd>
+                      </dl>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-12">
+                      <h3 class="section-headers"> Product Information </h3>
+                      <table id ="quoteSingle" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                          <thead>
+                          <tr>
+                              <th>Product Number</th>
+                              <th>Description</th>
+                              <th>Quantity</th>
+                              <th>Unit Price</th>
+                              <th>Discount</th>
+                              <th>Unit Total</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="productQuote : ${productQuoteData}">
+                              <td th:text="${productQuote.getProduct() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productQuote.getQuantity() != null} ? ${productQuote.getQuantity()} : ''"></td>
+                              <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productQuote.getDiscount() != null} ? ${productQuote.getDiscount()} : ''"></td>
+                              <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <div class="row spacer">
+                <div class="col-md-12">
+                    <dl class="dl-horizontal col-md-6 audit-print audit-location pull-right">
+                      <dt th:if="${quoteData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified By: </dt>
+                      <dd th:if="${quoteData.getLastModifiedBy() != null}"
+                          th:text="${quoteData.getLastModifiedBy().getName()}"
+                          class="col-md-6">
+                      </dd>
+                      <dt th:if="${quoteData.getLastModifiedBy() != null}"
+                          class="col-md-4">Last Modified: </dt>
+                      <dd th:if="${quoteData.getLastModifiedBy() != null}"
+                          th:text="${quoteData.getLastModified()}"
+                          class="col-md-6">
+                      </dd>
+                    </dl>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </th:block>
+</html>
