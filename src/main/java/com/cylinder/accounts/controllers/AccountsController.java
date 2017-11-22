@@ -25,17 +25,37 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/account")
 public class AccountsController extends BaseController {
-
+    /**
+     * Sql interface for account entites.
+     */
     @Autowired
     private AccountRepository accountRepository;
+
+    /**
+     * Sql interface for type entites.
+     */
     @Autowired
     private TypeRepository typeRepository;
+
+    /**
+     * Sql interface for contact entites.
+     */
     @Autowired
     private ContactRepository contactRepository;
+
+    /**
+     * Sql interface for crm user entites.
+     */
     @Autowired
     private CrmUserRepository userRepository;
     private final String moduleName = "Accounts";
 
+    /**
+     * Render the list view for all available accounts.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @GetMapping
     public String list(Model model, Authentication auth) {
 
@@ -46,6 +66,12 @@ public class AccountsController extends BaseController {
         return "accounts/list";
     }
 
+    /**
+     * Render the list view for all available accounts.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @GetMapping(value = "/records/{id}")
     public String singleRecord(@PathVariable("id") Long id,
                                Model model,
@@ -59,6 +85,13 @@ public class AccountsController extends BaseController {
         return "accounts/singleaccount";
     }
 
+    /**
+     * Render a edit view for a single account.
+     * @param id the id that is associated to some account.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @GetMapping(value = "/edit/{id}")
     public String editAccount(@PathVariable("id") Long id,
                               Model model,
@@ -81,6 +114,13 @@ public class AccountsController extends BaseController {
         return "accounts/editsingle";
     }
 
+    /**
+     * Process a form for editing a single record.
+     * @param id the id that is associated to some account.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @PostMapping(value = "/edit/{id}")
     public String saveEditableAccount(@PathVariable("id") Long id,
                                       @Valid @ModelAttribute("accountData") Account account,
@@ -106,6 +146,12 @@ public class AccountsController extends BaseController {
         return "redirect:/account/records/" + assignedId.toString();
     }
 
+    /**
+     * Render a view for a creating a single account.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @GetMapping(value = "/new/")
     public String newRecord(Model model, Authentication auth) {
         bindUserForm(model, auth);
@@ -114,6 +160,14 @@ public class AccountsController extends BaseController {
         return "accounts/editsingle";
     }
 
+    /**
+     * Process a new account form and potentially send errors back.
+     * @param account The account form object to be processed.
+     * @param result the object that binds the data from the view and validates user.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     * @return the name of the template to render.
+     */
     @PostMapping("/new/")
     public String saveNewAccount(@Valid @ModelAttribute("accountData") Account account,
                                  BindingResult result,
@@ -137,6 +191,11 @@ public class AccountsController extends BaseController {
         return "redirect:/account/records/" + assignedId.toString();
     }
 
+    /**
+     * Delete some account through a delete request.
+     * @param id the id that is associated to some lead.
+     * @return the name of the template to render.
+     */
     @DeleteMapping("/records/{id}")
     @ResponseBody
     public String deleteRecord(@PathVariable("id") Long id) {
@@ -148,6 +207,11 @@ public class AccountsController extends BaseController {
         }
     }
 
+    /**
+     * Helper function to bind common model attributes whenever generating a list form.
+     * @param model the view model object that is used to render the html.
+     * @param auth the authentication context that manages which users are logged in.
+     */
     private void bindUserForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
@@ -157,6 +221,10 @@ public class AccountsController extends BaseController {
         model.addAttribute("toList", "/account");
     }
 
+    /**
+     * Maps empty string to null when a form is submitted.
+     * @param binder The object that allows for empty strings to be turned into nulls.
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
