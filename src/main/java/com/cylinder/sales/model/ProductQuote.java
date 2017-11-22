@@ -54,7 +54,7 @@ public class ProductQuote implements Serializable{
      * @return the total of the item's price
      */
     public BigDecimal getUnitTotal(){
-        float multiplyer = discount * quantity;
+        float multiplyer = (1 - discount) * quantity;
         BigDecimal unitTotal = product.getUnitPrice().multiply(new BigDecimal(multiplyer));
         unitTotal = unitTotal.setScale(2,RoundingMode.CEILING);
        return unitTotal;
