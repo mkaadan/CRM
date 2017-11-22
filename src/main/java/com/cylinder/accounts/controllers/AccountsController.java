@@ -106,7 +106,7 @@ public class AccountsController extends BaseController {
             return "redirect:/404.html";
         }
 
-        bindUserForm(model, auth);
+        bindAccountUserForm(model, auth);
 
         model.addAttribute("accountData", account);
         model.addAttribute("action", "edit/" + id);
@@ -129,7 +129,7 @@ public class AccountsController extends BaseController {
                                       Authentication auth) {
 
         if (result.hasErrors()) {
-            this.bindUserForm(model, auth);
+            this.bindAccountUserForm(model, auth);
             model.addAttribute("action", "edit/" + account.getAccountId());
             return "accounts/editsingle";
         }
@@ -154,7 +154,7 @@ public class AccountsController extends BaseController {
      */
     @GetMapping(value = "/new/")
     public String newRecord(Model model, Authentication auth) {
-        bindUserForm(model, auth);
+        bindAccountUserForm(model, auth);
         model.addAttribute("action", "new/");
         model.addAttribute("accountData", new Account());
         return "accounts/editsingle";
@@ -174,7 +174,7 @@ public class AccountsController extends BaseController {
                                  Model model,
                                  Authentication auth) {
         if (result.hasErrors()) {
-            this.bindUserForm(model, auth);
+            this.bindAccountUserForm(model, auth);
             model.addAttribute("action", "new/");
             return "accounts/editsingle";
         }
@@ -212,7 +212,7 @@ public class AccountsController extends BaseController {
      * @param model the view model object that is used to render the html.
      * @param auth the authentication context that manages which users are logged in.
      */
-    private void bindUserForm(Model model, Authentication auth) {
+    private void bindAccountUserForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
         model.addAttribute("accountType", typeRepository.findAll());
