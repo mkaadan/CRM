@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.cylinder.products.model.Product;
 
@@ -46,4 +48,15 @@ public class ProductQuote implements Serializable{
     @DecimalMax(value="0.99",message="Please enter a valid discount.")
     @DecimalMin(value="0.00",message="Please enter a valid discount.")
     private float discount;
+
+    /**
+     * Calculate a total for the item
+     * @return the total of the item's price
+     */
+    public BigDecimal getUnitTotal(){
+        float multiplyer = discount * quantity;
+        BigDecimal unitTotal = product.getUnitPrice().multiply(new BigDecimal(multiplyer));
+        unitTotal = unitTotal.setScale(2,RoundingMode.CEILING);
+       return unitTotal;
+    }
 }

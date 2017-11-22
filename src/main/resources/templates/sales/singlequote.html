@@ -87,9 +87,9 @@
                               <td th:text="${productQuote.getProduct() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
                               <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
                               <td th:text="${productQuote.getQuantity() != null} ? ${productQuote.getQuantity()} : ''"></td>
-                              <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productQuote.getProduct().getUnitPrice() != null} ? ${productQuote.getProduct().getUnitPrice()} : ''"></td>
                               <td th:text="${productQuote.getDiscount() != null} ? ${productQuote.getDiscount()} : ''"></td>
-                              <td th:text="${productQuote.getProduct().getProductId() != null} ? ${productQuote.getProduct().getProductId()} : ''"></td>
+                              <td th:text="${productQuote.getUnitTotal() != null} ? ${productQuote.getUnitTotal()} : ''"></td>
                           </tr>
                           </tbody>
                       </table>
