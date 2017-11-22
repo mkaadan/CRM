@@ -46,60 +46,6 @@ public class PasswordForm {
   public PasswordForm() {}
 
   /**
-   * Gets currentPassword
-   *
-   * @return value of currentPassword
-   */
-  public String getCurrentPassword() {
-    return currentPassword;
-  }
-
-  /**
-   * Sets currentPassword
-   *
-   * @param currentPassword value of to be set
-   */
-  public void setCurrentPassword(String currentPassword) {
-    this.currentPassword = currentPassword;
-  }
-
-  /**
-   * Gets accountId
-   *
-   * @return value of accountId
-   */
-  public Long getAccountId() {
-    return accountId;
-  }
-
-  /**
-   * Sets accountId
-   *
-   * @param accountId value of to be set
-   */
-  public void setAccountId(Long accountId) {
-    this.accountId = accountId;
-  }
-
-  /**
-   * Gets newPassword
-   *
-   * @return value of newPassword
-   */
-  public String getNewPassword() {
-    return newPassword;
-  }
-
-  /**
-   * Sets newPassword
-   *
-   * @param newPassword value of to be set
-   */
-  public void setNewPassword(String newPassword) {
-    this.newPassword = newPassword;
-  }
-
-  /**
   * Hash the new password for storge in the database.
   * @param passwordEncoder the bcrypt password encoder that hashes the password.
   */
