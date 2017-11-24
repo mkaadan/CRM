@@ -15,6 +15,9 @@ buildscript {
 jar {
     baseName = 'cylinder'
     version =  '0.0.1'
+    manifest {
+      attributes('Main-Class': 'com.cylinder.Application')
+  }
 }
 
 repositories {
@@ -39,5 +42,6 @@ dependencies {
     compile("org.webjars:datatables:1.10.12")
     compile("org.webjars:datatables-plugins:1.10.12")
     compile("com.h2database:h2:1.4.196")
-    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.h2database:h2:1.4.196")
 }
