@@ -44,7 +44,7 @@ public class LeadControllerTest extends ControllerTests {
   @MockBean
   private StatusRepository statusRepository;
 
-  private ArrayList<Lead> getLeadListData() {
+  private ArrayList<Lead> mockLeadListData() {
     ArrayList<Lead> leads = new ArrayList();
     Lead lead = new Lead();
     lead.setLeadId(new Long("1"));
@@ -61,7 +61,7 @@ public class LeadControllerTest extends ControllerTests {
     return leads;
   }
 
-  private Lead getSingleLeadData() {
+  private Lead mockSingleLeadData() {
     Lead lead = new Lead();
     lead.setLeadId(new Long("1"));
     lead.setLastName("Testa");
@@ -106,15 +106,15 @@ public class LeadControllerTest extends ControllerTests {
                              .apply(springSecurity(super.springSecurityFilterChain))
                              .build();
     super.mockUserRepository();
-    Iterable<Lead> leads = getLeadListData();
+    Iterable<Lead> leads = mockLeadListData();
     Iterable<Source> sources = mockSourceData();
     Iterable<Status> statuses = mockStatusData();
     given(this.leadRepository.findAll()).willReturn(leads);
-    given(this.leadRepository.findOne(eq(new Long("1")))).willReturn(getSingleLeadData());
+    given(this.leadRepository.findOne(eq(new Long("1")))).willReturn(mockSingleLeadData());
     given(this.leadRepository.findOne(eq(new Long("1")))).willReturn(null);
     given(this.leadRepository.existsById(new Long("1"))).willReturn(true);
     given(this.leadRepository.existsById(new Long("5"))).willReturn(false);
-    given(this.leadRepository.save(any(Lead.class))).willReturn(getSingleLeadData());
+    given(this.leadRepository.save(any(Lead.class))).willReturn(mockSingleLeadData());
     given(this.sourceRepository.findAll()).willReturn(sources);
     given(this.statusRepository.findAll()).willReturn(statuses);
   }
