@@ -43,5 +43,6 @@ dependencies {
     compile("org.webjars:datatables-plugins:1.10.12")
     compile("com.h2database:h2:1.4.196")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
     testCompile("com.h2database:h2:1.4.196")
 }
