@@ -97,7 +97,7 @@ public class SalesOrderController extends BaseController{
 
     @ModelAttribute("allProducts")
     public List<Product> populateProducts() {
-        return iterableToListProduct(productRepository.findAll());
+        return iterableToList(productRepository.findAll());
     }
 
 
@@ -180,6 +180,7 @@ public class SalesOrderController extends BaseController{
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
+        SalesOrder salesOrder;
         if (salesOrderRepository.existsById(id)) {
             salesOrder = salesOrderRepository.findOne(id);
         } else {
@@ -304,7 +305,7 @@ public class SalesOrderController extends BaseController{
     /**
      * Maps empty string to null when a form is submitted.
      *
-     * @param binder The objectiterableToList(productSalesOrderRepository)); that allows for empty strings to be turned into nulls.
+     * @param binder The object that allows for empty strings to be turned into nulls.
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -396,27 +397,14 @@ public class SalesOrderController extends BaseController{
      * @param products  the iterable to convert
      * @return a list of all the products in the iterable
      */
-    private List<ProductSalesOrder> iterableToList(Iterable<ProductSalesOrder> products){
-        List<ProductSalesOrder> productList = new ArrayList<ProductSalesOrder>();
-        for(ProductSalesOrder product : products){
+    private <T> List<T> iterableToList(Iterable<T> products){
+        List<T> productList = new ArrayList<T>();
+        for(T product : products){
             productList.add(product);
         }
         return productList;
     }
 
-    /**
-     * converts a iterable object into a list
-     *
-     * @param products  the iterable to convert
-     * @return a list of all the products in the iterable
-     */
-    private List<Product> iterableToListProduct(Iterable<Product> products){
-        List<Product> productList = new ArrayList<Product>();
-        for(Product product : products){
-            productList.add(product);
-        }
-        return productList;
-    }
 
     /**
      * converts a list object into a iterable
@@ -424,8 +412,8 @@ public class SalesOrderController extends BaseController{
      * @param products  the list to convert
      * @return an iterable of all the products in the list
      */
-    private Iterable<ProductSalesOrder> listToIterable(List<ProductSalesOrder> products){
-        Iterable<ProductSalesOrder> productIterrable = products;
+    private <T> Iterable<T> listToIterable(List<T> products){
+        Iterable<T> productIterrable = products;
         return productIterrable;
     }
 
