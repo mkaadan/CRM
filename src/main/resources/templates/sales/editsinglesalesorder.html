@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contact" class="col-lg-2 col-form-label">Contract: </label>
+                        <label for="contract" class="col-lg-2 col-form-label">Contract: </label>
                         <div class="col-lg-6">
                             <select class="form-control" name="source" th:field="*{salesOrder.contact}">
                                 <option th:each="contract : ${contractData}"
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contact" class="col-lg-2 col-form-label">Quote: </label>
+                        <label for="quote" class="col-lg-2 col-form-label">Quote: </label>
                         <div class="col-lg-6">
                             <select class="form-control" name="source" th:field="*{salesOrder.contact}">
                                 <option th:each="quote : ${quoteData}"
@@ -67,6 +67,20 @@
                                         th:text="${quote.getQuoteId()}">
                                 </option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="taxPercent" class="col-lg-2 col-form-label">Tax Amount: </label>
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.taxPercent')}?'has-error':''">
+                            <input class="form-control"
+                                   type="text"
+                                   name="taxPercent"
+                                   th:field="*{salesOrder.taxPercent}">
+                            </input>
+                            <span class="help-block"
+                                  th:if="${#fields.hasErrors('salesOrder.taxPercent')}"
+                                  th:errors="*{salesOrder.taxPercent}">
+                        </span>
                         </div>
                     </div>
                     <div class = "row">

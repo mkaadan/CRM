@@ -67,6 +67,8 @@ public class SalesOrder extends SimpleAudit{
     @Getter
     @Setter
     @Column(name="tax_percent")
+    @DecimalMax(value = "0.99", message = "Please enter a valid tax percent.")
+    @DecimalMin(value = "0.00", message = "Please enter a valid tax percent.")
     private float taxPercent;
 
     /** The invoice number associated with the sales order. */
@@ -115,6 +117,7 @@ public class SalesOrder extends SimpleAudit{
      */
     public BigDecimal getTotalTaxes(){
         BigDecimal totalTaxes = getSubTotal().multiply(new BigDecimal(taxPercent));
+        totalTaxes = totalTaxes.setScale(2,RoundingMode.CEILING);
         return totalTaxes;
     }
 
