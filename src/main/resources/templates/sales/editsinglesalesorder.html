@@ -344,12 +344,12 @@
                         <input type="hidden"
                                name="contactId"
                                th:if="${salesOrderData.getSalesOrder().getBillingAddress() != null}"
-                               th:field="*{salesOrder.billingAddress.contactId}">
+                               th:field="*{salesOrder.billingAddress.addressId}">
                         </input>
                         <input type="hidden"
                                name="contactId"
                                th:if="${salesOrderData.getSalesOrder().getShippingAddress() != null}"
-                               th:field="*{salesOrder.shippingAddress.contactId}">
+                               th:field="*{salesOrder.shippingAddress.addressId}">
                         </input>
                         <div class="col-lg-7"></div>
                         <button id="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
