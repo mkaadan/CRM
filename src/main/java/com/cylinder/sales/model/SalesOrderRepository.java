@@ -10,7 +10,7 @@ public interface SalesOrderRepository extends CrudRepository<SalesOrder, Long> {
     /**
      * Check if a certain sales order record exists.
      *
-     * @param quoteId The id of the lead record one wishes to comfirm its existence.
+     * @param quoteId The id of the sales order record one wishes to comfirm its existence.
      * @return does the record exist?
      */
     @Query(value = "SELECT exists(SELECT 1 FROM sale.sales_orders WHERE sales_order_id=:salesOrderId)", nativeQuery = true)
@@ -19,7 +19,7 @@ public interface SalesOrderRepository extends CrudRepository<SalesOrder, Long> {
     /**
      * Delete a quote record based upon its id.
      *
-     * @param quoteId the id of the lead record one wishes to delete.
+     * @param quoteId the id of the sales order record one wishes to delete.
      * @return the amount of rows effected.
      */
     @Transactional

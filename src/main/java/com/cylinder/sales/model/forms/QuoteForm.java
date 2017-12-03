@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuoteForm {
+
+    /* Quote the form is for */
     @Getter
     @Setter
     @Valid
     private Quote quote;
+
+    /* list of all the products associated with the quote*/
     @Getter
     @Setter
     @Valid

@@ -10,7 +10,7 @@ public interface QuoteRepository extends CrudRepository<Quote, Long> {
     /**
      * Check if a certain quote record exists.
      *
-     * @param quoteId The id of the lead record one wishes to comfirm its existence.
+     * @param quoteId The id of the quote record one wishes to comfirm its existence.
      * @return does the record exist?
      */
     @Query(value = "SELECT exists(SELECT 1 FROM sale.quotes WHERE quote_id=:quoteId)", nativeQuery = true)
@@ -19,7 +19,7 @@ public interface QuoteRepository extends CrudRepository<Quote, Long> {
     /**
      * Delete a quote record based upon its id.
      *
-     * @param quoteId the id of the lead record one wishes to delete.
+     * @param quoteId the id of the quote record one wishes to delete.
      * @return the amount of rows effected.
      */
     @Transactional
