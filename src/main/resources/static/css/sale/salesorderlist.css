@@ -1,0 +1,31 @@
+.btn-list {
+    padding: 3px 15px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+
+.single-space {
+    padding-top: 25px;
+}
+
+.edit-link {
+    color: black;
+}
+
+.edit-link:visited {
+    color: black;
+}
+
+.edit-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.edit-link:active {
+    color: black;
+}
+
+.icon-spacer {
+    padding-left: 5px;
+    padding-right: 5px;
+}
