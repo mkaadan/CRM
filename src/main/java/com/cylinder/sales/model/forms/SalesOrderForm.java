@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SalesOrderForm {
+
+  /* Sales Order the form is for */
   @Getter
   @Setter
   @Valid
   private SalesOrder salesOrder;
+
+  /* list of all the products associated with the sales order*/
   @Getter
   @Setter
   @Valid

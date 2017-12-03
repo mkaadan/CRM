@@ -385,6 +385,12 @@ public class SalesOrderController extends BaseController{
     }
 
 
+    /**
+     * converts a iterable object into a list
+     *
+     * @param products  the iterable to convert
+     * @return a list of all the products in the iterable
+     */
     private List<ProductSalesOrder> iterableToList(Iterable<ProductSalesOrder> products){
         List<ProductSalesOrder> productList = new ArrayList<ProductSalesOrder>();
         for(ProductSalesOrder product : products){
@@ -393,6 +399,12 @@ public class SalesOrderController extends BaseController{
         return productList;
     }
 
+    /**
+     * converts a iterable object into a list
+     *
+     * @param products  the iterable to convert
+     * @return a list of all the products in the iterable
+     */
     private List<Product> iterableToListProduct(Iterable<Product> products){
         List<Product> productList = new ArrayList<Product>();
         for(Product product : products){
@@ -401,11 +413,22 @@ public class SalesOrderController extends BaseController{
         return productList;
     }
 
+    /**
+     * converts a list object into a iterable
+     *
+     * @param products  the list to convert
+     * @return an iterable of all the products in the list
+     */
     private Iterable<ProductSalesOrder> listToIterable(List<ProductSalesOrder> products){
         Iterable<ProductSalesOrder> productIterrable = products;
         return productIterrable;
     }
 
+    /**
+     * checks if an item already exists
+     *
+     * @param pso  an iterable to check if the new item is a duplicate
+     */
     private Optional<FieldError> itemAlreadyExists(Iterable<ProductSalesOrder> pso){
         HashMap map = new HashMap();
         int counter = 1;
@@ -420,6 +443,13 @@ public class SalesOrderController extends BaseController{
         return Optional.empty();
     }
 
+    /**
+     * decides if the shipping address should be shown or not
+     *      depending on if it is the same as the billing one
+     *
+     * @param salesOrder  sales order holding the two addresses
+     * @return a list of all the products in the iterable
+     */
     private Boolean showShipping(SalesOrder salesOrder){
         if(salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null){
             return true;

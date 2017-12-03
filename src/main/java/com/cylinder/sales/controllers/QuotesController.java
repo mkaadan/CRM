@@ -78,6 +78,11 @@ public class QuotesController extends BaseController {
      */
     private final String moduleName = "Quotes";
 
+    /**
+     * Creates a list of all the products
+     *
+     * @return the list of all the products
+     */
     @ModelAttribute("allProducts")
     public List<Product> populateProducts() {
         return iterableToListProduct(productRepository.findAll());
@@ -102,7 +107,7 @@ public class QuotesController extends BaseController {
     /**
      * Render a single view for a single quote.
      *
-     * @param id    the id that is associated to some lead.
+     * @param id    the id that is associated to some quote.
      * @param model the view model object that is used to render the html.
      * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
@@ -291,6 +296,14 @@ public class QuotesController extends BaseController {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
+    /**
+     * Adds a row for a product to occupy on the existing sales order
+     *
+     * @param salesOrderData the form for the sales order to follow
+     * @param id    the id that is associated to some sales order.
+     * @param model the view model object that is used to render the html.
+     * @param auth  the authentication context that manages which users are logged in.
+     */
     @RequestMapping(value = "/edit/{id}", params = {"addRow"})
     public String addRow(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                          @PathVariable("id") Long id,
@@ -302,6 +315,13 @@ public class QuotesController extends BaseController {
         return "sales/editsinglequote";
     }
 
+    /**
+     * Adds a row for a product to occupy on the new sales order
+     *
+     * @param salesOrderData the form for the sales order to follow
+     * @param model the view model object that is used to render the html.
+     * @param auth  the authentication context that manages which users are logged in.
+     */
     @RequestMapping(value = "/new/", params = {"addRow"})
     public String addRowToNew(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                               Authentication auth,
@@ -312,6 +332,15 @@ public class QuotesController extends BaseController {
         return "sales/editsinglequote";
     }
 
+    /**
+     * removes a row for a product to occupy on the existing sales order
+     *
+     * @param salesOrderData the form for the sales order to follow
+     * @param id    the id that is associated to some sales order.
+     * @param model the view model object that is used to render the html.
+     * @param auth  the authentication context that manages which users are logged in.
+     * @param req
+     */
     @RequestMapping(value = "/edit/{id}", params = {"removeRow"})
     public String removeRow(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                             @PathVariable("id") Long id,
@@ -325,6 +354,14 @@ public class QuotesController extends BaseController {
         return "sales/editsinglequote";
     }
 
+    /**
+     * removes a row for a product to occupy on the new sales order
+     *
+     * @param salesOrderData the form for the sales order to follow
+     * @param model the view model object that is used to render the html.
+     * @param auth  the authentication context that manages which users are logged in.
+     * @param req
+     */
     @RequestMapping(value = "/new/", params = {"removeRow"})
     public String removeRowFromNew(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
                                    Authentication auth,
@@ -337,7 +374,12 @@ public class QuotesController extends BaseController {
         return "sales/editsinglequote";
     }
 
-
+    /**
+     * converts a iterable object into a list
+     *
+     * @param products  the iterable to convert
+     * @return a list of all the products in the iterable
+     */
     private List<ProductQuote> iterableToList(Iterable<ProductQuote> products) {
         List<ProductQuote> productList = new ArrayList<ProductQuote>();
         for (ProductQuote product : products) {
@@ -346,6 +388,12 @@ public class QuotesController extends BaseController {
         return productList;
     }
 
+    /**
+     * converts a iterable object into a list
+     *
+     * @param products  the iterable to convert
+     * @return a list of all the products in the iterable
+     */
     private List<Product> iterableToListProduct(Iterable<Product> products) {
         List<Product> productList = new ArrayList<Product>();
         for (Product product : products) {
@@ -354,11 +402,22 @@ public class QuotesController extends BaseController {
         return productList;
     }
 
+    /**
+     * converts a list object into a iterable
+     *
+     * @param products  the list to convert
+     * @return an iterable of all the products in the list
+     */
     private Iterable<ProductQuote> listToIterable(List<ProductQuote> products) {
         Iterable<ProductQuote> productIterrable = products;
         return productIterrable;
     }
 
+    /**
+     * checks if an item already exists
+     *
+     * @param pso  an iterable to check if the new item is a duplicate
+     */
     private Optional<FieldError> itemAlreadyExists(Iterable<ProductQuote> pq) {
         HashMap map = new HashMap();
         int counter = 1;
