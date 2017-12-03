@@ -27,6 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import com.cylinder.errors.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -155,12 +156,11 @@ public class SalesOrderController extends BaseController{
         if (salesOrderRepository.existsById(id)) {
             salesOrder = salesOrderRepository.findOne(id);
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
         List<ProductSalesOrder> productList = productSalesOrderRepository.getProductsBySalesOrderId(salesOrder.getSalesOrderId());
         SalesOrderForm form = new SalesOrderForm(salesOrder, productList);
-        this.bindUserForm(model, auth);
+        this.bindSalesForm(model, auth);
         model.addAttribute("salesOrderData", form);
         model.addAttribute("action", "edit/" + id);
         return "sales/editsinglesalesorder";
@@ -180,13 +180,18 @@ public class SalesOrderController extends BaseController{
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
+        if (salesOrderRepository.existsById(id)) {
+            salesOrder = salesOrderRepository.findOne(id);
+        } else {
+            throw new NotFoundException();
+        }
         Iterable<ProductSalesOrder> productList = listToIterable(salesOrderData.getProductList());
         Optional<FieldError> error = itemAlreadyExists(productList);
         if (error.isPresent()) {
             result.addError(error.get());
         }
         if (result.hasErrors()) {
-            this.bindUserForm(model, auth);
+            this.bindSalesForm(model, auth);
             model.addAttribute("action", "edit/" + salesOrderData.getSalesOrder().getSalesOrderId());
             return "sales/editsinglesalesorder";
         }
@@ -217,7 +222,7 @@ public class SalesOrderController extends BaseController{
     @GetMapping("/new/")
     public String newRecord(Model model,
                             Authentication auth) {
-        this.bindUserForm(model,auth);
+        this.bindSalesForm(model,auth);
         model.addAttribute("action","new/");
         model.addAttribute("salesOrderData", new SalesOrderForm());
         return "sales/editsinglesalesorder";
@@ -240,7 +245,7 @@ public class SalesOrderController extends BaseController{
         SalesOrder salesOrder = salesOrderForm.getSalesOrder();
         Iterable<ProductSalesOrder> productList = listToIterable(salesOrderForm.getProductList());
         if (result.hasErrors()) {
-            this.bindUserForm(model,auth);
+            this.bindSalesForm(model,auth);
             model.addAttribute("action","new/");
             return "sales/editsinglesalesorder";
         }
@@ -285,7 +290,7 @@ public class SalesOrderController extends BaseController{
      * @param model the view model object that is used to render the html.
      * @param auth  the authentication context that manages which users are logged in.
      */
-    private void bindUserForm(Model model, Authentication auth) {
+    private void bindSalesForm(Model model, Authentication auth) {
         super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
         model.addAttribute("contactData", contactRepository.findAll());
@@ -319,7 +324,7 @@ public class SalesOrderController extends BaseController{
                          @PathVariable("id") Long id,
                          Authentication auth,
                          Model model) {
-        this.bindUserForm(model,auth);
+        this.bindSalesForm(model,auth);
         model.addAttribute("action","edit/"+ id);
         salesOrderData.getProductList().add(new ProductSalesOrder());
         return "sales/editsinglesalesorder";
@@ -336,7 +341,7 @@ public class SalesOrderController extends BaseController{
     public String addRowToNew(final @ModelAttribute("salesOrderData") SalesOrderForm salesOrderData,
                               Authentication auth,
                               Model model) {
-        this.bindUserForm(model,auth);
+        this.bindSalesForm(model,auth);
         model.addAttribute("action","new/");
         salesOrderData.getProductList().add(new ProductSalesOrder());
         return "sales/editsinglesalesorder";
@@ -359,7 +364,7 @@ public class SalesOrderController extends BaseController{
                             final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         salesOrderData.getProductList().remove(rowId.intValue());
-        this.bindUserForm(model,auth);
+        this.bindSalesForm(model,auth);
         model.addAttribute("action","edit/" + id);
         return "sales/editsinglesalesorder";
     }
@@ -379,7 +384,7 @@ public class SalesOrderController extends BaseController{
                                    final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         salesOrderData.getProductList().remove(rowId.intValue());
-        this.bindUserForm(model,auth);
+        this.bindSalesForm(model,auth);
         model.addAttribute("action","new/");
         return "sales/editsinglesalesorder";
     }
