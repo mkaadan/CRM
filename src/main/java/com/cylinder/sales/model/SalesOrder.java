@@ -10,11 +10,14 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import lombok.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 
 @Entity
 @Table(name = "sales_orders", schema = "sale")

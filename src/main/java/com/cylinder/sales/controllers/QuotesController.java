@@ -13,6 +13,7 @@ import com.cylinder.sales.model.ProductQuoteRepository;
 import com.cylinder.sales.model.Quote;
 import com.cylinder.sales.model.QuoteRepository;
 import com.cylinder.sales.model.forms.QuoteForm;
+import com.cylinder.sales.model.ListIterableServiceObject;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -85,7 +86,7 @@ public class QuotesController extends BaseController {
      */
     @ModelAttribute("allProducts")
     public List<Product> populateProducts() {
-        return iterableToListProduct(productRepository.findAll());
+        return ListIterableServiceObject.iterableToList(productRepository.findAll());
     }
 
 
@@ -167,7 +168,7 @@ public class QuotesController extends BaseController {
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
-        Iterable<ProductQuote> productList = listToIterable(quoteData.getProductList());
+        Iterable<ProductQuote> productList = ListIterableServiceObject.listToIterable(quoteData.getProductList());
         Optional<FieldError> error = itemAlreadyExists(productList);
         if (error.isPresent()) {
             result.addError(error.get());
@@ -190,9 +191,6 @@ public class QuotesController extends BaseController {
         productQuoteRepository.deleteProductsByQuoteId(quoteData.getQuote().getQuoteId());
         for (ProductQuote productEntry : productList) {
             productQuoteRepository.save(productEntry);
-            System.out.println("Assigned ID: " + assignedId);
-            System.out.println(productEntry.getQuote().getQuoteId());
-            System.out.println(productEntry.getProduct().getProductId());
         }
         return "redirect:/quote/records/" + assignedId.toString();
     }
@@ -228,7 +226,7 @@ public class QuotesController extends BaseController {
                                Model model,
                                Authentication auth) {
         Quote quote = quoteForm.getQuote();
-        Iterable<ProductQuote> productList = listToIterable(quoteForm.getProductList());
+        Iterable<ProductQuote> productList = ListIterableServiceObject.listToIterable(quoteForm.getProductList());
         if (result.hasErrors()) {
             this.bindUserForm(model, auth);
             model.addAttribute("action", "new/");
@@ -372,45 +370,6 @@ public class QuotesController extends BaseController {
         this.bindUserForm(model, auth);
         model.addAttribute("action", "new/");
         return "sales/editsinglequote";
-    }
-
-    /**
-     * converts a iterable object into a list
-     *
-     * @param products  the iterable to convert
-     * @return a list of all the products in the iterable
-     */
-    private List<ProductQuote> iterableToList(Iterable<ProductQuote> products) {
-        List<ProductQuote> productList = new ArrayList<ProductQuote>();
-        for (ProductQuote product : products) {
-            productList.add(product);
-        }
-        return productList;
-    }
-
-    /**
-     * converts a iterable object into a list
-     *
-     * @param products  the iterable to convert
-     * @return a list of all the products in the iterable
-     */
-    private List<Product> iterableToListProduct(Iterable<Product> products) {
-        List<Product> productList = new ArrayList<Product>();
-        for (Product product : products) {
-            productList.add(product);
-        }
-        return productList;
-    }
-
-    /**
-     * converts a list object into a iterable
-     *
-     * @param products  the list to convert
-     * @return an iterable of all the products in the list
-     */
-    private Iterable<ProductQuote> listToIterable(List<ProductQuote> products) {
-        Iterable<ProductQuote> productIterrable = products;
-        return productIterrable;
     }
 
     /**

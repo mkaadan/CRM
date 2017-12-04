@@ -13,11 +13,14 @@ import com.cylinder.sales.model.ProductSalesOrderRepository;
 import com.cylinder.sales.model.Contract;
 import com.cylinder.sales.model.ContractRepository;
 import com.cylinder.sales.model.Quote;
+import com.cylinder.sales.model.ListIterableServiceObject;
 import com.cylinder.sales.model.QuoteRepository;
 import com.cylinder.sales.model.SalesOrder;
 import com.cylinder.sales.model.SalesOrderRepository;
 import com.cylinder.sales.model.forms.SalesOrderForm;
 import com.cylinder.shared.controllers.BaseController;
+import com.cylinder.errors.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -27,7 +30,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.cylinder.errors.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -97,7 +99,7 @@ public class SalesOrderController extends BaseController{
 
     @ModelAttribute("allProducts")
     public List<Product> populateProducts() {
-        return iterableToList(productRepository.findAll());
+        return ListIterableServiceObject.iterableToList(productRepository.findAll());
     }
 
 
@@ -186,7 +188,7 @@ public class SalesOrderController extends BaseController{
         } else {
             throw new NotFoundException();
         }
-        Iterable<ProductSalesOrder> productList = listToIterable(salesOrderData.getProductList());
+        Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderData.getProductList());
         Optional<FieldError> error = itemAlreadyExists(productList);
         if (error.isPresent()) {
             result.addError(error.get());
@@ -244,7 +246,7 @@ public class SalesOrderController extends BaseController{
                                     Model model,
                                     Authentication auth) {
         SalesOrder salesOrder = salesOrderForm.getSalesOrder();
-        Iterable<ProductSalesOrder> productList = listToIterable(salesOrderForm.getProductList());
+        Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderForm.getProductList());
         if (result.hasErrors()) {
             this.bindSalesForm(model,auth);
             model.addAttribute("action","new/");
@@ -388,33 +390,6 @@ public class SalesOrderController extends BaseController{
         this.bindSalesForm(model,auth);
         model.addAttribute("action","new/");
         return "sales/editsinglesalesorder";
-    }
-
-
-    /**
-     * converts a iterable object into a list
-     *
-     * @param products  the iterable to convert
-     * @return a list of all the products in the iterable
-     */
-    private <T> List<T> iterableToList(Iterable<T> products){
-        List<T> productList = new ArrayList<T>();
-        for(T product : products){
-            productList.add(product);
-        }
-        return productList;
-    }
-
-
-    /**
-     * converts a list object into a iterable
-     *
-     * @param products  the list to convert
-     * @return an iterable of all the products in the list
-     */
-    private <T> Iterable<T> listToIterable(List<T> products){
-        Iterable<T> productIterrable = products;
-        return productIterrable;
     }
 
     /**
