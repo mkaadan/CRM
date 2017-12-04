@@ -44,18 +44,4 @@ public class Role {
     public Role() {
     }
 
-    /**
-     * Check wheter the id and name is consistent with what is in the database.
-     *
-     * @param roleRepository the sql database interface for getting security roles.
-     * @param fieldName      the name of the error field.
-     * @return the field error if any.
-     */
-    public Optional<FieldError> isValid(RoleRepository roleRepository, String fieldName) {
-        if (roleRepository.existsByRoleAndId(this.roleName, this.roleId)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(new FieldError("Role", fieldName, "This role doesn't exist."));
-        }
-    }
 }
