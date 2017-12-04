@@ -4,7 +4,9 @@ import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.Role;
 import com.cylinder.crmusers.model.RoleRepository;
+import com.cylinder.crmusers.model.services.AdminService;
 import com.cylinder.crmusers.model.forms.AdminUserForm;
+import com.cylinder.errors.*;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -23,17 +28,8 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
 
-    /**
-     * Sql interface for security role entites.
-     */
     @Autowired
-    private RoleRepository roleRepository;
-
-    /**
-     * Sql interface for crm user entites.
-     */
-    @Autowired
-    private CrmUserRepository userRepository;
+    private AdminService service;
 
     /**
      * bcrypt encoder for password logic.
@@ -57,9 +53,9 @@ public class AdminController extends BaseController {
     @GetMapping("/user/overview")
     public String userOverview(Authentication auth,
                                Model model) {
-        Iterable<Role> roles = roleRepository.findAll();
-        Iterable<CrmUser> userList = userRepository.findAll();
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+        Iterable<Role> roles = service.findAllRoles();
+        Iterable<CrmUser> userList = service.findAllUsers();
+        super.setCommonModelAttributes(model, auth, service.getUserRepository(), this.moduleName);
         model.addAttribute("userRole", roles);
         model.addAttribute("userData", userList);
         return "crmusers/admin/list";
@@ -75,12 +71,12 @@ public class AdminController extends BaseController {
     @GetMapping("/user/new")
     public String newUserForm(Authentication auth,
                               Model model) {
-        Iterable<Role> roles = roleRepository.findAll();
+        Iterable<Role> roles = service.findAllRoles();
         CrmUser newUser = new CrmUser();
         newUser.setIsEnabled(true);
         model.addAttribute("userForm", newUser);
         model.addAttribute("userRole", roles);
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+        super.setCommonModelAttributes(model, auth, service.getUserRepository(), this.moduleName);
         return "crmusers/admin/newuser";
     }
 
@@ -98,19 +94,18 @@ public class AdminController extends BaseController {
                                      BindingResult result,
                                      Authentication auth,
                                      Model model) {
-        Optional<FieldError> roleError = user.getRole()
-                .isValid(roleRepository,
-                        "roleName");
-        if (roleError.isPresent()) {
-            result.addError(roleError.get());
-        }
+        service.checkForRoleError(result,user.getRole());
         if (result.hasErrors()) {
-            Iterable<Role> roles = roleRepository.findAll();
-            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            Iterable<Role> roles = service.findAllRoles();
+            super.setCommonModelAttributes(model,
+                                           auth,
+                                           service.getUserRepository(),
+                                           this.moduleName);
+
             model.addAttribute("userRole", roles);
             return "crmusers/admin/newuser";
         } else {
-            userRepository.save(user);
+            service.saveUser(user);
             return "redirect:/admin/user/overview";
         }
     }
@@ -127,10 +122,16 @@ public class AdminController extends BaseController {
     public String adminUserEdit(@PathVariable("userId") Long userId,
                                 Authentication auth,
                                 Model model) {
-        CrmUser user = userRepository.findByAccountId(userId);
+        if (!service.userExistsByAccountId(userId)) {
+          throw new NotFoundException();
+        }
+        CrmUser user = service.findUserByAccountId(userId);
         AdminUserForm form = user.toAdminUserForm();
-        Iterable<Role> roles = roleRepository.findAll();
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+        Iterable<Role> roles = service.findAllRoles();
+        super.setCommonModelAttributes(model,
+                                       auth,
+                                       service.getUserRepository(),
+                                       this.moduleName);
         model.addAttribute("userForm", form);
         model.addAttribute("userRole", roles);
         return "crmusers/admin/userform";
@@ -154,29 +155,30 @@ public class AdminController extends BaseController {
                                 Authentication auth,
                                 HttpServletResponse response,
                                 Model model) {
-        if (userId != userForm.getAccountId()) {
-            response.setStatus(400);
-            return "redirect:/400.html";
+        if (!service.userExistsByAccountId(userForm.getAccountId())) {
+            throw new NotFoundException();
         } else {
-            CrmUser user = userRepository.findByAccountId(userId);
-            Optional<FieldError> roleError = userForm.getRole()
-                    .isValid(roleRepository,
-                            "role.roleName");
-            if (roleError.isPresent()) {
-                result.addError(roleError.get());
+            CrmUser user = service.findUserByAccountId(userId);
+            service.checkForRoleError(result, userForm.getRole());
+            if (userForm.getRole().getRoleId().equals(new Long("2"))) {
+              if (service.isOnlyAdmin(userId)) {
+                result.addError(new FieldError("Role",
+                                               "roleName",
+                                               "Cannot alter role permission."));
+              }
             }
             if (result.hasErrors()) {
                 super.setCommonModelAttributes(model,
                         auth,
-                        userRepository,
+                        service.getUserRepository(),
                         this.moduleName);
-                Iterable<Role> roles = roleRepository.findAll();
+                Iterable<Role> roles = service.findAllRoles();
                 model.addAttribute("userForm", userForm);
                 model.addAttribute("userRole", roles);
                 return "crmusers/admin/userform";
             } else {
                 user.mergeFromAdminUserForm(userForm);
-                userRepository.save(user);
+                service.saveUser(user);
                 return "redirect:/admin/user/overview";
             }
         }
@@ -190,14 +192,17 @@ public class AdminController extends BaseController {
      * @return the template to be rendered.
      */
     @DeleteMapping("/user/{userId}")
-    @ResponseBody
-    public String deleteUser(@PathVariable("userId") Long userId, HttpServletResponse response) {
-        if (userRepository.existsByAccountId(userId)) {
-            userRepository.deleteByAccountId(userId);
-            return "";
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId) {
+        if (service.userExistsByAccountId(userId)) {
+            if (service.findUserByAccountId(userId).getRole().getRoleName() == "ADMIN") {
+              if (service.isOnlyAdmin(userId)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot delete only admin user.");
+              }
+            }
+            service.deleteUserByAccountId(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } else {
-            response.setStatus(400);
-            return "";
+            throw new NotFoundException();
         }
     }
 }
