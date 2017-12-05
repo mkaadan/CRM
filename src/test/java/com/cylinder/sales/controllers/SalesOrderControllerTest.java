@@ -3,6 +3,8 @@ package com.cylinder.sales.controllers;
 import java.lang.Iterable;
 import java.util.ArrayList;
 
+import com.cylinder.products.model.Product;
+import com.cylinder.products.model.ProductRepository;
 import com.cylinder.sales.model.*;
 import com.cylinder.sales.controllers.SalesOrderController;
 import com.cylinder.ControllerTests;
@@ -38,7 +40,10 @@ public class SalesOrderControllerTest extends ControllerTests {
   @MockBean
   private SalesOrderRepository salesOrderRepository;
 
-//  @MockBean
+  @MockBean
+  private ProductRepository productRepository;
+
+  //  @MockBean
 //  private QuoteRepository quoteRepository;
 //
 //  @MockBean
