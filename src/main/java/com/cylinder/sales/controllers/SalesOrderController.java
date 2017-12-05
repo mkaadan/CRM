@@ -158,18 +158,18 @@ public class SalesOrderController extends BaseController{
                                  Model model,
                                  Authentication auth,
                                  HttpServletResponse response) {
-        SalesOrder salesOrder;
         if (salesOrderRepository.existsById(id)) {
-            salesOrder = salesOrderRepository.findOne(id);
-        } else {
+            SalesOrder salesOrder = salesOrderRepository.findOne(id);
+            List<ProductSalesOrder> productList = productSalesOrderRepository.getProductsBySalesOrderId(id);
+            SalesOrderForm form = new SalesOrderForm(salesOrder, productList);
+            this.bindSalesForm(model, auth);
+            model.addAttribute("salesOrderData", form);
+            model.addAttribute("action", "edit/" + id);
+            return "sales/editsinglesalesorder";
+        }
+        else {
             throw new NotFoundException();
         }
-        List<ProductSalesOrder> productList = productSalesOrderRepository.getProductsBySalesOrderId(salesOrder.getSalesOrderId());
-        SalesOrderForm form = new SalesOrderForm(salesOrder, productList);
-        this.bindSalesForm(model, auth);
-        model.addAttribute("salesOrderData", form);
-        model.addAttribute("action", "edit/" + id);
-        return "sales/editsinglesalesorder";
     }
 
     /**
