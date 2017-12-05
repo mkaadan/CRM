@@ -130,15 +130,19 @@ public class SalesOrderController extends BaseController{
     public String singleRecord(@PathVariable("id") Long id,
                                Model model,
                                Authentication auth) {
-        SalesOrder salesOrderData = salesOrderRepository.findOne(id);
-        super.setCommonModelAttributes(model,auth,userRepository, this.moduleName);
-        model.addAttribute("salesOrderData", salesOrderData);
-        model.addAttribute("toList", "/salesorder");
-        List<ProductSalesOrder> productSalesOrderData = productSalesOrderRepository.getProductsBySalesOrderId(salesOrderData.getSalesOrderId());
-        model.addAttribute("productSalesOrderData", productSalesOrderData);
-        boolean showShippingAddress = showShipping(salesOrderData);
-        model.addAttribute("showShippingAddress", showShippingAddress);
-        return "sales/singlesalesorder";
+        if (salesOrderRepository.existsById(id)) {
+            SalesOrder salesOrderData = salesOrderRepository.findOne(id);
+            super.setCommonModelAttributes(model,auth,userRepository, this.moduleName);
+            model.addAttribute("salesOrderData", salesOrderData);
+            model.addAttribute("toList", "/salesorder");
+            List<ProductSalesOrder> productSalesOrderData = productSalesOrderRepository.getProductsBySalesOrderId(id);
+            model.addAttribute("productSalesOrderData", productSalesOrderData);
+            boolean showShippingAddress = showShipping(salesOrderData);
+            model.addAttribute("showShippingAddress", showShippingAddress);
+            return "sales/singlesalesorder";
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
@@ -419,12 +423,14 @@ public class SalesOrderController extends BaseController{
      * @return a list of all the products in the iterable
      */
     private Boolean showShipping(SalesOrder salesOrder){
-        if(salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null){
-            return true;
-        }
-        if(salesOrder.getShippingAddress() == null ||
-                salesOrder.getBillingAddress().equals(salesOrder.getShippingAddress())){
-            return false;
+        if(salesOrder != null) {
+            if (salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null) {
+                return true;
+            }
+            if (salesOrder.getShippingAddress() == null ||
+                    salesOrder.getBillingAddress().equals(salesOrder.getShippingAddress())) {
+                return false;
+            }
         }
         return true;
     }
