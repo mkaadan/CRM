@@ -15,6 +15,7 @@ import static org.mockito.BDDMockito.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public abstract class ControllerTests {
+
   @MockBean
   protected CrmUserRepository userRepository;
 
@@ -32,7 +33,7 @@ public abstract class ControllerTests {
     return user;
   }
 
-  private ArrayList<CrmUser> mockUserData() {
+  protected ArrayList<CrmUser> mockUserData() {
     ArrayList<CrmUser> users = new ArrayList();
     CrmUser user = new CrmUser();
     user.setAccountId(new Long("1"));
