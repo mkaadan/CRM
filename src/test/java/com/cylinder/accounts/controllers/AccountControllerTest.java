@@ -5,6 +5,8 @@ import com.cylinder.accounts.model.Account;
 import com.cylinder.accounts.model.AccountRepository;
 import com.cylinder.accounts.model.AccountTypeRepository;
 import com.cylinder.accounts.model.Type;
+import com.cylinder.contacts.model.Contact;
+import com.cylinder.contacts.model.ContactRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -35,6 +37,9 @@ public class AccountControllerTest extends ControllerTests {
 
     @MockBean
     private AccountTypeRepository typeRepository;
+
+    @MockBean
+    private ContactRepository contactRepository;
 
     private ArrayList<Account> mockAccountListData() {
         ArrayList<Account> accounts = new ArrayList<>();
@@ -85,6 +90,23 @@ public class AccountControllerTest extends ControllerTests {
         return types;
     }
 
+    private ArrayList<Contact> mockContactData() {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        Contact contact = new Contact();
+        contact.setContactId(new Long("1"));
+        contact.setLastName("Testa");
+        contacts.add(contact);
+        contact = new Contact();
+        contact.setContactId(new Long("2"));
+        contact.setLastName("Testb");
+        contacts.add(contact);
+        contact = new Contact();
+        contact.setContactId(new Long("3"));
+        contact.setLastName("Testc");
+        contacts.add(contact);
+        return contacts;
+    }
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -96,6 +118,7 @@ public class AccountControllerTest extends ControllerTests {
         super.mockUserRepository();
         Iterable<Account> accounts = mockAccountListData();
         Iterable<Type> types = mockTypeData();
+        Iterable<Contact> contacts = mockContactData();
 
         given(this.accountRepository.findAll()).willReturn(accounts);
 
@@ -108,7 +131,10 @@ public class AccountControllerTest extends ControllerTests {
         given(this.accountRepository.save(any(Account.class))).willReturn(mockSingleAccountData());
 
         given(this.typeRepository.findAll()).willReturn(types);
+        given(this.contactRepository.findAll()).willReturn(contacts);
+        System.out.println(contacts);
     }
+
 
     @Test
     @WithMockUser(username = "fake@mail.com", authorities = "USER")
@@ -157,15 +183,22 @@ public class AccountControllerTest extends ControllerTests {
     public void testPostEditRecordWithExistentRecord() throws Exception {
         this.mockMvc.perform(post("/account/edit/{id}", new Long("1"))
                 .param("accountId", "1")
-                .param("lastName", "power")
-                .param("firstName", "austin")
-                .param("address.apartmentNumber", "null")
-                .param("address.city", "null")
-                .param("address.streetAddress", "null")
-                .param("address.stateProv", "null")
-                .param("address.country", "null")
-                .param("address.zipPostal", "null")
-                .param("address.poBox", "null")
+                .param("accountName", "companyname")
+                .param("numberEmployees", "100")
+                .param("shippingAddress.apartmentNumber", "null")
+                .param("shippingAddress.city", "null")
+                .param("shippingAddress.streetAddress", "null")
+                .param("shippingAddress.stateProv", "null")
+                .param("shippingAddress.country", "null")
+                .param("shippingAddress.zipPostal", "null")
+                .param("shippingAddress.poBox", "null")
+                .param("billingAddress.apartmentNumber", "null")
+                .param("billingAddress.city", "null")
+                .param("billingAddress.streetAddress", "null")
+                .param("billingAddress.stateProv", "null")
+                .param("billingAddress.country", "null")
+                .param("billingAddress.zipPostal", "null")
+                .param("billingAddress.poBox", "null")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/account/records/1"));
@@ -177,15 +210,22 @@ public class AccountControllerTest extends ControllerTests {
     public void testPostEditRecordWithNonExistentRecord() throws Exception {
         this.mockMvc.perform(post("/account/edit/{id}", new Long("5"))
                 .param("accountId", "5")
-                .param("lastName", "power")
-                .param("firstName", "austin")
-                .param("address.apartmentNumber", "null")
-                .param("address.city", "null")
-                .param("address.streetAddress", "null")
-                .param("address.stateProv", "null")
-                .param("address.country", "null")
-                .param("address.zipPostal", "null")
-                .param("address.poBox", "null")
+                .param("accountName", "companyname")
+                .param("numberEmployees", "100")
+                .param("shippingAddress.apartmentNumber", "null")
+                .param("shippingAddress.city", "null")
+                .param("shippingAddress.streetAddress", "null")
+                .param("shippingAddress.stateProv", "null")
+                .param("shippingAddress.country", "null")
+                .param("shippingAddress.zipPostal", "null")
+                .param("shippingAddress.poBox", "null")
+                .param("billingAddress.apartmentNumber", "null")
+                .param("billingAddress.city", "null")
+                .param("billingAddress.streetAddress", "null")
+                .param("billingAddress.stateProv", "null")
+                .param("billingAddress.country", "null")
+                .param("billingAddress.zipPostal", "null")
+                .param("billingAddress.poBox", "null")
                 .with(csrf()))
                 .andExpect(status().isNotFound());
     }
@@ -195,17 +235,24 @@ public class AccountControllerTest extends ControllerTests {
     public void testPostEditRecordWithExistentRecordInvalidData() throws Exception {
         this.mockMvc.perform(post("/account/edit/{id}", new Long("1"))
                 .param("accountId", "1")
-                .param("lastName", "power2")
-                .param("firstName", "austin")
-                .param("address.apartmentNumber", "null")
-                .param("address.city", "null")
-                .param("address.streetAddress", "null")
-                .param("address.stateProv", "null")
-                .param("address.country", "null")
-                .param("address.zipPostal", "null")
-                .param("address.poBox", "null")
+                .param("accountName", "company100")
+                .param("numberEmployees", "100")
+                .param("shippingAddress.apartmentNumber", "null")
+                .param("shippingAddress.city", "null")
+                .param("shippingAddress.streetAddress", "null")
+                .param("shippingAddress.stateProv", "null")
+                .param("shippingAddress.country", "null")
+                .param("shippingAddress.zipPostal", "null")
+                .param("shippingAddress.poBox", "null")
+                .param("billingAddress.apartmentNumber", "null")
+                .param("billingAddress.city", "null")
+                .param("billingAddress.streetAddress", "null")
+                .param("billingAddress.stateProv", "null")
+                .param("billingAddress.country", "null")
+                .param("billingAddress.zipPostal", "null")
+                .param("billingAddress.poBox", "null")
                 .with(csrf()))
-                .andExpect(model().attributeHasFieldErrors("accountData", "lastName"))
+                .andExpect(model().attributeHasFieldErrors("accountData", "accountName"))
                 .andExpect(status().isOk());
     }
 
@@ -221,15 +268,22 @@ public class AccountControllerTest extends ControllerTests {
     @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostNewRecordWithValidData() throws Exception {
         this.mockMvc.perform(post("/account/new/")
-                .param("lastName", "power")
-                .param("firstName", "austin")
-                .param("address.apartmentNumber", "null")
-                .param("address.city", "null")
-                .param("address.streetAddress", "null")
-                .param("address.stateProv", "null")
-                .param("address.country", "null")
-                .param("address.zipPostal", "null")
-                .param("address.poBox", "null")
+                .param("accountName", "companyname")
+                .param("numberEmployees", "100")
+                .param("shippingAddress.apartmentNumber", "null")
+                .param("shippingAddress.city", "null")
+                .param("shippingAddress.streetAddress", "null")
+                .param("shippingAddress.stateProv", "null")
+                .param("shippingAddress.country", "null")
+                .param("shippingAddress.zipPostal", "null")
+                .param("shippingAddress.poBox", "null")
+                .param("billingAddress.apartmentNumber", "null")
+                .param("billingAddress.city", "null")
+                .param("billingAddress.streetAddress", "null")
+                .param("billingAddress.stateProv", "null")
+                .param("billingAddress.country", "null")
+                .param("billingAddress.zipPostal", "null")
+                .param("billingAddress.poBox", "null")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());
         verify(this.accountRepository, times(1)).save(any(Account.class));
@@ -239,17 +293,24 @@ public class AccountControllerTest extends ControllerTests {
     @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostNewRecordWithInvalidData() throws Exception {
         this.mockMvc.perform(post("/account/new/")
-                .param("lastName", "power2")
-                .param("firstName", "austin")
-                .param("address.apartmentNumber", "null")
-                .param("address.city", "null")
-                .param("address.streetAddress", "null")
-                .param("address.stateProv", "null")
-                .param("address.country", "null")
-                .param("address.zipPostal", "null")
-                .param("address.poBox", "null")
+                .param("accountName", "company100")
+                .param("numberEmployees", "100")
+                .param("shippingAddress.apartmentNumber", "null")
+                .param("shippingAddress.city", "null")
+                .param("shippingAddress.streetAddress", "null")
+                .param("shippingAddress.stateProv", "null")
+                .param("shippingAddress.country", "null")
+                .param("shippingAddress.zipPostal", "null")
+                .param("shippingAddress.poBox", "null")
+                .param("billingAddress.apartmentNumber", "null")
+                .param("billingAddress.city", "null")
+                .param("billingAddress.streetAddress", "null")
+                .param("billingAddress.stateProv", "null")
+                .param("billingAddress.country", "null")
+                .param("billingAddress.zipPostal", "null")
+                .param("billingAddress.poBox", "null")
                 .with(csrf()))
-                .andExpect(model().attributeHasFieldErrors("accountData", "lastName"))
+                .andExpect(model().attributeHasFieldErrors("accountData", "accountName"))
                 .andExpect(status().isOk());
     }
 }
