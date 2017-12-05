@@ -4,6 +4,7 @@ import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.forms.PasswordForm;
 import com.cylinder.shared.controllers.BaseController;
+import com.cylinder.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -56,7 +57,6 @@ public class UserController extends BaseController {
     @GetMapping("/edit/{userId}")
     public String editUserPassword(@PathVariable("userId") Long userId,
                                    Authentication auth,
-                                   HttpServletResponse response,
                                    Model model) {
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
@@ -67,8 +67,7 @@ public class UserController extends BaseController {
             model.addAttribute("passForm", passForm);
             return "crmusers/users/userform";
         } else {
-            response.setStatus(403);
-            return "redirect:/403.html";
+            throw new RestrictedException();
         }
     }
 
