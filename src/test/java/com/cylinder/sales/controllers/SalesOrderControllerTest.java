@@ -10,6 +10,7 @@ import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
 import com.cylinder.sales.model.*;
+import com.cylinder.sales.model.forms.*;
 import com.cylinder.sales.controllers.SalesOrderController;
 import com.cylinder.ControllerTests;
 
@@ -62,6 +63,11 @@ public class SalesOrderControllerTest extends ControllerTests {
   @MockBean
   private ContractRepository contractRepository;
 
+  @MockBean
+  private ArrayList<SalesOrderForm> salesOrderForms;
+
+
+
   private ArrayList<SalesOrder> mockSalesOrderListData() {
     ArrayList<SalesOrder> salesOrders = new ArrayList();
     SalesOrder salesOrder = new SalesOrder();
@@ -110,6 +116,30 @@ public class SalesOrderControllerTest extends ControllerTests {
         return productSalesOrders;
     }
 
+    private ArrayList<SalesOrderForm> mockSalesOrderFormListData(Iterable<SalesOrder> salesOrders) {
+        ArrayList<SalesOrderForm> salesOrderForms = new ArrayList();
+        SalesOrderForm salesOrderForm;
+//        SalesOrder salesOrder = new SalesOrder();
+//        salesOrder.setSalesOrderId(new Long("1"));
+//        SalesOrderForm salesOrderForm = new SalesOrderForm(salesOrder,null);
+//        salesOrderForms.add(salesOrderForm);
+//        salesOrder = new SalesOrder();
+//        salesOrder.setSalesOrderId(new Long("2"));
+//        salesOrderForm = new SalesOrderForm(salesOrder,null);
+//        salesOrderForms.add(salesOrderForm);
+//        salesOrder = new SalesOrder();
+//        salesOrder.setSalesOrderId(new Long("3"));
+//        salesOrderForm = new SalesOrderForm(salesOrder,null);
+//        salesOrderForms.add(salesOrderForm);
+        for(SalesOrder salesOrder: salesOrders) {
+            if (salesOrder != null) {
+                salesOrderForm = new SalesOrderForm(salesOrder,null);
+                salesOrderForms.add(salesOrderForm);
+            }
+        }
+        return salesOrderForms;
+    }
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -120,6 +150,7 @@ public class SalesOrderControllerTest extends ControllerTests {
         Iterable<SalesOrder> salesOrders = mockSalesOrderListData();
         Iterable<Quote> quotes = mockQuoteData();
         Iterable<ProductSalesOrder> productSalesOrders = mockProductSalesOrderData();
+        salesOrderForms = mockSalesOrderFormListData(salesOrders);
         given(this.salesOrderRepository.findAll()).willReturn(salesOrders);
         given(this.salesOrderRepository.findOne(eq(new Long("1")))).willReturn(mockSingleSalesOrderData());
         given(this.salesOrderRepository.findOne(eq(new Long("1")))).willReturn(null);
@@ -128,6 +159,7 @@ public class SalesOrderControllerTest extends ControllerTests {
         given(this.salesOrderRepository.save(any(SalesOrder.class))).willReturn(mockSingleSalesOrderData());
         given(this.quoteRepository.findAll()).willReturn(quotes);
         given(this.productSalesOrderRepository.findAll()).willReturn(productSalesOrders);
+//        given(this.salesOrderFormRepository.findAll()).willReturn(salesOrderForms);
     }
 
     @Test
@@ -173,4 +205,36 @@ public class SalesOrderControllerTest extends ControllerTests {
                 .andExpect(status().isNotFound());
   }
 
+  @Test
+  @WithMockUser(username="fake@mail.com", authorities="USER")
+  public void testPostEditRecordWithExistantRecord() throws Exception {
+    this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("1"))
+                        .param("salesOrder.salesOrderId","1")
+                        .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                        .param("salesOrder.shippingAddress.city", "null")
+                        .param("salesOrder.shippingAddress.streetAddress", "null")
+                        .param("salesOrder.shippingAddress.stateProv", "null")
+                        .param("salesOrder.shippingAddress.country", "null")
+                        .param("salesOrder.shippingAddress.zipPostal", "null")
+                        .param("salesOrder.shippingAddress.poBox", "null")
+                        .param("salesOrder.billingAddress.apartmentNumber", "null")
+                        .param("salesOrder.billingAddress.city", "null")
+                        .param("salesOrder.billingAddress.streetAddress", "null")
+                        .param("salesOrder.billingAddress.stateProv", "null")
+                        .param("salesOrder.billingAddress.country", "null")
+                        .param("salesOrder.billingAddress.zipPostal", "null")
+                        .param("salesOrder.billingAddress.poBox", "null")
+                        .param("salesOrder.contact", "null")
+                        .param("salesOrder.account", "null")
+                        .param("salesOrder.quote", "null")
+                        .param("salesOrder.taxPercent", "null")
+                        .param("salesOrder.invoiceNumber", "null")
+                        .param("salesOrder.contract", "null")
+                        .param("salesOrder.owner", "null")
+                        .param("salesOrder.productSalesOrder", "null")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/salesorder/records/1"));
+    verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
+  }
 }

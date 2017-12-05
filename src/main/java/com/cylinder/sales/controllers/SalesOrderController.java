@@ -186,37 +186,42 @@ public class SalesOrderController extends BaseController{
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
-        SalesOrder salesOrder;
-        if (salesOrderRepository.existsById(id)) {
-            salesOrder = salesOrderRepository.findOne(id);
+        if (salesOrderData.getSalesOrder() != null) {
+            Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderData.getProductList());
+            Optional<FieldError> error = itemAlreadyExists(productList);
+            if (error.isPresent()) {
+                result.addError(error.get());
+            }
+            if (result.hasErrors()) {
+                this.bindSalesForm(model, auth);
+                model().attributeHasFieldErrors("result", "field")
+                model.addAttribute("action", "edit/" + salesOrderData.getSalesOrder().getSalesOrderId());
+                return "sales/editsinglesalesorder";
+            }
+            if (salesOrderData.getSalesOrder().getBillingAddress().areFieldsNull()) {
+                salesOrderData.getSalesOrder().setBillingAddress(null);
+            }
+            if (salesOrderData.getSalesOrder().getShippingAddress().areFieldsNull()) {
+                salesOrderData.getSalesOrder().setShippingAddress(null);
+            }
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            salesOrderData.getSalesOrder().setLastModifiedBy(user);
+            Account account = salesOrderData.getSalesOrder().getAccount();
+            Contact contact = salesOrderData.getSalesOrder().getContact();
+            for (ProductSalesOrder productEntry : salesOrderData.getProductList()) {
+                if (productEntry.getSalesOrder() == null) {
+                    productEntry.setSalesOrder(salesOrderData.getSalesOrder());
+                }
+            }
+            Long assignedId = salesOrderRepository.save(salesOrderData.getSalesOrder()).getSalesOrderId();
+            productSalesOrderRepository.deleteProductsBySalesOrderId(salesOrderData.getSalesOrder().getSalesOrderId());
+            for (ProductSalesOrder productEntry : productList) {
+                productSalesOrderRepository.save(productEntry);
+            }
+            return "redirect:/salesorder/records/" + assignedId.toString();
         } else {
             throw new NotFoundException();
         }
-        Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderData.getProductList());
-        Optional<FieldError> error = itemAlreadyExists(productList);
-        if (error.isPresent()) {
-            result.addError(error.get());
-        }
-        if (result.hasErrors()) {
-            this.bindSalesForm(model, auth);
-            model.addAttribute("action", "edit/" + salesOrderData.getSalesOrder().getSalesOrderId());
-            return "sales/editsinglesalesorder";
-        }
-        CrmUser user = userRepository.findByEmail(auth.getName());
-        salesOrderData.getSalesOrder().setLastModifiedBy(user);
-        Account account = salesOrderData.getSalesOrder().getAccount();
-        Contact contact = salesOrderData.getSalesOrder().getContact();
-        for (ProductSalesOrder productEntry : salesOrderData.getProductList()) {
-            if (productEntry.getSalesOrder() == null) {
-                productEntry.setSalesOrder(salesOrderData.getSalesOrder());
-            }
-        }
-        Long assignedId = salesOrderRepository.save(salesOrderData.getSalesOrder()).getSalesOrderId();
-        productSalesOrderRepository.deleteProductsBySalesOrderId(salesOrderData.getSalesOrder().getSalesOrderId());
-        for (ProductSalesOrder productEntry : productList) {
-            productSalesOrderRepository.save(productEntry);
-        }
-        return "redirect:/salesorder/records/" + assignedId.toString();
     }
 
     /**
