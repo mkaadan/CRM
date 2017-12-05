@@ -194,7 +194,9 @@ public class SalesOrderController extends BaseController{
             }
             if (result.hasErrors()) {
                 this.bindSalesForm(model, auth);
-                model().attributeHasFieldErrors("result", "field")
+                for (FieldError error2: result.getFieldErrors())  {
+                    System.out.println(" " + error2.getField());
+                }
                 model.addAttribute("action", "edit/" + salesOrderData.getSalesOrder().getSalesOrderId());
                 return "sales/editsinglesalesorder";
             }
