@@ -1,4 +1,4 @@
-package com.cylinder.accounts.controllers;
+package com.cylinder.crmusers.controllers;
 
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
