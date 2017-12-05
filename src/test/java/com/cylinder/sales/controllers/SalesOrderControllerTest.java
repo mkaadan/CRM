@@ -3,6 +3,10 @@ package com.cylinder.sales.controllers;
 import java.lang.Iterable;
 import java.util.ArrayList;
 
+import com.cylinder.accounts.model.Account;
+import com.cylinder.accounts.model.AccountRepository;
+import com.cylinder.contacts.model.Contact;
+import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
 import com.cylinder.sales.model.*;
@@ -43,11 +47,20 @@ public class SalesOrderControllerTest extends ControllerTests {
   @MockBean
   private ProductRepository productRepository;
 
-  //  @MockBean
-//  private QuoteRepository quoteRepository;
-//
+    @MockBean
+  private QuoteRepository quoteRepository;
+
   @MockBean
   private ProductSalesOrderRepository productSalesOrderRepository;
+
+  @MockBean
+  private AccountRepository accountRepository;
+
+  @MockBean
+  private ContactRepository contactRepository;
+
+  @MockBean
+  private ContractRepository contractRepository;
 
   private ArrayList<SalesOrder> mockSalesOrderListData() {
     ArrayList<SalesOrder> salesOrders = new ArrayList();
@@ -69,19 +82,19 @@ public class SalesOrderControllerTest extends ControllerTests {
     return salesOrder;
   }
 
-//    private ArrayList<Quote> mockQuoteData() {
-//        ArrayList<Quote> quotes = new ArrayList();
-//        Quote quote = new Quote();
-//        quote.setQuoteId(new Long("1"));
-//        quotes.add(quote);
-//        quote = new Quote();
-//        quote.setQuoteId(new Long("2"));
-//        quotes.add(quote);
-//        quote = new Quote();
-//        quote.setQuoteId(new Long("3"));
-//        quotes.add(quote);
-//        return quotes;
-//    }
+    private ArrayList<Quote> mockQuoteData() {
+        ArrayList<Quote> quotes = new ArrayList();
+        Quote quote = new Quote();
+        quote.setQuoteId(new Long("1"));
+        quotes.add(quote);
+        quote = new Quote();
+        quote.setQuoteId(new Long("2"));
+        quotes.add(quote);
+        quote = new Quote();
+        quote.setQuoteId(new Long("3"));
+        quotes.add(quote);
+        return quotes;
+    }
 
     private ArrayList<ProductSalesOrder> mockProductSalesOrderData() {
         ArrayList<ProductSalesOrder> productSalesOrders = new ArrayList();
@@ -105,7 +118,7 @@ public class SalesOrderControllerTest extends ControllerTests {
                 .build();
         super.mockUserRepository();
         Iterable<SalesOrder> salesOrders = mockSalesOrderListData();
-//        Iterable<Quote> quotes = mockQuoteData();
+        Iterable<Quote> quotes = mockQuoteData();
         Iterable<ProductSalesOrder> productSalesOrders = mockProductSalesOrderData();
         given(this.salesOrderRepository.findAll()).willReturn(salesOrders);
         given(this.salesOrderRepository.findOne(eq(new Long("1")))).willReturn(mockSingleSalesOrderData());
@@ -113,10 +126,8 @@ public class SalesOrderControllerTest extends ControllerTests {
         given(this.salesOrderRepository.existsById(new Long("1"))).willReturn(true);
         given(this.salesOrderRepository.existsById(new Long("5"))).willReturn(false);
         given(this.salesOrderRepository.save(any(SalesOrder.class))).willReturn(mockSingleSalesOrderData());
-//        given(this.quoteRepository.findAll()).willReturn(quotes);
+        given(this.quoteRepository.findAll()).willReturn(quotes);
         given(this.productSalesOrderRepository.findAll()).willReturn(productSalesOrders);
-        given(this.productSalesOrderRepository.getProductsBySalesOrderId(new Long("1"))).willReturn(mockProductSalesOrderData());
-        //given(this.productSalesOrderRepository.getProductsBySalesOrderId(new Long("5"))).willReturn(null);
     }
 
     @Test
@@ -139,4 +150,27 @@ public class SalesOrderControllerTest extends ControllerTests {
         this.mockMvc.perform(get("/salesorder/records/1"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testRecordWithNonExistantRecord() throws Exception {
+        this.mockMvc.perform(get("/salesorder/records/5"))
+                .andExpect(status().isNotFound());
+    }
+
+
+  @Test
+  @WithMockUser(username="fake@mail.com", authorities="USER")
+  public void testGetEditRecordWithExistantRecord() throws Exception {
+    this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1")).with(csrf()))
+                .andExpect(status().isOk());
+  }
+
+  @Test
+  @WithMockUser(username="fake@mail.com", authorities="USER")
+  public void testGetEditRecordWithNonExistantRecord() throws Exception {
+    this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("5")).with(csrf()))
+                .andExpect(status().isNotFound());
+  }
+
 }
