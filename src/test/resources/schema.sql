@@ -1,18 +1,18 @@
-CREATE SCHEMA global;
+CREATE SCHEMA IF NOT EXISTS global;
 
-CREATE TABLE global.industries(
+CREATE TABLE IF NOT EXISTS global.industries(
   industry_id bigserial primary key,
   industry_name varchar(255)
 );
 
-create schema crmuser;
+CREATE SCHEMA IF NOT EXISTS crmuser;
 
-CREATE TABLE crmuser.roles(
+CREATE TABLE IF NOT EXISTS crmuser.roles(
   role_id bigserial primary key,
   role varchar(20)
 );
 
-CREATE TABLE crmuser.accounts(
+CREATE TABLE IF NOT EXISTS crmuser.accounts(
   account_id bigserial primary key,
   email varchar(500) unique,
   password varchar(250),
@@ -22,26 +22,26 @@ CREATE TABLE crmuser.accounts(
   role_id bigint references crmuser.roles(role_id) on delete restrict
 );
 
-CREATE SCHEMA lead;
+CREATE SCHEMA IF NOT EXISTS lead;
 
-CREATE TABLE lead.comments(
+CREATE TABLE IF NOT EXISTS lead.comments(
   comment_id bigserial PRIMARY KEY,
   account_id bigint NOT NULL references crmuser.accounts(account_id),
   date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message text
 );
 
-CREATE TABLE lead.statuses(
+CREATE TABLE IF NOT EXISTS lead.statuses(
   status_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE lead.sources(
+CREATE TABLE IF NOT EXISTS lead.sources(
   source_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE lead.addresses(
+CREATE TABLE IF NOT EXISTS lead.addresses(
   address_id bigserial PRIMARY KEY,
   apartment_number varchar(50),
   street varchar(250),
@@ -52,12 +52,12 @@ CREATE TABLE lead.addresses(
   po_box varchar(25)
 );
 
-CREATE TABLE lead.emails(
+CREATE TABLE IF NOT EXISTS lead.emails(
   email_id bigserial PRIMARY KEY,
   email varchar(250)
 );
 
-CREATE TABLE lead.details(
+CREATE TABLE IF NOT EXISTS lead.details(
   lead_id bigserial PRIMARY KEY,
   first_name varchar(250),
   last_name varchar(250) NOT NULL,
@@ -78,19 +78,19 @@ CREATE TABLE lead.details(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE lead.comment_lookups(
+CREATE TABLE IF NOT EXISTS lead.comment_lookups(
   comment_id bigint references lead.comments(comment_id) on delete cascade,
   lead_id bigint references lead.details(lead_id) on delete cascade
 );
 
-create schema product;
+CREATE SCHEMA IF NOT EXISTS product;
 
-CREATE TABLE product.categories(
+CREATE TABLE IF NOT EXISTS product.categories(
   category_id bigserial PRIMARY KEY,
   descriptor varchar(100)
 );
 
-CREATE TABLE product.details(
+CREATE TABLE IF NOT EXISTS product.details(
     product_id bigserial PRIMARY KEY,
     code varchar(50),
     name varchar(250) NOT NULL,
@@ -113,16 +113,16 @@ CREATE TABLE product.details(
     owner_id bigint references crmuser.accounts(account_id)
 );
 
-CREATE SCHEMA contact;
+CREATE SCHEMA IF NOT EXISTS contact;
 
-CREATE SCHEMA account;
+CREATE SCHEMA IF NOT EXISTS account;
 
-CREATE TABLE contact.emails(
+CREATE TABLE IF NOT EXISTS contact.emails(
   email_id bigserial PRIMARY KEY,
   email varchar(250)
 );
 
-CREATE TABLE contact.addresses(
+CREATE TABLE IF NOT EXISTS contact.addresses(
   address_id bigserial PRIMARY KEY,
   apartment_number varchar(50),
   street varchar(250),
@@ -133,19 +133,19 @@ CREATE TABLE contact.addresses(
   po_box varchar(25)
 );
 
-CREATE TABLE contact.comments(
+CREATE TABLE IF NOT EXISTS contact.comments(
   comment_id bigserial PRIMARY KEY,
   account_id bigint NOT NULL references crmuser.accounts(account_id) on delete set null,
   date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message text
 );
 
-CREATE TABLE account.type(
+CREATE TABLE IF NOT EXISTS account.type(
   type_id bigserial PRIMARY KEY,
   descriptor varchar(100)
 );
 
-CREATE TABLE account.addresses(
+CREATE TABLE IF NOT EXISTS account.addresses(
   address_id bigserial PRIMARY KEY,
   apartment_number varchar(50),
   street varchar(250),
@@ -156,13 +156,13 @@ CREATE TABLE account.addresses(
   po_box varchar(25)
 );
 
-CREATE TABLE account.emails(
+CREATE TABLE IF NOT EXISTS account.emails(
   email_id bigserial PRIMARY KEY,
   email varchar(250)
 );
 
 
-CREATE TABLE account.details(
+CREATE TABLE IF NOT EXISTS account.details(
   account_id bigserial PRIMARY KEY,
   name varchar(250) NOT NULL,
   rating float,
@@ -184,7 +184,7 @@ CREATE TABLE account.details(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE contact.details(
+CREATE TABLE IF NOT EXISTS contact.details(
   contact_id bigserial PRIMARY KEY,
   first_name varchar(250),
   last_name varchar(250),
@@ -211,26 +211,26 @@ CREATE TABLE contact.details(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE contact.comment_lookups(
+CREATE TABLE IF NOT EXISTS contact.comment_lookups(
   comment_id bigint references contact.comments(comment_id) on delete cascade,
   contact_id bigint references contact.details(contact_id) on delete cascade,
   PRIMARY KEY(comment_id, contact_id)
 );
 
 
-CREATE SCHEMA ticket;
+CREATE SCHEMA IF NOT EXISTS ticket;
 
-CREATE TABLE ticket.statuses(
+CREATE TABLE IF NOT EXISTS ticket.statuses(
   status_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE ticket.case_origins(
+CREATE TABLE IF NOT EXISTS ticket.case_origins(
   origin_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE ticket.comments(
+CREATE TABLE IF NOT EXISTS ticket.comments(
   comment_id bigserial PRIMARY KEY,
   account_id bigint NOT NULL references crmuser.accounts(account_id),
   date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -238,7 +238,7 @@ CREATE TABLE ticket.comments(
 );
 
 
-CREATE TABLE ticket.details(
+CREATE TABLE IF NOT EXISTS ticket.details(
   ticket_id bigserial PRIMARY KEY,
   status_id bigint references ticket.statuses(status_id) on delete restrict,
   origin_id bigint references ticket.case_origins(origin_id) on delete restrict,
@@ -253,32 +253,32 @@ CREATE TABLE ticket.details(
   solution text
 );
 
-CREATE TABLE ticket.comment_lookups(
+CREATE TABLE IF NOT EXISTS ticket.comment_lookups(
   comment_id bigint references ticket.comments(comment_id) on delete cascade,
   ticket_id bigint references ticket.details(ticket_id) on delete cascade,
   PRIMARY KEY(comment_id, ticket_id)
 );
 
-CREATE SCHEMA deal;
+CREATE SCHEMA IF NOT EXISTS deal;
 
-CREATE TABLE deal.types(
+CREATE TABLE IF NOT EXISTS deal.types(
   type_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE deal.stages(
+CREATE TABLE IF NOT EXISTS deal.stages(
   stage_id bigserial PRIMARY KEY,
   descriptor varchar(250)
 );
 
-CREATE TABLE deal.comments(
+CREATE TABLE IF NOT EXISTS deal.comments(
   comment_id bigserial PRIMARY KEY,
   account_id bigint NOT NULL references crmuser.accounts(account_id) on delete set null,
   date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message text
 );
 
-CREATE TABLE deal.details(
+CREATE TABLE IF NOT EXISTS deal.details(
   deal_id bigserial PRIMARY KEY,
   owner_id bigint NOT NULL references crmuser.accounts(account_id) on delete set null,
   type_id bigint references deal.types(type_id) on delete restrict,
@@ -295,15 +295,15 @@ CREATE TABLE deal.details(
 );
 
 
-CREATE TABLE deal.comment_lookups(
+CREATE TABLE IF NOT EXISTS deal.comment_lookups(
   comment_id bigint references deal.comments(comment_id),
   deal_id bigint references deal.details(deal_id),
   PRIMARY KEY(comment_id, deal_id)
 );
 
-CREATE SCHEMA sale;
+CREATE SCHEMA IF NOT EXISTS sale;
 
-CREATE TABLE sale.purchase_orders(
+CREATE TABLE IF NOT EXISTS sale.purchase_orders(
   purchase_order_id bigserial primary key,
   contact_id bigint references contact.details(contact_id) on delete set null,
   account_id bigint references account.details(account_id) on delete restrict,
@@ -314,7 +314,7 @@ CREATE TABLE sale.purchase_orders(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE sale.purchase_product_lookups(
+CREATE TABLE IF NOT EXISTS sale.purchase_product_lookups(
   purchase_product_id bigserial primary key,
   purchase_order_id bigint references sale.purchase_orders(purchase_order_id) on delete cascade,
   product_id bigint references product.details(product_id) on delete restrict,
@@ -322,7 +322,7 @@ CREATE TABLE sale.purchase_product_lookups(
   discount numeric(5,5)
 );
 
-CREATE TABLE sale.quotes(
+CREATE TABLE IF NOT EXISTS sale.quotes(
   quote_id bigserial primary key,
   account_id bigint references account.details(account_id) on delete restrict,
   contact_id bigint references contact.details(contact_id) on delete set null,
@@ -333,7 +333,7 @@ CREATE TABLE sale.quotes(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE sale.quote_product_lookup(
+CREATE TABLE IF NOT EXISTS sale.quote_product_lookup(
   quote_product_id bigserial primary key,
   product_id bigint references product.details(product_id) on delete restrict,
   quote_id bigint references sale.quotes(quote_id) on delete cascade,
@@ -341,7 +341,7 @@ CREATE TABLE sale.quote_product_lookup(
   discount numeric(5,5)
 );
 
-CREATE TABLE sale.addresses(
+CREATE TABLE IF NOT EXISTS sale.addresses(
   address_id bigserial PRIMARY KEY,
   apartment_number varchar(50),
   street varchar(250),
@@ -352,13 +352,13 @@ CREATE TABLE sale.addresses(
   po_box varchar(25)
 );
 
-CREATE TABLE sale.contract(
+CREATE TABLE IF NOT EXISTS sale.contract(
   contract_id bigserial primary key,
   contact_title varchar(50),
   contract text
 );
 
-CREATE TABLE sale.sales_orders(
+CREATE TABLE IF NOT EXISTS sale.sales_orders(
   sale_order_id bigserial primary key,
   billing_address_id bigint references sale.addresses(address_id) on delete set null,
   shipping_address_id bigint references sale.addresses(address_id) on delete set null,
@@ -375,7 +375,7 @@ CREATE TABLE sale.sales_orders(
   last_modified_by_id bigint references crmuser.accounts(account_id) on delete set null
 );
 
-CREATE TABLE sale.sale_product_lookups(
+CREATE TABLE IF NOT EXISTS sale.sale_product_lookups(
   sale_product_id bigserial primary key,
   sale_order_id bigint references sale.sales_orders(sale_order_id) on delete cascade,
   product_id bigint references product.details(product_id) on delete restrict,
@@ -383,31 +383,31 @@ CREATE TABLE sale.sale_product_lookups(
   discount numeric(5,5)
 );
 
-CREATE TABLE account.comments(
+CREATE TABLE IF NOT EXISTS account.comments(
   comment_id bigserial PRIMARY KEY,
   date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message text
 );
 
-CREATE TABLE account.comment_lookups(
+CREATE TABLE IF NOT EXISTS account.comment_lookups(
   comment_id bigint references account.comments(comment_id) on delete cascade,
   account_id bigint references account.details(account_id) on delete cascade,
   PRIMARY KEY(comment_id, account_id)
 );
 
-CREATE TABLE account.deal_lookups(
+CREATE TABLE IF NOT EXISTS account.deal_lookups(
   deal_id bigint references deal.details(deal_id) on delete cascade,
   account_id bigint references account.details(account_id) on delete cascade,
   PRIMARY KEY(deal_id, account_id)
 );
 
-CREATE TABLE account.case_lookups(
+CREATE TABLE IF NOT EXISTS account.case_lookups(
   ticket_id bigint references ticket.details(ticket_id) on delete cascade,
   account_id bigint references account.details(account_id) on delete cascade,
   PRIMARY KEY(ticket_id, account_id)
 );
 
-CREATE TABLE account.contact_lookups(
+CREATE TABLE IF NOT EXISTS account.contact_lookups(
   contact_id bigint references contact.details(contact_id) on delete cascade,
   account_id bigint references account.details(account_id) on delete cascade,
   PRIMARY KEY(contact_id, account_id)
