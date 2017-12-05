@@ -1,4 +1,4 @@
-package com.cylinder.leads.model.LeadRepositoryTests;
+package com.cylinder.leads.model;
 
 import com.cylinder.leads.model.LeadRepository;
 import com.cylinder.leads.model.Lead;
