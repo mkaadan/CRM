@@ -13,8 +13,10 @@ public abstract class ListIterableServiceObject<T> {
      */
     public static <T> List<T> iterableToList(Iterable<T> products){
         List<T> productList = new ArrayList<T>();
-        for(T product : products){
-            productList.add(product);
+        if(products != null) {
+            for (T product : products) {
+                productList.add(product);
+            }
         }
         return productList;
     }
