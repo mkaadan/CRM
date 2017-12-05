@@ -186,7 +186,7 @@ public class SalesOrderController extends BaseController{
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
-        if (salesOrderData.getSalesOrder() != null) {
+        if (salesOrderData.getSalesOrder() != null && salesOrderRepository.existsById(id)) {
             Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderData.getProductList());
             Optional<FieldError> error = itemAlreadyExists(productList);
             if (error.isPresent()) {
@@ -194,9 +194,9 @@ public class SalesOrderController extends BaseController{
             }
             if (result.hasErrors()) {
                 this.bindSalesForm(model, auth);
-                for (FieldError error2: result.getFieldErrors())  {
-                    System.out.println(" " + error2.getField());
-                }
+//                for (FieldError error2: result.getFieldErrors())  {
+//                    System.out.println(" " + error2.getField());
+//                }
                 model.addAttribute("action", "edit/" + salesOrderData.getSalesOrder().getSalesOrderId());
                 return "sales/editsinglesalesorder";
             }
@@ -263,6 +263,7 @@ public class SalesOrderController extends BaseController{
             model.addAttribute("action","new/");
             return "sales/editsinglesalesorder";
         }
+
         CrmUser user = userRepository.findByEmail(auth.getName());
         salesOrder.setCreatedBy(user);
         SalesOrder savedSalesOrder = salesOrderRepository.save(salesOrder);

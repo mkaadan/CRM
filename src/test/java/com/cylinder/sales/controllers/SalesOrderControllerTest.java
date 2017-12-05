@@ -230,4 +230,28 @@ public class SalesOrderControllerTest extends ControllerTests {
                 .andExpect(redirectedUrl("/salesorder/records/1"));
     verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
   }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testPostEditRecordWithNonExistantRecord() throws Exception {
+        this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("5"))
+                .param("salesOrder.salesOrderId","5")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "6")
+                .with(csrf()))
+                .andExpect(status().isNotFound());
+    }
 }
