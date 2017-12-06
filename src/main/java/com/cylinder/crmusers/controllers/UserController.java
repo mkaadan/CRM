@@ -58,10 +58,16 @@ public class UserController extends BaseController {
     public String editUserPassword(@PathVariable("userId") Long userId,
                                    Authentication auth,
                                    Model model) {
+        if (!userRepository.existsByAccountId(userId)) {
+          throw new NotFoundException();
+        }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
         if (userId == currentUser.getAccountId()) {
-            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            super.setCommonModelAttributes(model,
+                                           auth,
+                                           userRepository,
+                                           this.moduleName);
             PasswordForm passForm = new PasswordForm();
             passForm.setAccountId(currentUser.getAccountId());
             model.addAttribute("passForm", passForm);
@@ -89,6 +95,9 @@ public class UserController extends BaseController {
                            Authentication auth,
                            HttpServletResponse response,
                            Model model) {
+        if (!userRepository.existsByAccountId(userId)) {
+          throw new NotFoundException();
+        }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
         if (userId == currentUser.getAccountId()) {
@@ -100,7 +109,10 @@ public class UserController extends BaseController {
                 result.addError(passwordError.get());
             }
             if (result.hasErrors()) {
-                super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+                super.setCommonModelAttributes(model,
+                                               auth,
+                                               userRepository,
+                                               this.moduleName);
                 return "crmusers/users/userform";
             } else {
                 passForm.hashNewPassword(passwordEncoder);
@@ -109,8 +121,7 @@ public class UserController extends BaseController {
                 return "redirect:/user/edit/" + userId;
             }
         } else {
-            response.setStatus(403);
-            return "redirect:/403.html";
+            throw new RestrictedException();
         }
     }
 
