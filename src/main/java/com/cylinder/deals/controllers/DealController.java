@@ -8,6 +8,7 @@ import com.cylinder.deals.model.Deal;
 import com.cylinder.deals.model.DealRepository;
 import com.cylinder.deals.model.StageRepository;
 import com.cylinder.deals.model.TypeRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -102,8 +103,7 @@ public class DealController extends BaseController {
             model.addAttribute("toList", "/deal");
             return "deals/single";
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
     }
 
@@ -124,8 +124,7 @@ public class DealController extends BaseController {
         if (dealRepository.existsByDealId(id)) {
             deal = dealRepository.findOne(id);
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
         this.bindDealForm(model, auth);
         model.addAttribute("dealData", deal);
@@ -147,15 +146,19 @@ public class DealController extends BaseController {
                                    BindingResult result,
                                    Model model,
                                    Authentication auth) {
-        if (result.hasErrors()) {
-            this.bindDealForm(model, auth);
-            model.addAttribute("action", "edit/" + deal.getDealId());
-            return "deals/dealform";
+        if (dealRepository.existsByDealId(deal.getDealId())) {
+            if (result.hasErrors()) {
+                this.bindDealForm(model, auth);
+                model.addAttribute("action", "edit/" + deal.getDealId());
+                return "deals/dealform";
+            }
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            deal.setLastModifiedBy(user);
+            Long assignedId = dealRepository.save(deal).getDealId();
+            return "redirect:/deal/records/" + assignedId.toString();
+        } else {
+            throw new NotFoundException();
         }
-        CrmUser user = userRepository.findByEmail(auth.getName());
-        deal.setLastModifiedBy(user);
-        Long assignedId = dealRepository.save(deal).getDealId();
-        return "redirect:/deal/records/" + assignedId.toString();
     }
 
     /**
