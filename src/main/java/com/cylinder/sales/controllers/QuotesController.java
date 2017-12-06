@@ -195,9 +195,7 @@ public class QuotesController extends BaseController {
             }
             Long assignedId = quoteRepository.save(quoteData.getQuote()).getQuoteId();
             productQuoteRepository.deleteProductsByQuoteId(quoteData.getQuote().getQuoteId());
-            for (ProductQuote productEntry : productList) {
-                productQuoteRepository.save(productEntry);
-            }
+            productQuoteRepository.save(productList);
             return "redirect:/quote/records/" + assignedId.toString();
         } else {
             throw new NotFoundException();
@@ -252,9 +250,7 @@ public class QuotesController extends BaseController {
                 productEntry.setQuote(savedQuote);
             }
         }
-        for (ProductQuote productEntry : productList) {
-            productQuoteRepository.save(productEntry);
-        }
+        productQuoteRepository.save(productList);
         return "redirect:/quote/records/" + assignedId.toString();
     }
 
