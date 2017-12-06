@@ -14,6 +14,16 @@ import javax.persistence.*;
 public class Stage {
 
     /**
+     * The stage descriptor.
+     *
+     * @param descriptor the plain english value of the stage.
+     * @return the deal's stage descriptor.
+     */
+    @Getter
+    @Setter
+    @Column
+    protected String descriptor;
+    /**
      * The identifier for a deal's stage.
      *
      * @param stageId the new lead id value.
@@ -25,16 +35,5 @@ public class Stage {
     @Column(name = "stage_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stageId;
-
-    /**
-     * The stage descriptor.
-     *
-     * @param descriptor the plain english value of the stage.
-     * @return the deal's stage descriptor.
-     */
-    @Getter
-    @Setter
-    @Column
-    protected String descriptor;
 
 }

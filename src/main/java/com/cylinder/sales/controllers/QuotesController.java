@@ -6,17 +6,12 @@ import com.cylinder.contacts.model.Contact;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
-import com.cylinder.sales.model.ProductQuote;
-import com.cylinder.sales.model.ProductQuoteRepository;
-import com.cylinder.sales.model.Quote;
-import com.cylinder.sales.model.QuoteRepository;
+import com.cylinder.sales.model.*;
 import com.cylinder.sales.model.forms.QuoteForm;
-import com.cylinder.sales.model.ListIterableServiceObject;
 import com.cylinder.shared.controllers.BaseController;
-import com.cylinder.errors.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -30,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -41,45 +35,39 @@ import java.util.Optional;
 public class QuotesController extends BaseController {
 
     /**
+     * The module name that this controller is associated to.
+     */
+    private final String moduleName = "Quotes";
+    /**
      * Sql interface for quote entites.
      */
     @Autowired
     private QuoteRepository quoteRepository;
-
     /**
      * Sql interface for productQuote entites.
      */
     @Autowired
     private ProductQuoteRepository productQuoteRepository;
-
     /**
      * Sql interface for product entites.
      */
     @Autowired
     private ProductRepository productRepository;
-
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
     /**
      * Sql interface for contact entites.
      */
     @Autowired
     private ContactRepository contactRepository;
-
     /**
      * Sql interface for account entites.
      */
     @Autowired
     private AccountRepository accountRepository;
-
-    /**
-     * The module name that this controller is associated to.
-     */
-    private final String moduleName = "Quotes";
 
     /**
      * Creates a list of all the products
@@ -153,8 +141,7 @@ public class QuotesController extends BaseController {
             model.addAttribute("quoteData", form);
             model.addAttribute("action", "edit/" + id);
             return "sales/editsinglequote";
-        }
-        else {
+        } else {
             throw new NotFoundException();
         }
     }
@@ -303,9 +290,9 @@ public class QuotesController extends BaseController {
      * Adds a row for a product to occupy on the existing sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param id    the id that is associated to some sales order.
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param id             the id that is associated to some sales order.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      */
     @RequestMapping(value = "/edit/{id}", params = {"addRow"})
     public String addRow(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
@@ -322,8 +309,8 @@ public class QuotesController extends BaseController {
      * Adds a row for a product to occupy on the new sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      */
     @RequestMapping(value = "/new/", params = {"addRow"})
     public String addRowToNew(@Valid @ModelAttribute("quoteData") QuoteForm quoteData,
@@ -339,9 +326,9 @@ public class QuotesController extends BaseController {
      * removes a row for a product to occupy on the existing sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param id    the id that is associated to some sales order.
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param id             the id that is associated to some sales order.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      * @param req
      */
     @RequestMapping(value = "/edit/{id}", params = {"removeRow"})
@@ -361,8 +348,8 @@ public class QuotesController extends BaseController {
      * removes a row for a product to occupy on the new sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      * @param req
      */
     @RequestMapping(value = "/new/", params = {"removeRow"})
@@ -380,7 +367,7 @@ public class QuotesController extends BaseController {
     /**
      * checks if an item already exists
      *
-     * @param pso  an iterable to check if the new item is a duplicate
+     * @param pso an iterable to check if the new item is a duplicate
      */
     private Optional<FieldError> itemAlreadyExists(Iterable<ProductQuote> pq) {
         HashMap map = new HashMap();

@@ -30,16 +30,13 @@ import java.util.Optional;
 @RequestMapping("/contact")
 public class ContactsController extends BaseController {
 
+    private final String moduleName = "Contacts";
     @Autowired
     private ContactRepository contactRepository;
-
     @Autowired
     private CrmUserRepository userRepository;
-
     @Autowired
     private AccountRepository AccountRepository;
-
-    private final String moduleName = "Contacts";
 
     /**
      * Render the list view for all available contacts.

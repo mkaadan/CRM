@@ -18,26 +18,23 @@ import javax.sql.DataSource;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     /**
+     * Get the user data to authenicate against.
+     */
+    private static final String userQuery = "SELECT email as username, password, is_enabled as enabled FROM crmuser.accounts where email=?";
+    /**
+     * Get the secuirty roles a user is associated with.
+     */
+    private static final String roleQuery = "SELECT accounts.email as username, roles.role FROM crmuser.accounts accounts LEFT JOIN crmuser.roles roles ON accounts.role_id = roles.role_id where accounts.email=?";
+    /**
      * bcrypt encoder for password logic.
      */
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
     /**
      * A general database connection.
      */
     @Autowired
     private DataSource databaseConnection;
-
-    /**
-     * Get the user data to authenicate against.
-     */
-    private static final String userQuery = "SELECT email as username, password, is_enabled as enabled FROM crmuser.accounts where email=?";
-
-    /**
-     * Get the secuirty roles a user is associated with.
-     */
-    private static final String roleQuery = "SELECT accounts.email as username, roles.role FROM crmuser.accounts accounts LEFT JOIN crmuser.roles roles ON accounts.role_id = roles.role_id where accounts.email=?";
 
     /**
      * Allow authentication to happen with a database.

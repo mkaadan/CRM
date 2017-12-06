@@ -1,3 +1,3 @@
-$(document).ready(function() {
-  deleteRecord("#deleteRecord", "/salesorder/records/", "/salesOrder/");
+$(document).ready(function () {
+    deleteRecord("#deleteRecord", "/salesorder/records/", "/salesOrder/");
 });

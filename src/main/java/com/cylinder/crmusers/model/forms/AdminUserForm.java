@@ -55,7 +55,7 @@ public class AdminUserForm {
     @Setter
     @NotEmpty(message = "Please provide the last name of the user.")
     protected String lastName;
-
+    protected boolean isEnabled;
     /**
      * The secuirty role associated to a user's account.
      *
@@ -65,8 +65,6 @@ public class AdminUserForm {
     @Getter
     @Setter
     private Role role;
-
-    protected boolean isEnabled;
 
     public AdminUserForm() {
     }

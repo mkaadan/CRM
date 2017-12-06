@@ -7,9 +7,9 @@
                 </div>
             </div>
             <div class="single-space"></div>
-            <form  class="row" th:object="${salesOrderData}" th:action="@{|/salesorder/${action}|}" method="post">
+            <form class="row" th:object="${salesOrderData}" th:action="@{|/salesorder/${action}|}" method="post">
                 <div class="col-lg-12">
-                    <div class = "row">
+                    <div class="row">
                         <div class="col-lg-12 title-gap">
                             <h3> Basic Information </h3>
                         </div>
@@ -71,7 +71,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="taxPercent" class="col-lg-2 col-form-label">Tax Amount: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.taxPercent')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.taxPercent')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="taxPercent"
@@ -83,14 +84,15 @@
                         </span>
                         </div>
                     </div>
-                    <div class = "row">
+                    <div class="row">
                         <div class="col-lg-12 title-gap">
                             <h3> Billing Address Information </h3>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="apartmentNumber" class="col-lg-2 col-form-label">Apartment Number: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.apartmentNumber')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.apartmentNumber')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="apartmentNumber"
@@ -104,7 +106,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="streetAddress" class="col-lg-2 col-form-label">Street: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.streetAddress')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.streetAddress')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="streetAddress"
@@ -118,7 +121,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="city" class="col-lg-2 col-form-label">City: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.city')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.city')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="city"
@@ -132,7 +136,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="stateProv" class="col-lg-2 col-form-label">Province/State: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.stateProv')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.stateProv')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="stateProv"
@@ -146,7 +151,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="country" class="col-lg-2 col-form-label">Country: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.country')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.country')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="country"
@@ -160,7 +166,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="zipPostal" class="col-lg-2 col-form-label">Zip/Postal: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.zipPostal')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.zipPostal')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="zipPostal"
@@ -174,7 +181,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="poBox" class="col-lg-2 col-form-label">Po Box: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.billingAddress.poBox')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.billingAddress.poBox')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="poBox"
@@ -186,14 +194,15 @@
                        </span>
                         </div>
                     </div>
-                    <div class = "row">
+                    <div class="row">
                         <div class="col-lg-12 title-gap">
                             <h3> Shipping Address Information </h3>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="apartmentNumber" class="col-lg-2 col-form-label">Apartment Number: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.apartmentNumber')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.apartmentNumber')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="apartmentNumber"
@@ -207,7 +216,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="streetAddress" class="col-lg-2 col-form-label">Street: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.streetAddress')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.streetAddress')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="streetAddress"
@@ -221,7 +231,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="city" class="col-lg-2 col-form-label">City: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.city')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.city')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="city"
@@ -235,7 +246,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="stateProv" class="col-lg-2 col-form-label">Province/State: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.stateProv')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.stateProv')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="stateProv"
@@ -249,7 +261,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="country" class="col-lg-2 col-form-label">Country: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.country')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.country')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="country"
@@ -263,7 +276,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="zipPostal" class="col-lg-2 col-form-label">Zip/Postal: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.zipPostal')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.zipPostal')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="zipPostal"
@@ -277,7 +291,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="poBox" class="col-lg-2 col-form-label">Po Box: </label>
-                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.poBox')}?'has-error':''">
+                        <div class="col-lg-6"
+                             th:classappend="${#fields.hasErrors('salesOrder.shippingAddress.poBox')}?'has-error':''">
                             <input class="form-control"
                                    type="text"
                                    name="poBox"
@@ -289,62 +304,63 @@
                        </span>
                         </div>
                     </div>
-                    <div class = "row">
+                    <div class="row">
                         <div class="col-lg-12 title-gap">
                             <h3> Item Information </h3>
                         </div>
                     </div>
                     <table>
-                      <thead>
+                        <thead>
                         <tr>
-                          <th >Row</th>
-                          <th >Product</th>
-                          <th >Quantity</th>
-                          <th >Discount</th>
-                          <th>
-                            <button type="submit" name="addRow" >Add row</button>
-                          </th>
+                            <th>Row</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Discount</th>
+                            <th>
+                                <button type="submit" name="addRow">Add row</button>
+                            </th>
                         </tr>
-                      </thead>
-                      <tbody>
+                        </thead>
+                        <tbody>
                         <tr th:each="row,rowStat : *{productList}">
-                          <td th:text="${rowStat.count}">0</td>
-                          <td>
-                            <select th:field="*{productList[__${rowStat.index}__].product}">
-                              <option th:each="var : ${allProducts}"
-                                      th:value="${var.productId}"
-                                      th:text="${var.name}"></option>
-                            </select>
-                          </td>
-                          <td>
-                            <input type="text" th:field="*{productList[__${rowStat.index}__].quantity}" />
-                            <span class="help-block"
-                                  th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
-                                  th:errors="*{quantity}">
+                            <td th:text="${rowStat.count}">0</td>
+                            <td>
+                                <select th:field="*{productList[__${rowStat.index}__].product}">
+                                    <option th:each="var : ${allProducts}"
+                                            th:value="${var.productId}"
+                                            th:text="${var.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${rowStat.index}__].quantity}"/>
+                                <span class="help-block"
+                                      th:if="${#fields.hasErrors('productList[__${rowStat.index}__].quantity')}"
+                                      th:errors="*{quantity}">
                             </span>
-                          </td>
-                          <td>
-                            <input type="text" th:field="*{productList[__${rowStat.index}__].discount}" />
-                          </td>
-                          <td>
-                            <button type="submit" name="removeRow"
-                                    th:value="${rowStat.index}" >Remove row</button>
-                          </td>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${rowStat.index}__].discount}"/>
+                            </td>
+                            <td>
+                                <button type="submit" name="removeRow"
+                                        th:value="${rowStat.index}">Remove row
+                                </button>
+                            </td>
                         </tr>
-                      </tbody>
+                        </tbody>
                     </table>
                     <div class="row">
-                         <input type="hidden" name="salesOrderId" th:field="*{salesOrder.salesOrderId}"></input>
-                         <input type="hidden"
-                                  name="contactId"
-                                  th:if="${salesOrderData.getSalesOrder().getContact() != null}"
-                                  th:field="*{salesOrder.contact.contactId}">
-                         </input>
-                         <input type="hidden"
-                                  name="accountId"
-                                  th:if="${salesOrderData.getSalesOrder().getAccount() != null}"
-                                  th:field="*{salesOrder.account.accountId}">
-                         </input>
+                        <input type="hidden" name="salesOrderId" th:field="*{salesOrder.salesOrderId}"></input>
+                        <input type="hidden"
+                               name="contactId"
+                               th:if="${salesOrderData.getSalesOrder().getContact() != null}"
+                               th:field="*{salesOrder.contact.contactId}">
+                        </input>
+                        <input type="hidden"
+                               name="accountId"
+                               th:if="${salesOrderData.getSalesOrder().getAccount() != null}"
+                               th:field="*{salesOrder.account.accountId}">
+                        </input>
                         <input type="hidden"
                                name="contractId"
                                th:if="${salesOrderData.getSalesOrder().getContract() != null}"
