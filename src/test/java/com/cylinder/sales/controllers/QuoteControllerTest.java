@@ -57,10 +57,14 @@ public class QuoteControllerTest extends ControllerTests {
   @MockBean
   private ContactRepository contactRepository;
 
-
   @MockBean
   private ArrayList<QuoteForm> quoteForms;
 
+  @MockBean
+  private Contact sampleContact;
+
+  @MockBean
+  private Account sampleAccount;
 
 
   private ArrayList<Quote> mockQuoteListData() {
@@ -81,6 +85,18 @@ public class QuoteControllerTest extends ControllerTests {
     Quote quote = new Quote();
     quote.setQuoteId(new Long("1"));
     return quote;
+  }
+
+  private Contact mockSingleContactData() {
+      Contact contact = new Contact();
+      contact.setContactId(new Long("1"));
+      return contact;
+  }
+
+  private Account mockSingleAccountData() {
+      Account account = new Account();
+      account.setAccountId(new Long("1"));
+      return account;
   }
 
     private ArrayList<ProductQuote> mockProductQuoteData() {
@@ -119,6 +135,8 @@ public class QuoteControllerTest extends ControllerTests {
         Iterable<Quote> quotes = mockQuoteListData();
         Iterable<ProductQuote> productQuotes = mockProductQuoteData();
         quoteForms = mockQuoteFormListData(quotes);
+        sampleContact = mockSingleContactData();
+        sampleAccount = mockSingleAccountData();
         given(this.quoteRepository.findAll()).willReturn(quotes);
         given(this.quoteRepository.findOne(eq(new Long("1")))).willReturn(mockSingleQuoteData());
         given(this.quoteRepository.findOne(eq(new Long("1")))).willReturn(null);
@@ -171,44 +189,45 @@ public class QuoteControllerTest extends ControllerTests {
                 .andExpect(status().isNotFound());
   }
 
-//  @Test
-//  @WithMockUser(username="fake@mail.com", authorities="USER")
-//  public void testPostEditRecordWithExistantRecord() throws Exception {
-//    this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
-//                    .param("quote.quoteId","1")
-//                    .with(csrf()))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/quote/records/1"));
-//    verify(this.quoteRepository, times(1)).save(any(Quote.class));
-//  }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testPostEditRecordWithNonExistantRecord() throws Exception {
-//        this.mockMvc.perform(post("/quote/edit/{id}", new Long("5"))
-//                    .param("quote.quoteId","5")
-//                    .with(csrf()))
-//                .andExpect(status().isNotFound());
-//    }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testPostEditRecordWithExistantRecordInvalidData() throws Exception {
-//      this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
-//                    .param("quote.quoteId","1")
-//                    .with(csrf()))
-//                .andExpect(model().attributeHasFieldErrors("quoteData", "quote.invoiceNumber"))
-//                .andExpect(status().isOk());
-//      }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testNewRecord() throws Exception {
-//        this.mockMvc.perform(get("/quote/new/")
-//                        .with(csrf()))
-//                .andExpect(status().isOk());
-//    }
-//
+  @Test
+  @WithMockUser(username="fake@mail.com", authorities="USER")
+  public void testPostEditRecordWithExistantRecord() throws Exception {
+    this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
+                    .param("quote.quoteId","1")
+                    .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/quote/records/1"));
+    verify(this.quoteRepository, times(1)).save(any(Quote.class));
+  }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testPostEditRecordWithNonExistantRecord() throws Exception {
+        this.mockMvc.perform(post("/quote/edit/{id}", new Long("5"))
+                    .param("quote.quoteId","5")
+                    .with(csrf()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testPostEditRecordWithExistantRecordInvalidData() throws Exception {
+      this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
+                    .param("quote.quoteId","1")
+                    .param("quote.contact","sampleAccount")
+                    .with(csrf()))
+                .andExpect(model().attributeHasFieldErrors("quoteData", "quote.contact"))
+                .andExpect(status().isOk());
+      }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testNewRecord() throws Exception {
+        this.mockMvc.perform(get("/quote/new/")
+                        .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
 //    @Test
 //    @WithMockUser(username="fake@mail.com", authorities="USER")
 //    public void testPostNewRecordWithValidData() throws Exception {

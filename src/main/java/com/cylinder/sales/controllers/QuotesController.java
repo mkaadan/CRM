@@ -173,31 +173,35 @@ public class QuotesController extends BaseController {
                                     BindingResult result,
                                     Model model,
                                     Authentication auth) {
-        Iterable<ProductQuote> productList = ListIterableServiceObject.listToIterable(quoteData.getProductList());
-        Optional<FieldError> error = itemAlreadyExists(productList);
-        if (error.isPresent()) {
-            result.addError(error.get());
-        }
-        if (result.hasErrors()) {
-            this.bindUserForm(model, auth);
-            model.addAttribute("action", "edit/" + quoteData.getQuote().getQuoteId());
-            return "sales/editsinglequote";
-        }
-        CrmUser user = userRepository.findByEmail(auth.getName());
-        quoteData.getQuote().setLastModifiedBy(user);
-        Account account = quoteData.getQuote().getAccount();
-        Contact contact = quoteData.getQuote().getContact();
-        for (ProductQuote productEntry : quoteData.getProductList()) {
-            if (productEntry.getQuote() == null) {
-                productEntry.setQuote(quoteData.getQuote());
+        if (quoteData.getQuote() != null && quoteRepository.existsById(id)) {
+            Iterable<ProductQuote> productList = ListIterableServiceObject.listToIterable(quoteData.getProductList());
+            Optional<FieldError> error = itemAlreadyExists(productList);
+            if (error.isPresent()) {
+                result.addError(error.get());
             }
+            if (result.hasErrors()) {
+                this.bindUserForm(model, auth);
+                model.addAttribute("action", "edit/" + quoteData.getQuote().getQuoteId());
+                return "sales/editsinglequote";
+            }
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            quoteData.getQuote().setLastModifiedBy(user);
+            Account account = quoteData.getQuote().getAccount();
+            Contact contact = quoteData.getQuote().getContact();
+            for (ProductQuote productEntry : quoteData.getProductList()) {
+                if (productEntry.getQuote() == null) {
+                    productEntry.setQuote(quoteData.getQuote());
+                }
+            }
+            Long assignedId = quoteRepository.save(quoteData.getQuote()).getQuoteId();
+            productQuoteRepository.deleteProductsByQuoteId(quoteData.getQuote().getQuoteId());
+            for (ProductQuote productEntry : productList) {
+                productQuoteRepository.save(productEntry);
+            }
+            return "redirect:/quote/records/" + assignedId.toString();
+        } else {
+            throw new NotFoundException();
         }
-        Long assignedId = quoteRepository.save(quoteData.getQuote()).getQuoteId();
-        productQuoteRepository.deleteProductsByQuoteId(quoteData.getQuote().getQuoteId());
-        for (ProductQuote productEntry : productList) {
-            productQuoteRepository.save(productEntry);
-        }
-        return "redirect:/quote/records/" + assignedId.toString();
     }
 
     /**
