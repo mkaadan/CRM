@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import com.cylinder.errors.NotFoundException;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -63,11 +65,17 @@ public class ContractsController extends BaseController {
     public String singleRecord(@PathVariable("id") Long id,
                                Model model,
                                Authentication auth) {
-        Contract contractData = contractRepository.findOne(id);
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
-        model.addAttribute("contractData", contractData);
-        model.addAttribute("toList", "/contract");
-        return "sales/singlecontract";
+        if (contractRepository.existsById(id)) {
+          Contract contractData = contractRepository.findOne(id);
+          super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+          model.addAttribute("contractData", contractData);
+          model.addAttribute("toList", "/contract");
+          return "sales/singlecontract";
+        }
+        else {
+            throw new NotFoundException();
+        }
+
     }
 
     /**
@@ -86,14 +94,14 @@ public class ContractsController extends BaseController {
         Contract contract;
         if (contractRepository.existsById(id)) {
             contract = contractRepository.findOne(id);
-        } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
-        }
-        this.bindUserForm(model, auth);
-        model.addAttribute("contractData", contract);
-        model.addAttribute("action", "edit/" + id);
-        return "sales/editsinglecontract";
+            this.bindUserForm(model, auth);
+            model.addAttribute("contractData", contract);
+            model.addAttribute("action", "edit/" + id);
+            return "sales/editsinglecontract";
+      }
+      else {
+          throw new NotFoundException();
+      }
     }
 
     /**
@@ -109,14 +117,20 @@ public class ContractsController extends BaseController {
                                        @Valid @ModelAttribute("contractData") Contract contract,
                                        BindingResult result,
                                        Model model,
-                                       Authentication auth) {
-        if (result.hasErrors()) {
-            this.bindUserForm(model, auth);
-            model.addAttribute("action", "edit/" + contract.getContractId());
-            return "sales/editsinglecontract";
-        }
+                                     Authentication auth) {
+        if (contractRepository.existsById(id)) {
+          if (result.hasErrors()) {
+              this.bindUserForm(model, auth);
+              model.addAttribute("action", "edit/" + contract.getContractId());
+              return "sales/editsinglecontract";
+          }
+
         Long assignedId = contractRepository.save(contract).getContractId();
         return "redirect:/contract/records/" + assignedId.toString();
+        }
+        else {
+            throw new NotFoundException();
+        }
     }
 
     /**
