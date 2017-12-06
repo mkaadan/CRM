@@ -119,18 +119,6 @@ public class SalesOrderControllerTest extends ControllerTests {
     private ArrayList<SalesOrderForm> mockSalesOrderFormListData(Iterable<SalesOrder> salesOrders) {
         ArrayList<SalesOrderForm> salesOrderForms = new ArrayList();
         SalesOrderForm salesOrderForm;
-//        SalesOrder salesOrder = new SalesOrder();
-//        salesOrder.setSalesOrderId(new Long("1"));
-//        SalesOrderForm salesOrderForm = new SalesOrderForm(salesOrder,null);
-//        salesOrderForms.add(salesOrderForm);
-//        salesOrder = new SalesOrder();
-//        salesOrder.setSalesOrderId(new Long("2"));
-//        salesOrderForm = new SalesOrderForm(salesOrder,null);
-//        salesOrderForms.add(salesOrderForm);
-//        salesOrder = new SalesOrder();
-//        salesOrder.setSalesOrderId(new Long("3"));
-//        salesOrderForm = new SalesOrderForm(salesOrder,null);
-//        salesOrderForms.add(salesOrderForm);
         for(SalesOrder salesOrder: salesOrders) {
             if (salesOrder != null) {
                 salesOrderForm = new SalesOrderForm(salesOrder,null);
@@ -159,7 +147,6 @@ public class SalesOrderControllerTest extends ControllerTests {
         given(this.salesOrderRepository.save(any(SalesOrder.class))).willReturn(mockSingleSalesOrderData());
         given(this.quoteRepository.findAll()).willReturn(quotes);
         given(this.productSalesOrderRepository.findAll()).willReturn(productSalesOrders);
-//        given(this.salesOrderFormRepository.findAll()).willReturn(salesOrderForms);
     }
 
     @Test
@@ -340,7 +327,19 @@ public class SalesOrderControllerTest extends ControllerTests {
 
     @Test
     @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testAddRowWithValidData() throws Exception{
+    public void testAddRowToExisting() throws Exception{
+        this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1"))
+                    .param("addRow","addRow")
+                    .with(csrf()))
+            .andExpect(status().isOk());
+    }
 
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testAddRowToNew() throws Exception{
+        this.mockMvc.perform(get("/salesorder/new/")
+                .param("addRow","addRow")
+                .with(csrf()))
+            .andExpect(status().isOk());
     }
 }
