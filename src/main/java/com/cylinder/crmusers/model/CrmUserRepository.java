@@ -69,4 +69,12 @@ public interface CrmUserRepository extends JpaRepository<CrmUser, Long> {
      */
     boolean existsByAccountIdAndEmail(Long accountId, String email);
 
+    /**
+    *  Count the amount of user that have a particular role.
+    *  @param roleId The id of the role.
+    *  @return the count of users who have a particular role. 
+    **/
+    @Query(value="SELECT COUNT(*) FROM crmuser.accounts WHERE role_id=:roleId", nativeQuery=true)
+    Long countByRoleId(@Param("roleId") Long roleId);
+
 }

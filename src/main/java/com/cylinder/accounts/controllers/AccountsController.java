@@ -6,6 +6,7 @@ import com.cylinder.accounts.model.AccountTypeRepository;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -76,12 +77,16 @@ public class AccountsController extends BaseController {
                                Model model,
                                Authentication auth) {
 
-        Account accountData = accountRepository.findOne(id);
-        super.setCommonModelAttributes(model, auth, userRepository, moduleName);
-        model.addAttribute("accountData", accountData);
-        model.addAttribute("toList", "/account");
+        if (accountRepository.existsById(id)) {
+            Account accountData = accountRepository.findOne(id);
+            super.setCommonModelAttributes(model, auth, userRepository, moduleName);
+            model.addAttribute("accountData", accountData);
+            model.addAttribute("toList", "/account");
 
-        return "accounts/singleaccount";
+            return "accounts/singleaccount";
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
@@ -102,8 +107,7 @@ public class AccountsController extends BaseController {
         if (accountRepository.existsById(id)) {
             account = accountRepository.findOne(id);
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
 
         bindAccountUserForm(model, auth);
@@ -129,22 +133,26 @@ public class AccountsController extends BaseController {
                                       Model model,
                                       Authentication auth) {
 
-        if (result.hasErrors()) {
-            this.bindAccountUserForm(model, auth);
-            model.addAttribute("action", "edit/" + account.getAccountId());
-            return "accounts/editsingle";
-        }
-        if (account.getBillingAddress().areFieldsNull()) {
-            account.setBillingAddress(null);
-        }
-        if (account.getShippingAddress().areFieldsNull()) {
-            account.setShippingAddress(null);
-        }
+        if (accountRepository.existsById(account.getAccountId())) {
+            if (result.hasErrors()) {
+                this.bindAccountUserForm(model, auth);
+                model.addAttribute("action", "edit/" + account.getAccountId());
+                return "accounts/editsingle";
+            }
+            if (account.getBillingAddress().areFieldsNull()) {
+                account.setBillingAddress(null);
+            }
+            if (account.getShippingAddress().areFieldsNull()) {
+                account.setShippingAddress(null);
+            }
 
-        CrmUser user = userRepository.findByEmail(auth.getName());
-        account.setLastModifiedBy(user);
-        Long assignedId = accountRepository.save(account).getAccountId();
-        return "redirect:/account/records/" + assignedId.toString();
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            account.setLastModifiedBy(user);
+            Long assignedId = accountRepository.save(account).getAccountId();
+            return "redirect:/account/records/" + assignedId.toString();
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
