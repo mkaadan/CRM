@@ -5,6 +5,7 @@ import com.cylinder.contacts.model.Contact;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -66,11 +67,15 @@ public class ContactsController extends BaseController {
     public String singleRecord(@PathVariable("id") Long id,
                                Authentication auth,
                                Model model) {
-        Contact contactData = contactRepository.findOne(id);
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
-        model.addAttribute("contactData", contactData);
-        model.addAttribute("toList", "/contact/");
-        return "contacts/singlecontact";
+        if (contactRepository.existsByContactId(id)) {
+            Contact contactData = contactRepository.findOne(id);
+            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            model.addAttribute("contactData", contactData);
+            model.addAttribute("toList", "/contact/");
+            return "contacts/singlecontact";
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
@@ -90,8 +95,7 @@ public class ContactsController extends BaseController {
         if (contactRepository.existsByContactId(id)) {
             contact = contactRepository.findOne(id);
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
         this.bindContactForm(model, auth, Optional.of(id));
         model.addAttribute("contactData", contact);
@@ -113,21 +117,25 @@ public class ContactsController extends BaseController {
                                       BindingResult result,
                                       Model model,
                                       Authentication auth) {
-        if (result.hasErrors()) {
-            this.bindContactForm(model, auth, Optional.of(id));
-            model.addAttribute("action", "edit/" + contact.getContactId());
-            return "contacts/contactform";
+        if (contactRepository.existsByContactId(contact.getContactId())) {
+            if (result.hasErrors()) {
+                this.bindContactForm(model, auth, Optional.of(id));
+                model.addAttribute("action", "edit/" + contact.getContactId());
+                return "contacts/contactform";
+            }
+            if (contact.getMailingAddress().areFieldsNull()) {
+                contact.setMailingAddress(null);
+            }
+            if (contact.getOtherAddress().areFieldsNull()) {
+                contact.setOtherAddress(null);
+            }
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            contact.setLastModifiedBy(user);
+            Long assignedId = contactRepository.save(contact).getContactId();
+            return "redirect:/contact/records/" + assignedId.toString();
+        } else {
+            throw new NotFoundException();
         }
-        if (contact.getMailingAddress().areFieldsNull()) {
-            contact.setMailingAddress(null);
-        }
-        if (contact.getOtherAddress().areFieldsNull()) {
-            contact.setOtherAddress(null);
-        }
-        CrmUser user = userRepository.findByEmail(auth.getName());
-        contact.setLastModifiedBy(user);
-        Long assignedId = contactRepository.save(contact).getContactId();
-        return "redirect:/contact/records/" + assignedId.toString();
     }
 
     /**

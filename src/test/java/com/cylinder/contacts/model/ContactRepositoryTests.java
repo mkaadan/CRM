@@ -1,14 +1,11 @@
-package com.cylinder.contacts.model.ContactRepositoryTests;
+package com.cylinder.contacts.model;
 
-        import com.cylinder.contacts.model.ContactRepository;
-        import com.cylinder.contacts.model.Contact;
-        import com.cylinder.RespositoryTests;
+import com.cylinder.RespositoryTests;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-        import org.junit.*;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import static org.junit.Assert.*;
-
-        import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 public class ContactRepositoryTests extends RespositoryTests {
 
@@ -43,7 +40,7 @@ public class ContactRepositoryTests extends RespositoryTests {
         Long id = new Long("4");
         boolean isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, true);
-        contactRepository.existsByContactId(id);
+        contactRepository.deleteByContactId(id);
         isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, false);
     }
