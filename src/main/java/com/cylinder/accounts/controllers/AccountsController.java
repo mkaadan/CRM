@@ -139,12 +139,7 @@ public class AccountsController extends BaseController {
                 model.addAttribute("action", "edit/" + account.getAccountId());
                 return "accounts/editsingle";
             }
-            if (account.getBillingAddress().areFieldsNull()) {
-                account.setBillingAddress(null);
-            }
-            if (account.getShippingAddress().areFieldsNull()) {
-                account.setShippingAddress(null);
-            }
+            areAddressesNull(account);
 
             CrmUser user = userRepository.findByEmail(auth.getName());
             account.setLastModifiedBy(user);
@@ -189,12 +184,7 @@ public class AccountsController extends BaseController {
             model.addAttribute("action", "new/");
             return "accounts/editsingle";
         }
-        if (account.getBillingAddress().areFieldsNull()) {
-            account.setBillingAddress(null);
-        }
-        if (account.getShippingAddress().areFieldsNull()) {
-            account.setShippingAddress(null);
-        }
+        areAddressesNull(account);
 
         CrmUser user = userRepository.findByEmail(auth.getName());
         account.setCreatedBy(user);
@@ -242,5 +232,15 @@ public class AccountsController extends BaseController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    private void areAddressesNull(Account account) {
+
+        if (account.getBillingAddress().areFieldsNull()) {
+            account.setBillingAddress(null);
+        }
+        if (account.getShippingAddress().areFieldsNull()) {
+            account.setShippingAddress(null);
+        }
     }
 }
