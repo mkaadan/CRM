@@ -214,9 +214,7 @@ public class SalesOrderController extends BaseController{
             }
             Long assignedId = salesOrderRepository.save(salesOrderData.getSalesOrder()).getSalesOrderId();
             productSalesOrderRepository.deleteProductsBySalesOrderId(salesOrderData.getSalesOrder().getSalesOrderId());
-            for (ProductSalesOrder productEntry : productList) {
-                productSalesOrderRepository.save(productEntry);
-            }
+            productSalesOrderRepository.save(productList);
             return "redirect:/salesorder/records/" + assignedId.toString();
         } else {
             throw new NotFoundException();
@@ -272,9 +270,7 @@ public class SalesOrderController extends BaseController{
                 productEntry.setSalesOrder(savedSalesOrder);
             }
         }
-        for (ProductSalesOrder productEntry: productList) {
-            productSalesOrderRepository.save(productEntry);
-        }
+        productSalesOrderRepository.save(productList);
         return "redirect:/salesorder/records/" + assignedId.toString() ;
     }
 

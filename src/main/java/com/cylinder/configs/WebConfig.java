@@ -20,8 +20,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder() {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
-        return passwordEncoder;
+        return new BCryptPasswordEncoder(12);
     }
 
     /**
