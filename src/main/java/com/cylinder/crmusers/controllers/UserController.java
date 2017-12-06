@@ -4,6 +4,7 @@ import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.forms.PasswordForm;
 import com.cylinder.shared.controllers.BaseController;
+import com.cylinder.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -56,19 +57,23 @@ public class UserController extends BaseController {
     @GetMapping("/edit/{userId}")
     public String editUserPassword(@PathVariable("userId") Long userId,
                                    Authentication auth,
-                                   HttpServletResponse response,
                                    Model model) {
+        if (!userRepository.existsByAccountId(userId)) {
+          throw new NotFoundException();
+        }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
         if (userId == currentUser.getAccountId()) {
-            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            super.setCommonModelAttributes(model,
+                                           auth,
+                                           userRepository,
+                                           this.moduleName);
             PasswordForm passForm = new PasswordForm();
             passForm.setAccountId(currentUser.getAccountId());
             model.addAttribute("passForm", passForm);
             return "crmusers/users/userform";
         } else {
-            response.setStatus(403);
-            return "redirect:/403.html";
+            throw new RestrictedException();
         }
     }
 
@@ -90,6 +95,9 @@ public class UserController extends BaseController {
                            Authentication auth,
                            HttpServletResponse response,
                            Model model) {
+        if (!userRepository.existsByAccountId(userId)) {
+          throw new NotFoundException();
+        }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
         if (userId == currentUser.getAccountId()) {
@@ -101,7 +109,10 @@ public class UserController extends BaseController {
                 result.addError(passwordError.get());
             }
             if (result.hasErrors()) {
-                super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+                super.setCommonModelAttributes(model,
+                                               auth,
+                                               userRepository,
+                                               this.moduleName);
                 return "crmusers/users/userform";
             } else {
                 passForm.hashNewPassword(passwordEncoder);
@@ -110,8 +121,7 @@ public class UserController extends BaseController {
                 return "redirect:/user/edit/" + userId;
             }
         } else {
-            response.setStatus(403);
-            return "redirect:/403.html";
+            throw new RestrictedException();
         }
     }
 

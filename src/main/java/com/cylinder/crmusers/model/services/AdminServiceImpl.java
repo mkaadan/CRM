@@ -87,7 +87,9 @@ public class AdminServiceImpl implements AdminService {
      if (roleRepository.existsByRoleAndId(role.getRoleName(), role.getRoleId())) {
          roleError = Optional.empty();
      } else {
-         roleError =  Optional.of(new FieldError("Role", "roleName", "This role doesn't exist."));
+         roleError =  Optional.of(new FieldError("Role",
+                                                 "roleName",
+                                                 "This role doesn't exist."));
      }
      if (roleError.isPresent()) {
          result.addError(roleError.get());
@@ -103,14 +105,13 @@ public class AdminServiceImpl implements AdminService {
    }
 
    /**
-   * The user being alted or deleted the only admin user. 
+   * The user being alted or deleted the only admin user.
    *
    */
    public boolean isOnlyAdmin(Long accountId) {
      Long roleId = roleRepository.findByRoleName("ADMIN").getRoleId();
      CrmUser user = this.findUserByAccountId(accountId);
-     String count = userRepository.countByRoleId(roleId).toString();
-     if (user.getRole().getRoleId() == roleId) {
+     if (roleId.equals(user.getRole().getRoleId())) {
        if(userRepository.countByRoleId(roleId) == 1) {
          return true;
        } else {
