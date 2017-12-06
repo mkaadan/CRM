@@ -228,41 +228,42 @@ public class QuoteControllerTest extends ControllerTests {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testPostNewRecordWithValidData() throws Exception {
-//      this.mockMvc.perform(post("/quote/new/")
-//                    .param("quote.quoteId","1")
-//                    .with(csrf()))
-//              .andExpect(status().is3xxRedirection());
-//      verify(this.quoteRepository, times(1)).save(any(Quote.class));
-//      }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testPostNewRecordWithInvalidData() throws Exception {
-//      this.mockMvc.perform(post("/quote/new/")
-//                    .param("quote.quoteId","1")
-//                    .with(csrf()))
-//              .andExpect(model().attributeHasFieldErrors("quoteData", "quote.invoiceNumber"))
-//              .andExpect(status().isOk());
-//      }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testAddRowToExisting() throws Exception{
-//        this.mockMvc.perform(get("/quote/edit/{id}", new Long("1"))
-//                    .param("addRow","addRow")
-//                    .with(csrf()))
-//            .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    @WithMockUser(username="fake@mail.com", authorities="USER")
-//    public void testAddRowToNew() throws Exception{
-//        this.mockMvc.perform(get("/quote/new/")
-//                .param("addRow","addRow")
-//                .with(csrf()))
-//            .andExpect(status().isOk());
-//    }
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testPostNewRecordWithValidData() throws Exception {
+      this.mockMvc.perform(post("/quote/new/")
+                    .param("quote.quoteId","1")
+                    .with(csrf()))
+              .andExpect(status().is3xxRedirection());
+      verify(this.quoteRepository, times(1)).save(any(Quote.class));
+      }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testPostNewRecordWithInvalidData() throws Exception {
+      this.mockMvc.perform(post("/quote/new/")
+                    .param("quote.quoteId","1")
+                    .param("quote.contact","sampleAccount")
+                    .with(csrf()))
+              .andExpect(model().attributeHasFieldErrors("quoteData", "quote.contact"))
+              .andExpect(status().isOk());
+      }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testAddRowToExisting() throws Exception{
+        this.mockMvc.perform(get("/quote/edit/{id}", new Long("1"))
+                    .param("addRow","addRow")
+                    .with(csrf()))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username="fake@mail.com", authorities="USER")
+    public void testAddRowToNew() throws Exception{
+        this.mockMvc.perform(get("/quote/new/")
+                .param("addRow","addRow")
+                .with(csrf()))
+            .andExpect(status().isOk());
+    }
 }
