@@ -26,25 +26,22 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/product")
 public class ProductsController extends BaseController {
 
+    private final String moduleName = "Products";
     /**
      * Sql interface for product entites.
      */
     @Autowired
     private ProductRepository productRepository;
-
     /**
      * Sql interface for product category entites.
      */
     @Autowired
     private CategoriesRepository categoriesRepository;
-
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
-    private final String moduleName = "Products";
 
     /**
      * Render the list view for all available products.

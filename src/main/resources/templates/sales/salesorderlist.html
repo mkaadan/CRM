@@ -19,12 +19,12 @@
                         <a th:href="${toList}" th:text="${moduleName}" class="moduleName backLink"></a>
                     </div>
                     <div class="pull-right">
-                        <p th:text="${welcomeMessage}" class= "text-right welcomeMessage"></p>
+                        <p th:text="${welcomeMessage}" class="text-right welcomeMessage"></p>
                     </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class ="row">
+            <div class="row">
                 <div class="col-sm-12">
                     <a th:href="@{|/salesorder/new/|}">
                         <button class="btn-primary pull-right btn-list">
@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <table id ="salesOrderList" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="salesOrderList" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Sales Order #</th>
@@ -56,7 +56,8 @@
                             <td th:text="${salesOrder.getContact() != null} ? ${salesOrder.getContact().getFullName()} : ''"></td>
                             <td th:text="${salesOrder.getOwner() != null} ? ${salesOrder.getOwner().getName()} : ''"></td>
                             <td>
-                                <a class="edit-link icon-spacer" th:href="@{|/salesorder/edit/${salesOrder.getSalesOrderId()}|}" title="Edit">
+                                <a class="edit-link icon-spacer"
+                                   th:href="@{|/salesorder/edit/${salesOrder.getSalesOrderId()}|}" title="Edit">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                                 <span th:attr="data-id=${salesOrder.getSalesOrderId()}"

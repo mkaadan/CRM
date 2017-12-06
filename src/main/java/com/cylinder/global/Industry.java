@@ -22,12 +22,12 @@ public class Industry {
         return this.industryId;
     }
 
-    public String getIndustryName() {
-        return this.industryName;
-    }
-
     public void setIndustryId(Long id) {
         this.industryId = id;
+    }
+
+    public String getIndustryName() {
+        return this.industryName;
     }
 
     public void setIndustryName(String name) {

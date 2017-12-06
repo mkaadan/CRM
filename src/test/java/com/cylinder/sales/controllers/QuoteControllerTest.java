@@ -1,103 +1,97 @@
 package com.cylinder.sales.controllers;
 
-import java.lang.Iterable;
-import java.util.ArrayList;
-
+import com.cylinder.ControllerTests;
 import com.cylinder.accounts.model.Account;
 import com.cylinder.accounts.model.AccountRepository;
 import com.cylinder.contacts.model.Contact;
 import com.cylinder.contacts.model.ContactRepository;
-import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
-import com.cylinder.sales.model.*;
-import com.cylinder.sales.model.forms.*;
-import com.cylinder.sales.controllers.QuotesController;
-import com.cylinder.ControllerTests;
-
-import org.junit.*;
-import static org.junit.Assert.*;
-
-import org.mockito.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.BDDMockito.*;
+import com.cylinder.sales.model.ProductQuote;
+import com.cylinder.sales.model.ProductQuoteRepository;
+import com.cylinder.sales.model.Quote;
+import com.cylinder.sales.model.QuoteRepository;
+import com.cylinder.sales.model.forms.QuoteForm;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.mockito.Matchers;
-import static org.mockito.Mockito.times;
-
-
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
-
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import org.springframework.security.core.Authentication;
+import java.util.ArrayList;
+
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class QuoteControllerTest extends ControllerTests {
 
-  @InjectMocks
-  QuotesController quoteController;
+    @InjectMocks
+    QuotesController quoteController;
 
-  @MockBean
-  private QuoteRepository quoteRepository;
+    @MockBean
+    private QuoteRepository quoteRepository;
 
-  @MockBean
-  private ProductRepository productRepository;
+    @MockBean
+    private ProductRepository productRepository;
 
-  @MockBean
-  private ProductQuoteRepository productQuoteRepository;
+    @MockBean
+    private ProductQuoteRepository productQuoteRepository;
 
-  @MockBean
-  private AccountRepository accountRepository;
+    @MockBean
+    private AccountRepository accountRepository;
 
-  @MockBean
-  private ContactRepository contactRepository;
+    @MockBean
+    private ContactRepository contactRepository;
 
-  @MockBean
-  private ArrayList<QuoteForm> quoteForms;
+    @MockBean
+    private ArrayList<QuoteForm> quoteForms;
 
-  @MockBean
-  private Contact sampleContact;
+    @MockBean
+    private Contact sampleContact;
 
-  @MockBean
-  private Account sampleAccount;
+    @MockBean
+    private Account sampleAccount;
 
 
-  private ArrayList<Quote> mockQuoteListData() {
-    ArrayList<Quote> quotes = new ArrayList();
-    Quote quote = new Quote();
-    quote.setQuoteId(new Long("1"));
-    quotes.add(quote);
-    quote = new Quote();
-    quote.setQuoteId(new Long("2"));
-    quotes.add(quote);
-    quote = new Quote();
-    quote.setQuoteId(new Long("3"));
-    quotes.add(quote);
-    return quotes;
-  }
+    private ArrayList<Quote> mockQuoteListData() {
+        ArrayList<Quote> quotes = new ArrayList();
+        Quote quote = new Quote();
+        quote.setQuoteId(new Long("1"));
+        quotes.add(quote);
+        quote = new Quote();
+        quote.setQuoteId(new Long("2"));
+        quotes.add(quote);
+        quote = new Quote();
+        quote.setQuoteId(new Long("3"));
+        quotes.add(quote);
+        return quotes;
+    }
 
-  private Quote mockSingleQuoteData() {
-    Quote quote = new Quote();
-    quote.setQuoteId(new Long("1"));
-    return quote;
-  }
+    private Quote mockSingleQuoteData() {
+        Quote quote = new Quote();
+        quote.setQuoteId(new Long("1"));
+        return quote;
+    }
 
-  private Contact mockSingleContactData() {
-      Contact contact = new Contact();
-      contact.setContactId(new Long("1"));
-      return contact;
-  }
+    private Contact mockSingleContactData() {
+        Contact contact = new Contact();
+        contact.setContactId(new Long("1"));
+        return contact;
+    }
 
-  private Account mockSingleAccountData() {
-      Account account = new Account();
-      account.setAccountId(new Long("1"));
-      return account;
-  }
+    private Account mockSingleAccountData() {
+        Account account = new Account();
+        account.setAccountId(new Long("1"));
+        return account;
+    }
 
     private ArrayList<ProductQuote> mockProductQuoteData() {
         ArrayList<ProductQuote> productQuotes = new ArrayList();
@@ -116,9 +110,9 @@ public class QuoteControllerTest extends ControllerTests {
     private ArrayList<QuoteForm> mockQuoteFormListData(Iterable<Quote> quotes) {
         ArrayList<QuoteForm> quoteForms = new ArrayList();
         QuoteForm quoteForm;
-        for(Quote quote: quotes) {
+        for (Quote quote : quotes) {
             if (quote != null) {
-                quoteForm = new QuoteForm(quote,null);
+                quoteForm = new QuoteForm(quote, null);
                 quoteForms.add(quoteForm);
             }
         }
@@ -147,7 +141,7 @@ public class QuoteControllerTest extends ControllerTests {
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testIndex() throws Exception {
         this.mockMvc.perform(get("/quote"))
                 .andExpect(status().isOk());
@@ -161,109 +155,109 @@ public class QuoteControllerTest extends ControllerTests {
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testRecordWithExistantRecord() throws Exception {
         this.mockMvc.perform(get("/quote/records/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testRecordWithNonExistantRecord() throws Exception {
         this.mockMvc.perform(get("/quote/records/5"))
                 .andExpect(status().isNotFound());
     }
 
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testGetEditRecordWithExistantRecord() throws Exception {
-    this.mockMvc.perform(get("/quote/edit/{id}", new Long("1")).with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testGetEditRecordWithExistantRecord() throws Exception {
+        this.mockMvc.perform(get("/quote/edit/{id}", new Long("1")).with(csrf()))
                 .andExpect(status().isOk());
-  }
+    }
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testGetEditRecordWithNonExistantRecord() throws Exception {
-    this.mockMvc.perform(get("/quote/edit/{id}", new Long("5")).with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testGetEditRecordWithNonExistantRecord() throws Exception {
+        this.mockMvc.perform(get("/quote/edit/{id}", new Long("5")).with(csrf()))
                 .andExpect(status().isNotFound());
-  }
+    }
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testPostEditRecordWithExistantRecord() throws Exception {
-    this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
-                    .param("quote.quoteId","1")
-                    .with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testPostEditRecordWithExistantRecord() throws Exception {
+        this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
+                .param("quote.quoteId", "1")
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/quote/records/1"));
-    verify(this.quoteRepository, times(1)).save(any(Quote.class));
-  }
+        verify(this.quoteRepository, times(1)).save(any(Quote.class));
+    }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostEditRecordWithNonExistantRecord() throws Exception {
         this.mockMvc.perform(post("/quote/edit/{id}", new Long("5"))
-                    .param("quote.quoteId","5")
-                    .with(csrf()))
+                .param("quote.quoteId", "5")
+                .with(csrf()))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostEditRecordWithExistantRecordInvalidData() throws Exception {
-      this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
-                    .param("quote.quoteId","1")
-                    .param("quote.contact","sampleAccount")
-                    .with(csrf()))
+        this.mockMvc.perform(post("/quote/edit/{id}", new Long("1"))
+                .param("quote.quoteId", "1")
+                .param("quote.contact", "sampleAccount")
+                .with(csrf()))
                 .andExpect(model().attributeHasFieldErrors("quoteData", "quote.contact"))
                 .andExpect(status().isOk());
-      }
+    }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testNewRecord() throws Exception {
         this.mockMvc.perform(get("/quote/new/")
-                        .with(csrf()))
+                .with(csrf()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostNewRecordWithValidData() throws Exception {
-      this.mockMvc.perform(post("/quote/new/")
-                    .param("quote.quoteId","1")
-                    .with(csrf()))
-              .andExpect(status().is3xxRedirection());
-      verify(this.quoteRepository, times(1)).save(any(Quote.class));
-      }
-
-    @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testPostNewRecordWithInvalidData() throws Exception {
-      this.mockMvc.perform(post("/quote/new/")
-                    .param("quote.quoteId","1")
-                    .param("quote.contact","sampleAccount")
-                    .with(csrf()))
-              .andExpect(model().attributeHasFieldErrors("quoteData", "quote.contact"))
-              .andExpect(status().isOk());
-      }
-
-    @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testAddRowToExisting() throws Exception{
-        this.mockMvc.perform(get("/quote/edit/{id}", new Long("1"))
-                    .param("addRow","addRow")
-                    .with(csrf()))
-            .andExpect(status().isOk());
+        this.mockMvc.perform(post("/quote/new/")
+                .param("quote.quoteId", "1")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+        verify(this.quoteRepository, times(1)).save(any(Quote.class));
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testAddRowToNew() throws Exception{
-        this.mockMvc.perform(get("/quote/new/")
-                .param("addRow","addRow")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testPostNewRecordWithInvalidData() throws Exception {
+        this.mockMvc.perform(post("/quote/new/")
+                .param("quote.quoteId", "1")
+                .param("quote.contact", "sampleAccount")
                 .with(csrf()))
-            .andExpect(status().isOk());
+                .andExpect(model().attributeHasFieldErrors("quoteData", "quote.contact"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testAddRowToExisting() throws Exception {
+        this.mockMvc.perform(get("/quote/edit/{id}", new Long("1"))
+                .param("addRow", "addRow")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testAddRowToNew() throws Exception {
+        this.mockMvc.perform(get("/quote/new/")
+                .param("addRow", "addRow")
+                .with(csrf()))
+                .andExpect(status().isOk());
     }
 }

@@ -63,12 +63,13 @@ public class ProductQuote implements Serializable {
 
     /**
      * Calculate a total for the item
+     *
      * @return the total of the item's price
      */
-    public BigDecimal getUnitTotal(){
+    public BigDecimal getUnitTotal() {
         float multiplyer = (1 - discount) * quantity;
         BigDecimal unitTotal = product.getUnitPrice().multiply(new BigDecimal(multiplyer));
-        unitTotal = unitTotal.setScale(2,RoundingMode.CEILING);
-       return unitTotal;
+        unitTotal = unitTotal.setScale(2, RoundingMode.CEILING);
+        return unitTotal;
     }
 }

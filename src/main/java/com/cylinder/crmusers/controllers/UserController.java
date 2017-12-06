@@ -3,8 +3,9 @@ package com.cylinder.crmusers.controllers;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.forms.PasswordForm;
+import com.cylinder.errors.NotFoundException;
+import com.cylinder.errors.RestrictedException;
 import com.cylinder.shared.controllers.BaseController;
-import com.cylinder.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -29,21 +30,19 @@ import java.util.Optional;
 public class UserController extends BaseController {
 
     /**
+     * The name of the module this controller is associated to.
+     */
+    private final String moduleName = "Users";
+    /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
     /**
      * bcrypt encoder for password logic.
      */
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    /**
-     * The name of the module this controller is associated to.
-     */
-    private final String moduleName = "Users";
 
     /**
      * Render a form that allows the user to alter their password.
@@ -59,15 +58,15 @@ public class UserController extends BaseController {
                                    Authentication auth,
                                    Model model) {
         if (!userRepository.existsByAccountId(userId)) {
-          throw new NotFoundException();
+            throw new NotFoundException();
         }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
         if (userId == currentUser.getAccountId()) {
             super.setCommonModelAttributes(model,
-                                           auth,
-                                           userRepository,
-                                           this.moduleName);
+                    auth,
+                    userRepository,
+                    this.moduleName);
             PasswordForm passForm = new PasswordForm();
             passForm.setAccountId(currentUser.getAccountId());
             model.addAttribute("passForm", passForm);
@@ -96,7 +95,7 @@ public class UserController extends BaseController {
                            HttpServletResponse response,
                            Model model) {
         if (!userRepository.existsByAccountId(userId)) {
-          throw new NotFoundException();
+            throw new NotFoundException();
         }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
@@ -110,9 +109,9 @@ public class UserController extends BaseController {
             }
             if (result.hasErrors()) {
                 super.setCommonModelAttributes(model,
-                                               auth,
-                                               userRepository,
-                                               this.moduleName);
+                        auth,
+                        userRepository,
+                        this.moduleName);
                 return "crmusers/users/userform";
             } else {
                 passForm.hashNewPassword(passwordEncoder);

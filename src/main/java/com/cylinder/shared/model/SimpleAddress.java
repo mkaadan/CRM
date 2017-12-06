@@ -35,64 +35,64 @@ abstract public class SimpleAddress {
         return this.addressId;
     }
 
-    public String getApartmentNumber() {
-        return this.apartmentNumber;
-    }
-
-    public String getCity() {
-        return this.city;
-    }
-
-    public String getStreetAddress() {
-        return this.streetAddress;
-    }
-
-    public String getStateProv() {
-        return this.stateProv;
-    }
-
-    public String getPoBox() {
-        return this.poBox;
-    }
-
-    public String getZipPostal() {
-        return this.zipPostal;
-    }
-
-    public String getCountry() {
-        return this.country;
-    }
-
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setStateProv(String stateProv) {
-        this.stateProv = stateProv;
+    public String getApartmentNumber() {
+        return this.apartmentNumber;
     }
 
     public void setApartmentNumber(String apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
     }
 
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetAddress() {
+        return this.streetAddress;
+    }
+
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public String getStateProv() {
+        return this.stateProv;
+    }
+
+    public void setStateProv(String stateProv) {
+        this.stateProv = stateProv;
+    }
+
+    public String getPoBox() {
+        return this.poBox;
     }
 
     public void setPoBox(String poBox) {
         this.poBox = poBox;
     }
 
+    public String getZipPostal() {
+        return this.zipPostal;
+    }
+
     public void setZipPostal(String zipPostal) {
         this.zipPostal = zipPostal;
+    }
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     /*

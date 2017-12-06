@@ -1,92 +1,80 @@
 package com.cylinder.sales.controllers;
 
-import java.lang.Iterable;
-import java.util.ArrayList;
-
-import com.cylinder.accounts.model.Account;
+import com.cylinder.ControllerTests;
 import com.cylinder.accounts.model.AccountRepository;
-import com.cylinder.contacts.model.Contact;
 import com.cylinder.contacts.model.ContactRepository;
-import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
 import com.cylinder.sales.model.*;
-import com.cylinder.sales.model.forms.*;
-import com.cylinder.sales.controllers.SalesOrderController;
-import com.cylinder.ControllerTests;
-
-import org.junit.*;
-import static org.junit.Assert.*;
-
-import org.mockito.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.BDDMockito.*;
+import com.cylinder.sales.model.forms.SalesOrderForm;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.mockito.Matchers;
-import static org.mockito.Mockito.times;
-
-
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
-
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import org.springframework.security.core.Authentication;
+import java.util.ArrayList;
+
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class SalesOrderControllerTest extends ControllerTests {
 
-  @InjectMocks
-  SalesOrderController salesOrderController;
-
-  @MockBean
-  private SalesOrderRepository salesOrderRepository;
-
-  @MockBean
-  private ProductRepository productRepository;
+    @InjectMocks
+    SalesOrderController salesOrderController;
 
     @MockBean
-  private QuoteRepository quoteRepository;
+    private SalesOrderRepository salesOrderRepository;
 
-  @MockBean
-  private ProductSalesOrderRepository productSalesOrderRepository;
+    @MockBean
+    private ProductRepository productRepository;
 
-  @MockBean
-  private AccountRepository accountRepository;
+    @MockBean
+    private QuoteRepository quoteRepository;
 
-  @MockBean
-  private ContactRepository contactRepository;
+    @MockBean
+    private ProductSalesOrderRepository productSalesOrderRepository;
 
-  @MockBean
-  private ContractRepository contractRepository;
+    @MockBean
+    private AccountRepository accountRepository;
 
-  @MockBean
-  private ArrayList<SalesOrderForm> salesOrderForms;
+    @MockBean
+    private ContactRepository contactRepository;
+
+    @MockBean
+    private ContractRepository contractRepository;
+
+    @MockBean
+    private ArrayList<SalesOrderForm> salesOrderForms;
 
 
+    private ArrayList<SalesOrder> mockSalesOrderListData() {
+        ArrayList<SalesOrder> salesOrders = new ArrayList();
+        SalesOrder salesOrder = new SalesOrder();
+        salesOrder.setSalesOrderId(new Long("1"));
+        salesOrders.add(salesOrder);
+        salesOrder = new SalesOrder();
+        salesOrder.setSalesOrderId(new Long("2"));
+        salesOrders.add(salesOrder);
+        salesOrder = new SalesOrder();
+        salesOrder.setSalesOrderId(new Long("3"));
+        salesOrders.add(salesOrder);
+        return salesOrders;
+    }
 
-  private ArrayList<SalesOrder> mockSalesOrderListData() {
-    ArrayList<SalesOrder> salesOrders = new ArrayList();
-    SalesOrder salesOrder = new SalesOrder();
-    salesOrder.setSalesOrderId(new Long("1"));
-    salesOrders.add(salesOrder);
-    salesOrder = new SalesOrder();
-    salesOrder.setSalesOrderId(new Long("2"));
-    salesOrders.add(salesOrder);
-    salesOrder = new SalesOrder();
-    salesOrder.setSalesOrderId(new Long("3"));
-    salesOrders.add(salesOrder);
-    return salesOrders;
-  }
-
-  private SalesOrder mockSingleSalesOrderData() {
-    SalesOrder salesOrder = new SalesOrder();
-    salesOrder.setSalesOrderId(new Long("1"));
-    return salesOrder;
-  }
+    private SalesOrder mockSingleSalesOrderData() {
+        SalesOrder salesOrder = new SalesOrder();
+        salesOrder.setSalesOrderId(new Long("1"));
+        return salesOrder;
+    }
 
     private ArrayList<Quote> mockQuoteData() {
         ArrayList<Quote> quotes = new ArrayList();
@@ -119,9 +107,9 @@ public class SalesOrderControllerTest extends ControllerTests {
     private ArrayList<SalesOrderForm> mockSalesOrderFormListData(Iterable<SalesOrder> salesOrders) {
         ArrayList<SalesOrderForm> salesOrderForms = new ArrayList();
         SalesOrderForm salesOrderForm;
-        for(SalesOrder salesOrder: salesOrders) {
+        for (SalesOrder salesOrder : salesOrders) {
             if (salesOrder != null) {
-                salesOrderForm = new SalesOrderForm(salesOrder,null);
+                salesOrderForm = new SalesOrderForm(salesOrder, null);
                 salesOrderForms.add(salesOrderForm);
             }
         }
@@ -150,7 +138,7 @@ public class SalesOrderControllerTest extends ControllerTests {
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testIndex() throws Exception {
         this.mockMvc.perform(get("/salesorder"))
                 .andExpect(status().isOk());
@@ -164,182 +152,182 @@ public class SalesOrderControllerTest extends ControllerTests {
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testRecordWithExistantRecord() throws Exception {
         this.mockMvc.perform(get("/salesorder/records/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testRecordWithNonExistantRecord() throws Exception {
         this.mockMvc.perform(get("/salesorder/records/5"))
                 .andExpect(status().isNotFound());
     }
 
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testGetEditRecordWithExistantRecord() throws Exception {
-    this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1")).with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testGetEditRecordWithExistantRecord() throws Exception {
+        this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1")).with(csrf()))
                 .andExpect(status().isOk());
-  }
+    }
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testGetEditRecordWithNonExistantRecord() throws Exception {
-    this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("5")).with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testGetEditRecordWithNonExistantRecord() throws Exception {
+        this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("5")).with(csrf()))
                 .andExpect(status().isNotFound());
-  }
+    }
 
-  @Test
-  @WithMockUser(username="fake@mail.com", authorities="USER")
-  public void testPostEditRecordWithExistantRecord() throws Exception {
-    this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("1"))
-                    .param("salesOrder.salesOrderId","1")
-                    .param("salesOrder.shippingAddress.apartmentNumber", "null")
-                    .param("salesOrder.shippingAddress.city", "null")
-                    .param("salesOrder.shippingAddress.streetAddress", "null")
-                    .param("salesOrder.shippingAddress.stateProv", "null")
-                    .param("salesOrder.shippingAddress.country", "null")
-                    .param("salesOrder.shippingAddress.zipPostal", "null")
-                    .param("salesOrder.shippingAddress.poBox", "null")
-                    .param("salesOrder.billingAddress.apartmentNumber", "null")
-                    .param("salesOrder.billingAddress.city", "null")
-                    .param("salesOrder.billingAddress.streetAddress", "null")
-                    .param("salesOrder.billingAddress.stateProv", "null")
-                    .param("salesOrder.billingAddress.country", "null")
-                    .param("salesOrder.billingAddress.zipPostal", "null")
-                    .param("salesOrder.billingAddress.poBox", "null")
-                    .param("salesOrder.invoiceNumber", "5")
-                    .with(csrf()))
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testPostEditRecordWithExistantRecord() throws Exception {
+        this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("1"))
+                .param("salesOrder.salesOrderId", "1")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "5")
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/salesorder/records/1"));
-    verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
-  }
+        verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
+    }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostEditRecordWithNonExistantRecord() throws Exception {
         this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("5"))
-                    .param("salesOrder.salesOrderId","5")
-                    .param("salesOrder.shippingAddress.apartmentNumber", "null")
-                    .param("salesOrder.shippingAddress.city", "null")
-                    .param("salesOrder.shippingAddress.streetAddress", "null")
-                    .param("salesOrder.shippingAddress.stateProv", "null")
-                    .param("salesOrder.shippingAddress.country", "null")
-                    .param("salesOrder.shippingAddress.zipPostal", "null")
-                    .param("salesOrder.shippingAddress.poBox", "null")
-                    .param("salesOrder.billingAddress.apartmentNumber", "null")
-                    .param("salesOrder.billingAddress.city", "null")
-                    .param("salesOrder.billingAddress.streetAddress", "null")
-                    .param("salesOrder.billingAddress.stateProv", "null")
-                    .param("salesOrder.billingAddress.country", "null")
-                    .param("salesOrder.billingAddress.zipPostal", "null")
-                    .param("salesOrder.billingAddress.poBox", "null")
-                    .param("salesOrder.invoiceNumber", "6")
-                    .with(csrf()))
+                .param("salesOrder.salesOrderId", "5")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "6")
+                .with(csrf()))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostEditRecordWithExistantRecordInvalidData() throws Exception {
-      this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("1"))
-                    .param("salesOrder.salesOrderId","1")
-                    .param("salesOrder.shippingAddress.apartmentNumber", "null")
-                    .param("salesOrder.shippingAddress.city", "null")
-                    .param("salesOrder.shippingAddress.streetAddress", "null")
-                    .param("salesOrder.shippingAddress.stateProv", "null")
-                    .param("salesOrder.shippingAddress.country", "null")
-                    .param("salesOrder.shippingAddress.zipPostal", "null")
-                    .param("salesOrder.shippingAddress.poBox", "null")
-                    .param("salesOrder.billingAddress.apartmentNumber", "null")
-                    .param("salesOrder.billingAddress.city", "null")
-                    .param("salesOrder.billingAddress.streetAddress", "null")
-                    .param("salesOrder.billingAddress.stateProv", "null")
-                    .param("salesOrder.billingAddress.country", "null")
-                    .param("salesOrder.billingAddress.zipPostal", "null")
-                    .param("salesOrder.billingAddress.poBox", "null")
-                    .param("salesOrder.invoiceNumber", "q")
-                    .with(csrf()))
+        this.mockMvc.perform(post("/salesorder/edit/{id}", new Long("1"))
+                .param("salesOrder.salesOrderId", "1")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "q")
+                .with(csrf()))
                 .andExpect(model().attributeHasFieldErrors("salesOrderData", "salesOrder.invoiceNumber"))
                 .andExpect(status().isOk());
-      }
+    }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testNewRecord() throws Exception {
         this.mockMvc.perform(get("/salesorder/new/")
-                        .with(csrf()))
+                .with(csrf()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
     public void testPostNewRecordWithValidData() throws Exception {
-      this.mockMvc.perform(post("/salesorder/new/")
-                    .param("salesOrder.salesOrderId","1")
-                    .param("salesOrder.shippingAddress.apartmentNumber", "null")
-                    .param("salesOrder.shippingAddress.city", "null")
-                    .param("salesOrder.shippingAddress.streetAddress", "null")
-                    .param("salesOrder.shippingAddress.stateProv", "null")
-                    .param("salesOrder.shippingAddress.country", "null")
-                    .param("salesOrder.shippingAddress.zipPostal", "null")
-                    .param("salesOrder.shippingAddress.poBox", "null")
-                    .param("salesOrder.billingAddress.apartmentNumber", "null")
-                    .param("salesOrder.billingAddress.city", "null")
-                    .param("salesOrder.billingAddress.streetAddress", "null")
-                    .param("salesOrder.billingAddress.stateProv", "null")
-                    .param("salesOrder.billingAddress.country", "null")
-                    .param("salesOrder.billingAddress.zipPostal", "null")
-                    .param("salesOrder.billingAddress.poBox", "null")
-                    .param("salesOrder.invoiceNumber", "6")
-                    .with(csrf()))
-              .andExpect(status().is3xxRedirection());
-      verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
-      }
-
-    @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testPostNewRecordWithInvalidData() throws Exception {
-      this.mockMvc.perform(post("/salesorder/new/")
-                    .param("salesOrder.salesOrderId","1")
-                    .param("salesOrder.shippingAddress.apartmentNumber", "null")
-                    .param("salesOrder.shippingAddress.city", "null")
-                    .param("salesOrder.shippingAddress.streetAddress", "null")
-                    .param("salesOrder.shippingAddress.stateProv", "null")
-                    .param("salesOrder.shippingAddress.country", "null")
-                    .param("salesOrder.shippingAddress.zipPostal", "null")
-                    .param("salesOrder.shippingAddress.poBox", "null")
-                    .param("salesOrder.billingAddress.apartmentNumber", "null")
-                    .param("salesOrder.billingAddress.city", "null")
-                    .param("salesOrder.billingAddress.streetAddress", "null")
-                    .param("salesOrder.billingAddress.stateProv", "null")
-                    .param("salesOrder.billingAddress.country", "null")
-                    .param("salesOrder.billingAddress.zipPostal", "null")
-                    .param("salesOrder.billingAddress.poBox", "null")
-                    .param("salesOrder.invoiceNumber", "q")
-                    .with(csrf()))
-              .andExpect(model().attributeHasFieldErrors("salesOrderData", "salesOrder.invoiceNumber"))
-              .andExpect(status().isOk());
-      }
-
-    @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testAddRowToExisting() throws Exception{
-        this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1"))
-                    .param("addRow","addRow")
-                    .with(csrf()))
-            .andExpect(status().isOk());
+        this.mockMvc.perform(post("/salesorder/new/")
+                .param("salesOrder.salesOrderId", "1")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "6")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+        verify(this.salesOrderRepository, times(1)).save(any(SalesOrder.class));
     }
 
     @Test
-    @WithMockUser(username="fake@mail.com", authorities="USER")
-    public void testAddRowToNew() throws Exception{
-        this.mockMvc.perform(get("/salesorder/new/")
-                .param("addRow","addRow")
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testPostNewRecordWithInvalidData() throws Exception {
+        this.mockMvc.perform(post("/salesorder/new/")
+                .param("salesOrder.salesOrderId", "1")
+                .param("salesOrder.shippingAddress.apartmentNumber", "null")
+                .param("salesOrder.shippingAddress.city", "null")
+                .param("salesOrder.shippingAddress.streetAddress", "null")
+                .param("salesOrder.shippingAddress.stateProv", "null")
+                .param("salesOrder.shippingAddress.country", "null")
+                .param("salesOrder.shippingAddress.zipPostal", "null")
+                .param("salesOrder.shippingAddress.poBox", "null")
+                .param("salesOrder.billingAddress.apartmentNumber", "null")
+                .param("salesOrder.billingAddress.city", "null")
+                .param("salesOrder.billingAddress.streetAddress", "null")
+                .param("salesOrder.billingAddress.stateProv", "null")
+                .param("salesOrder.billingAddress.country", "null")
+                .param("salesOrder.billingAddress.zipPostal", "null")
+                .param("salesOrder.billingAddress.poBox", "null")
+                .param("salesOrder.invoiceNumber", "q")
                 .with(csrf()))
-            .andExpect(status().isOk());
+                .andExpect(model().attributeHasFieldErrors("salesOrderData", "salesOrder.invoiceNumber"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testAddRowToExisting() throws Exception {
+        this.mockMvc.perform(get("/salesorder/edit/{id}", new Long("1"))
+                .param("addRow", "addRow")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "fake@mail.com", authorities = "USER")
+    public void testAddRowToNew() throws Exception {
+        this.mockMvc.perform(get("/salesorder/new/")
+                .param("addRow", "addRow")
+                .with(csrf()))
+                .andExpect(status().isOk());
     }
 }

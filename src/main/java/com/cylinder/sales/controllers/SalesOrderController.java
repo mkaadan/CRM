@@ -6,21 +6,12 @@ import com.cylinder.contacts.model.Contact;
 import com.cylinder.contacts.model.ContactRepository;
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.products.model.Product;
 import com.cylinder.products.model.ProductRepository;
-import com.cylinder.sales.model.ProductSalesOrder;
-import com.cylinder.sales.model.ProductSalesOrderRepository;
-import com.cylinder.sales.model.Contract;
-import com.cylinder.sales.model.ContractRepository;
-import com.cylinder.sales.model.Quote;
-import com.cylinder.sales.model.ListIterableServiceObject;
-import com.cylinder.sales.model.QuoteRepository;
-import com.cylinder.sales.model.SalesOrder;
-import com.cylinder.sales.model.SalesOrderRepository;
+import com.cylinder.sales.model.*;
 import com.cylinder.sales.model.forms.SalesOrderForm;
 import com.cylinder.shared.controllers.BaseController;
-import com.cylinder.errors.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -34,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -42,60 +32,52 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/salesorder")
-public class SalesOrderController extends BaseController{
-
-    /**
-     * Sql interface for sales order entites.
-     */
-    @Autowired
-    private SalesOrderRepository salesOrderRepository;
-
-    /**
-     * Sql interface for productSalesOrder entites.
-     */
-    @Autowired
-    private ProductSalesOrderRepository productSalesOrderRepository;
-
-    /**
-     * Sql interface for crm user entites.
-     */
-    @Autowired
-    private CrmUserRepository userRepository;
-
-    /**
-     * Sql interface for product entites.
-     */
-    @Autowired
-    private ProductRepository productRepository;
-
-    /**
-     * Sql interface for contact entites.
-     */
-    @Autowired
-    private ContactRepository contactRepository;
-
-    /**
-     * Sql interface for account entites.
-     */
-    @Autowired
-    private AccountRepository accountRepository;
-
-    /**
-     * Sql interface for contract entites.
-     */
-    @Autowired
-    private ContractRepository contractRepository;
-
-    /**
-     * Sql interface for quote entites.
-     */
-    @Autowired
-    private QuoteRepository quoteRepository;
+public class SalesOrderController extends BaseController {
 
     /**
      * The module name that this controller is associated to.
      */
     private final String moduleName = "Sales Orders";
+    /**
+     * Sql interface for sales order entites.
+     */
+    @Autowired
+    private SalesOrderRepository salesOrderRepository;
+    /**
+     * Sql interface for productSalesOrder entites.
+     */
+    @Autowired
+    private ProductSalesOrderRepository productSalesOrderRepository;
+    /**
+     * Sql interface for crm user entites.
+     */
+    @Autowired
+    private CrmUserRepository userRepository;
+    /**
+     * Sql interface for product entites.
+     */
+    @Autowired
+    private ProductRepository productRepository;
+    /**
+     * Sql interface for contact entites.
+     */
+    @Autowired
+    private ContactRepository contactRepository;
+    /**
+     * Sql interface for account entites.
+     */
+    @Autowired
+    private AccountRepository accountRepository;
+    /**
+     * Sql interface for contract entites.
+     */
+    @Autowired
+    private ContractRepository contractRepository;
+    /**
+     * Sql interface for quote entites.
+     */
+    @Autowired
+    private QuoteRepository quoteRepository;
 
     @ModelAttribute("allProducts")
     public List<Product> populateProducts() {
@@ -107,12 +89,12 @@ public class SalesOrderController extends BaseController{
      * Render the list view for all available sales orders.
      *
      * @param model the view model object that is used to render the html.
-     * @param auth the authentication context that manages which users are logged in.
+     * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
     @GetMapping
-    public String list(Model model, Authentication auth){
-        Iterable<SalesOrder> salesOrderData =  salesOrderRepository.findAll();
+    public String list(Model model, Authentication auth) {
+        Iterable<SalesOrder> salesOrderData = salesOrderRepository.findAll();
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("salesOrderData", salesOrderData);
         return "sales/salesorderlist";
@@ -132,7 +114,7 @@ public class SalesOrderController extends BaseController{
                                Authentication auth) {
         if (salesOrderRepository.existsById(id)) {
             SalesOrder salesOrderData = salesOrderRepository.findOne(id);
-            super.setCommonModelAttributes(model,auth,userRepository, this.moduleName);
+            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
             model.addAttribute("salesOrderData", salesOrderData);
             model.addAttribute("toList", "/salesorder");
             List<ProductSalesOrder> productSalesOrderData = productSalesOrderRepository.getProductsBySalesOrderId(id);
@@ -153,7 +135,7 @@ public class SalesOrderController extends BaseController{
      * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
-    @GetMapping(value="/edit/{id}")
+    @GetMapping(value = "/edit/{id}")
     public String editSalesOrder(@PathVariable("id") Long id,
                                  Model model,
                                  Authentication auth,
@@ -166,8 +148,7 @@ public class SalesOrderController extends BaseController{
             model.addAttribute("salesOrderData", form);
             model.addAttribute("action", "edit/" + id);
             return "sales/editsinglesalesorder";
-        }
-        else {
+        } else {
             throw new NotFoundException();
         }
     }
@@ -180,12 +161,12 @@ public class SalesOrderController extends BaseController{
      * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
      */
-    @PostMapping(value="/edit/{id}")
+    @PostMapping(value = "/edit/{id}")
     public String saveEditableSalesOrder(@PathVariable("id") Long id,
-                                    @Valid @ModelAttribute("salesOrderData") SalesOrderForm salesOrderData,
-                                    BindingResult result,
-                                    Model model,
-                                    Authentication auth) {
+                                         @Valid @ModelAttribute("salesOrderData") SalesOrderForm salesOrderData,
+                                         BindingResult result,
+                                         Model model,
+                                         Authentication auth) {
         if (salesOrderData.getSalesOrder() != null && salesOrderRepository.existsById(id)) {
             Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderData.getProductList());
             Optional<FieldError> error = itemAlreadyExists(productList);
@@ -231,8 +212,8 @@ public class SalesOrderController extends BaseController{
     @GetMapping("/new/")
     public String newRecord(Model model,
                             Authentication auth) {
-        this.bindSalesForm(model,auth);
-        model.addAttribute("action","new/");
+        this.bindSalesForm(model, auth);
+        model.addAttribute("action", "new/");
         model.addAttribute("salesOrderData", new SalesOrderForm());
         return "sales/editsinglesalesorder";
     }
@@ -254,8 +235,8 @@ public class SalesOrderController extends BaseController{
         SalesOrder salesOrder = salesOrderForm.getSalesOrder();
         Iterable<ProductSalesOrder> productList = ListIterableServiceObject.listToIterable(salesOrderForm.getProductList());
         if (result.hasErrors()) {
-            this.bindSalesForm(model,auth);
-            model.addAttribute("action","new/");
+            this.bindSalesForm(model, auth);
+            model.addAttribute("action", "new/");
             return "sales/editsinglesalesorder";
         }
 
@@ -265,13 +246,13 @@ public class SalesOrderController extends BaseController{
         Account account = savedSalesOrder.getAccount();
         Contact contact = savedSalesOrder.getContact();
         Long assignedId = savedSalesOrder.getSalesOrderId();
-        for(ProductSalesOrder productEntry: productList) {
+        for (ProductSalesOrder productEntry : productList) {
             if (productEntry.getSalesOrder() == null) {
                 productEntry.setSalesOrder(savedSalesOrder);
             }
         }
         productSalesOrderRepository.save(productList);
-        return "redirect:/salesorder/records/" + assignedId.toString() ;
+        return "redirect:/salesorder/records/" + assignedId.toString();
     }
 
 
@@ -299,7 +280,7 @@ public class SalesOrderController extends BaseController{
      * @param auth  the authentication context that manages which users are logged in.
      */
     private void bindSalesForm(Model model, Authentication auth) {
-        super.setCommonModelAttributes(model,auth,userRepository,this.moduleName);
+        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("userData", userRepository.findAll());
         model.addAttribute("contactData", contactRepository.findAll());
         model.addAttribute("accountData", accountRepository.findAll());
@@ -323,17 +304,17 @@ public class SalesOrderController extends BaseController{
      * Adds a row for a product to occupy on the existing sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param id    the id that is associated to some sales order.
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param id             the id that is associated to some sales order.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      */
     @RequestMapping(value = "/edit/{id}", params = {"addRow"})
     public String addRow(final @ModelAttribute("salesOrderData") SalesOrderForm salesOrderData,
                          @PathVariable("id") Long id,
                          Authentication auth,
                          Model model) {
-        this.bindSalesForm(model,auth);
-        model.addAttribute("action","edit/"+ id);
+        this.bindSalesForm(model, auth);
+        model.addAttribute("action", "edit/" + id);
         salesOrderData.getProductList().add(new ProductSalesOrder());
         return "sales/editsinglesalesorder";
     }
@@ -342,15 +323,15 @@ public class SalesOrderController extends BaseController{
      * Adds a row for a product to occupy on the new sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      */
     @RequestMapping(value = "/new/", params = {"addRow"})
     public String addRowToNew(final @ModelAttribute("salesOrderData") SalesOrderForm salesOrderData,
                               Authentication auth,
                               Model model) {
-        this.bindSalesForm(model,auth);
-        model.addAttribute("action","new/");
+        this.bindSalesForm(model, auth);
+        model.addAttribute("action", "new/");
         salesOrderData.getProductList().add(new ProductSalesOrder());
         return "sales/editsinglesalesorder";
     }
@@ -359,9 +340,9 @@ public class SalesOrderController extends BaseController{
      * removes a row for a product to occupy on the existing sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param id    the id that is associated to some sales order.
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param id             the id that is associated to some sales order.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      * @param req
      */
     @RequestMapping(value = "/edit/{id}", params = {"removeRow"})
@@ -372,8 +353,8 @@ public class SalesOrderController extends BaseController{
                             final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         salesOrderData.getProductList().remove(rowId.intValue());
-        this.bindSalesForm(model,auth);
-        model.addAttribute("action","edit/" + id);
+        this.bindSalesForm(model, auth);
+        model.addAttribute("action", "edit/" + id);
         return "sales/editsinglesalesorder";
     }
 
@@ -381,8 +362,8 @@ public class SalesOrderController extends BaseController{
      * removes a row for a product to occupy on the new sales order
      *
      * @param salesOrderData the form for the sales order to follow
-     * @param model the view model object that is used to render the html.
-     * @param auth  the authentication context that manages which users are logged in.
+     * @param model          the view model object that is used to render the html.
+     * @param auth           the authentication context that manages which users are logged in.
      * @param req
      */
     @RequestMapping(value = "/new/", params = {"removeRow"})
@@ -392,23 +373,23 @@ public class SalesOrderController extends BaseController{
                                    final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         salesOrderData.getProductList().remove(rowId.intValue());
-        this.bindSalesForm(model,auth);
-        model.addAttribute("action","new/");
+        this.bindSalesForm(model, auth);
+        model.addAttribute("action", "new/");
         return "sales/editsinglesalesorder";
     }
 
     /**
      * checks if an item already exists
      *
-     * @param pso  an iterable to check if the new item is a duplicate
+     * @param pso an iterable to check if the new item is a duplicate
      */
-    private Optional<FieldError> itemAlreadyExists(Iterable<ProductSalesOrder> pso){
+    private Optional<FieldError> itemAlreadyExists(Iterable<ProductSalesOrder> pso) {
         HashMap map = new HashMap();
         int counter = 1;
-        for(ProductSalesOrder entry : pso){
-            if(map.containsKey(entry.getProduct().getProductId())){
-                return Optional.of(new FieldError("ProductSalesOrder","productList["+counter+"].product", "Cannot have duplicate products on a sales order."));
-            } else{
+        for (ProductSalesOrder entry : pso) {
+            if (map.containsKey(entry.getProduct().getProductId())) {
+                return Optional.of(new FieldError("ProductSalesOrder", "productList[" + counter + "].product", "Cannot have duplicate products on a sales order."));
+            } else {
                 map.put(entry.getProduct().getProductId(), entry);
             }
             counter++;
@@ -418,13 +399,13 @@ public class SalesOrderController extends BaseController{
 
     /**
      * decides if the shipping address should be shown or not
-     *      depending on if it is the same as the billing one
+     * depending on if it is the same as the billing one
      *
-     * @param salesOrder  sales order holding the two addresses
+     * @param salesOrder sales order holding the two addresses
      * @return a list of all the products in the iterable
      */
-    private Boolean showShipping(SalesOrder salesOrder){
-        if(salesOrder != null) {
+    private Boolean showShipping(SalesOrder salesOrder) {
+        if (salesOrder != null) {
             if (salesOrder.getBillingAddress() == null && salesOrder.getShippingAddress() != null) {
                 return true;
             }

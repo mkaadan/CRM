@@ -1,6 +1,7 @@
 package com.cylinder.sales.controllers;
 
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.sales.model.Contract;
 import com.cylinder.sales.model.ContractRepository;
 import com.cylinder.shared.controllers.BaseController;
@@ -12,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.cylinder.errors.NotFoundException;
-
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -23,21 +22,19 @@ import javax.validation.Valid;
 public class ContractsController extends BaseController {
 
     /**
+     * The module name that this controller is associated to.
+     */
+    private final String moduleName = "Contracts";
+    /**
      * Sql interface for contract entites.
      */
     @Autowired
     private ContractRepository contractRepository;
-
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
-    /**
-     * The module name that this controller is associated to.
-     */
-    private final String moduleName = "Contracts";
 
     /**
      * Render the list view for all available contracts.
@@ -66,13 +63,12 @@ public class ContractsController extends BaseController {
                                Model model,
                                Authentication auth) {
         if (contractRepository.existsById(id)) {
-          Contract contractData = contractRepository.findOne(id);
-          super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
-          model.addAttribute("contractData", contractData);
-          model.addAttribute("toList", "/contract");
-          return "sales/singlecontract";
-        }
-        else {
+            Contract contractData = contractRepository.findOne(id);
+            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            model.addAttribute("contractData", contractData);
+            model.addAttribute("toList", "/contract");
+            return "sales/singlecontract";
+        } else {
             throw new NotFoundException();
         }
 
@@ -98,10 +94,9 @@ public class ContractsController extends BaseController {
             model.addAttribute("contractData", contract);
             model.addAttribute("action", "edit/" + id);
             return "sales/editsinglecontract";
-      }
-      else {
-          throw new NotFoundException();
-      }
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
@@ -117,18 +112,17 @@ public class ContractsController extends BaseController {
                                        @Valid @ModelAttribute("contractData") Contract contract,
                                        BindingResult result,
                                        Model model,
-                                     Authentication auth) {
+                                       Authentication auth) {
         if (contractRepository.existsById(id)) {
-          if (result.hasErrors()) {
-              this.bindUserForm(model, auth);
-              model.addAttribute("action", "edit/" + contract.getContractId());
-              return "sales/editsinglecontract";
-          }
+            if (result.hasErrors()) {
+                this.bindUserForm(model, auth);
+                model.addAttribute("action", "edit/" + contract.getContractId());
+                return "sales/editsinglecontract";
+            }
 
-        Long assignedId = contractRepository.save(contract).getContractId();
-        return "redirect:/contract/records/" + assignedId.toString();
-        }
-        else {
+            Long assignedId = contractRepository.save(contract).getContractId();
+            return "redirect:/contract/records/" + assignedId.toString();
+        } else {
             throw new NotFoundException();
         }
     }
