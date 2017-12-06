@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import com.cylinder.errors.NotFoundException;
 
 
 @Controller
@@ -72,12 +73,18 @@ public class ProductsController extends BaseController {
     public String singleRecord(@PathVariable("id") Long id,
                                Model model,
                                Authentication auth) {
+        if (productRepository.existsByProductId(id)) {
         Product productData = productRepository.findOne(id);
         super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
         model.addAttribute("productData", productData);
         model.addAttribute("toList", "/product");
         return "products/singleproduct";
-    }
+        }
+        else {
+        throw new NotFoundException();
+        }
+      }
+
 
     /**
      * Maps empty string to null when a form is submitted.
@@ -150,8 +157,7 @@ public class ProductsController extends BaseController {
         if (productRepository.existsByProductId(id)) {
             product = productRepository.findOne(id);
         } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            throw new NotFoundException();
         }
         this.bindProductForm(model, auth);
         model.addAttribute("productData", product);
@@ -173,11 +179,17 @@ public class ProductsController extends BaseController {
                                       BindingResult result,
                                       Model model,
                                       Authentication auth) {
+        if (productRepository.existsByProductId(id)) {
+        product = productRepository.findOne(id);
+        } else {
+        throw new NotFoundException();
+        }
         if (result.hasErrors()) {
             this.bindProductForm(model, auth);
             model.addAttribute("action", "edit/" + product.getProductId());
             return "products/editsingle";
         }
+
         CrmUser user = userRepository.findByEmail(auth.getName());
         product.setLastModifiedBy(user);
         Long assignedId = productRepository.save(product).getProductId();

@@ -111,7 +111,6 @@ public class LeadControllerTest extends ControllerTests {
     Iterable<Status> statuses = mockStatusData();
     given(this.leadRepository.findAll()).willReturn(leads);
     given(this.leadRepository.findOne(eq(new Long("1")))).willReturn(mockSingleLeadData());
-    given(this.leadRepository.findOne(eq(new Long("1")))).willReturn(null);
     given(this.leadRepository.existsById(new Long("1"))).willReturn(true);
     given(this.leadRepository.existsById(new Long("5"))).willReturn(false);
     given(this.leadRepository.save(any(Lead.class))).willReturn(mockSingleLeadData());
