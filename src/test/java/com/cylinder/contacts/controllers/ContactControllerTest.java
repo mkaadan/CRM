@@ -76,8 +76,8 @@ public class ContactControllerTest extends ControllerTests {
                 .apply(springSecurity(super.springSecurityFilterChain))
                 .build();
         super.mockUserRepository();
-        Iterable<Contact> leads = mockContactListData();
-        given(this.contactRepository.findAll()).willReturn(leads);
+        Iterable<Contact> contacts = mockContactListData();
+        given(this.contactRepository.findAll()).willReturn(contacts);
         given(this.contactRepository.findOne(eq(new Long("1")))).willReturn(mockSingleContactData());
         given(this.contactRepository.findOne(eq(new Long("1")))).willReturn(null);
         given(this.contactRepository.existsByContactId(new Long("1"))).willReturn(true);
