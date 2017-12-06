@@ -123,12 +123,7 @@ public class ContactsController extends BaseController {
                 model.addAttribute("action", "edit/" + contact.getContactId());
                 return "contacts/contactform";
             }
-            if (contact.getMailingAddress().areFieldsNull()) {
-                contact.setMailingAddress(null);
-            }
-            if (contact.getOtherAddress().areFieldsNull()) {
-                contact.setOtherAddress(null);
-            }
+            checkAddressesForNull(contact);
             CrmUser user = userRepository.findByEmail(auth.getName());
             contact.setLastModifiedBy(user);
             Long assignedId = contactRepository.save(contact).getContactId();
@@ -173,12 +168,7 @@ public class ContactsController extends BaseController {
             model.addAttribute("action", "new/");
             return "contacts/contactform";
         }
-        if (contact.getMailingAddress().areFieldsNull()) {
-            contact.setMailingAddress(null);
-        }
-        if (contact.getOtherAddress().areFieldsNull()) {
-            contact.setOtherAddress(null);
-        }
+        checkAddressesForNull(contact);
         CrmUser user = userRepository.findByEmail(auth.getName());
         contact.setCreatedBy(user);
         Long assignedId = contactRepository.save(contact).getContactId();
@@ -233,5 +223,14 @@ public class ContactsController extends BaseController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    private void checkAddressesForNull(Contact contact) {
+        if (contact.getMailingAddress().areFieldsNull()) {
+            contact.setMailingAddress(null);
+        }
+        if (contact.getOtherAddress().areFieldsNull()) {
+            contact.setOtherAddress(null);
+        }
     }
 }
