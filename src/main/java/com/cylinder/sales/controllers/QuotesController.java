@@ -15,6 +15,8 @@ import com.cylinder.sales.model.QuoteRepository;
 import com.cylinder.sales.model.forms.QuoteForm;
 import com.cylinder.sales.model.ListIterableServiceObject;
 import com.cylinder.shared.controllers.BaseController;
+import com.cylinder.errors.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -117,13 +119,17 @@ public class QuotesController extends BaseController {
     public String singleRecord(@PathVariable("id") Long id,
                                Model model,
                                Authentication auth) {
-        Quote quoteData = quoteRepository.findOne(id);
-        super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
-        model.addAttribute("quoteData", quoteData);
-        model.addAttribute("toList", "/quote");
-        List<ProductQuote> productQuoteData = productQuoteRepository.getProductsByQuoteId(quoteData.getQuoteId());
-        model.addAttribute("productQuoteData", productQuoteData);
-        return "sales/singlequote";
+        if (quoteRepository.existsById(id)) {
+            Quote quoteData = quoteRepository.findOne(id);
+            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            model.addAttribute("quoteData", quoteData);
+            model.addAttribute("toList", "/quote");
+            List<ProductQuote> productQuoteData = productQuoteRepository.getProductsByQuoteId(id);
+            model.addAttribute("productQuoteData", productQuoteData);
+            return "sales/singlequote";
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     /**
@@ -139,19 +145,18 @@ public class QuotesController extends BaseController {
                             Model model,
                             Authentication auth,
                             HttpServletResponse response) {
-        Quote quote;
         if (quoteRepository.existsById(id)) {
-            quote = quoteRepository.findOne(id);
-        } else {
-            response.setStatus(404);
-            return "redirect:/404.html";
+            Quote quote = quoteRepository.findOne(id);
+            List<ProductQuote> productList = productQuoteRepository.getProductsByQuoteId(id);
+            QuoteForm form = new QuoteForm(quote, productList);
+            this.bindUserForm(model, auth);
+            model.addAttribute("quoteData", form);
+            model.addAttribute("action", "edit/" + id);
+            return "sales/editsinglequote";
         }
-        List<ProductQuote> productList = productQuoteRepository.getProductsByQuoteId(quote.getQuoteId());
-        QuoteForm form = new QuoteForm(quote, productList);
-        this.bindUserForm(model, auth);
-        model.addAttribute("quoteData", form);
-        model.addAttribute("action", "edit/" + id);
-        return "sales/editsinglequote";
+        else {
+            throw new NotFoundException();
+        }
     }
 
     /**
