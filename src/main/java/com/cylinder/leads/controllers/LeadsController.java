@@ -2,6 +2,7 @@ package com.cylinder.leads.controllers;
 
 import com.cylinder.crmusers.model.CrmUser;
 import com.cylinder.crmusers.model.CrmUserRepository;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.leads.model.Lead;
 import com.cylinder.leads.model.LeadRepository;
 import com.cylinder.leads.model.SourceRepository;
@@ -15,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.cylinder.errors.NotFoundException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -26,33 +26,29 @@ import javax.validation.Valid;
 public class LeadsController extends BaseController {
 
     /**
+     * The module name that this controller is associated to.
+     */
+    private final String moduleName = "Leads";
+    /**
      * Sql interface for lead entites.
      */
     @Autowired
     private LeadRepository leadRepository;
-
     /**
      * Sql interface for lead status entites.
      */
     @Autowired
     private StatusRepository statusRespository;
-
     /**
      * Sql interface for source entites.
      */
     @Autowired
     private SourceRepository sourceRespository;
-
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
-    /**
-     * The module name that this controller is associated to.
-     */
-    private final String moduleName = "Leads";
 
     /**
      * Render the list view for all available leads.
@@ -71,6 +67,7 @@ public class LeadsController extends BaseController {
 
     /**
      * Render the list view for all available leads.
+     *
      * @param model the view model object that is used to render the html.
      * @param auth  the authentication context that manages which users are logged in.
      * @return the name of the template to render.
@@ -81,13 +78,13 @@ public class LeadsController extends BaseController {
                                Authentication auth,
                                HttpServletResponse response) {
         if (leadRepository.existsById(id)) {
-          Lead leadData = leadRepository.findOne(id);
-          super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
-          model.addAttribute("leadData", leadData);
-          model.addAttribute("toList", "/lead");
-          return "leads/singlelead";
+            Lead leadData = leadRepository.findOne(id);
+            super.setCommonModelAttributes(model, auth, userRepository, this.moduleName);
+            model.addAttribute("leadData", leadData);
+            model.addAttribute("toList", "/lead");
+            return "leads/singlelead";
         } else {
-          throw new NotFoundException();
+            throw new NotFoundException();
         }
     }
 
@@ -131,18 +128,18 @@ public class LeadsController extends BaseController {
                                    Model model,
                                    Authentication auth) {
         if (leadRepository.existsById(lead.getLeadId())) {
-          if (result.hasErrors()) {
-              this.bindLeadForm(model, auth);
-              model.addAttribute("action", "edit/" + lead.getLeadId());
-              return "leads/editsingle";
-          }
-          if (lead.getAddress().areFieldsNull()) {
-              lead.setAddress(null);
-          }
-          CrmUser user = userRepository.findByEmail(auth.getName());
-          lead.setLastModifiedBy(user);
-          Long assignedId = leadRepository.save(lead).getLeadId();
-          return "redirect:/lead/records/" + assignedId.toString();
+            if (result.hasErrors()) {
+                this.bindLeadForm(model, auth);
+                model.addAttribute("action", "edit/" + lead.getLeadId());
+                return "leads/editsingle";
+            }
+            if (lead.getAddress().areFieldsNull()) {
+                lead.setAddress(null);
+            }
+            CrmUser user = userRepository.findByEmail(auth.getName());
+            lead.setLastModifiedBy(user);
+            Long assignedId = leadRepository.save(lead).getLeadId();
+            return "redirect:/lead/records/" + assignedId.toString();
         } else {
             throw new NotFoundException();
         }

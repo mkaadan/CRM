@@ -94,7 +94,7 @@ public class DealControllerTest extends ControllerTests {
 
         return stages;
     }
-    
+
     private ArrayList<Type> mockTypeData() {
         ArrayList<Type> types = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class DealControllerTest extends ControllerTests {
 
         return types;
     }
-    
+
     private ArrayList<Account> mockAccountData() {
         ArrayList<Account> accounts = new ArrayList<>();
 
@@ -148,7 +148,7 @@ public class DealControllerTest extends ControllerTests {
         contact.setContactId(new Long("2"));
         contact.setLastName("contactB");
         contacts.add(contact);
-        
+
         contact = new Contact();
         contact.setContactId(new Long("3"));
         contact.setLastName("contactC");

@@ -23,30 +23,27 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/account")
 public class AccountsController extends BaseController {
+    private final String moduleName = "Accounts";
     /**
      * Sql interface for account entites.
      */
     @Autowired
     private AccountRepository accountRepository;
-
     /**
      * Sql interface for type entites.
      */
     @Autowired
     private AccountTypeRepository typeRepository;
-
     /**
      * Sql interface for contact entites.
      */
     @Autowired
     private ContactRepository contactRepository;
-
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-    private final String moduleName = "Accounts";
 
     /**
      * Render the list view for all available accounts.

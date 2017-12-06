@@ -32,43 +32,37 @@ import javax.validation.Valid;
 @RequestMapping("/deal")
 public class DealController extends BaseController {
 
+    private final String moduleName = "Deals";
     /**
      * Sql interface for crm user entites.
      */
     @Autowired
     private CrmUserRepository userRepository;
-
     /**
      * Sql interface for deal entites.
      */
     @Autowired
     private DealRepository dealRepository;
-
     /**
      * Sql interface for deal stage entites.
      */
     @Autowired
     private StageRepository stageRepository;
-
     /**
      * Sql interface for deal type entites.
      */
     @Autowired
     private TypeRepository typeRepository;
-
     /**
      * Sql interface for deal type entites.
      */
     @Autowired
     private AccountRepository accountRepository;
-
     /**
      * Sql interface for deal type entites.
      */
     @Autowired
     private ContactRepository contactRepository;
-
-    private final String moduleName = "Deals";
 
     /**
      * Render a general overview of all deals going on.

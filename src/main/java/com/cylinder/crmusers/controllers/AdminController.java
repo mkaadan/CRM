@@ -1,14 +1,14 @@
 package com.cylinder.crmusers.controllers;
 
 import com.cylinder.crmusers.model.CrmUser;
-import com.cylinder.crmusers.model.CrmUserRepository;
 import com.cylinder.crmusers.model.Role;
-import com.cylinder.crmusers.model.RoleRepository;
-import com.cylinder.crmusers.model.services.AdminService;
 import com.cylinder.crmusers.model.forms.AdminUserForm;
-import com.cylinder.errors.*;
+import com.cylinder.crmusers.model.services.AdminService;
+import com.cylinder.errors.NotFoundException;
 import com.cylinder.shared.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,31 +16,25 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
 
+    /**
+     * The name of the module this controller is associated to.
+     */
+    private final String moduleName = "Admin";
     @Autowired
     private AdminService service;
-
     /**
      * bcrypt encoder for password logic.
      */
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    /**
-     * The name of the module this controller is associated to.
-     */
-    private final String moduleName = "Admin";
 
     /**
      * Render the list view that so that a user with ADMIN privledges can get a
@@ -94,13 +88,13 @@ public class AdminController extends BaseController {
                                      BindingResult result,
                                      Authentication auth,
                                      Model model) {
-        service.checkForRoleError(result,user.getRole());
+        service.checkForRoleError(result, user.getRole());
         if (result.hasErrors()) {
             Iterable<Role> roles = service.findAllRoles();
             super.setCommonModelAttributes(model,
-                                           auth,
-                                           service.getUserRepository(),
-                                           this.moduleName);
+                    auth,
+                    service.getUserRepository(),
+                    this.moduleName);
 
             model.addAttribute("userRole", roles);
             return "crmusers/admin/newuser";
@@ -123,15 +117,15 @@ public class AdminController extends BaseController {
                                 Authentication auth,
                                 Model model) {
         if (!service.userExistsByAccountId(userId)) {
-          throw new NotFoundException();
+            throw new NotFoundException();
         }
         CrmUser user = service.findUserByAccountId(userId);
         AdminUserForm form = user.toAdminUserForm();
         Iterable<Role> roles = service.findAllRoles();
         super.setCommonModelAttributes(model,
-                                       auth,
-                                       service.getUserRepository(),
-                                       this.moduleName);
+                auth,
+                service.getUserRepository(),
+                this.moduleName);
         model.addAttribute("userForm", form);
         model.addAttribute("userRole", roles);
         return "crmusers/admin/userform";
@@ -161,11 +155,11 @@ public class AdminController extends BaseController {
             CrmUser user = service.findUserByAccountId(userId);
             service.checkForRoleError(result, userForm.getRole());
             if (userForm.getRole().getRoleId().equals(new Long("2"))) {
-              if (service.isOnlyAdmin(userId)) {
-                result.addError(new FieldError("Role",
-                                               "roleName",
-                                               "Cannot alter role permission."));
-              }
+                if (service.isOnlyAdmin(userId)) {
+                    result.addError(new FieldError("Role",
+                            "roleName",
+                            "Cannot alter role permission."));
+                }
             }
             if (result.hasErrors()) {
                 super.setCommonModelAttributes(model,
@@ -195,9 +189,9 @@ public class AdminController extends BaseController {
     public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId) {
         if (service.userExistsByAccountId(userId)) {
             if (service.findUserByAccountId(userId).getRole().getRoleName() == "ADMIN") {
-              if (service.isOnlyAdmin(userId)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot delete only admin user.");
-              }
+                if (service.isOnlyAdmin(userId)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot delete only admin user.");
+                }
             }
             service.deleteUserByAccountId(userId);
             return ResponseEntity.status(HttpStatus.OK).body(null);

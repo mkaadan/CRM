@@ -15,6 +15,16 @@ import javax.persistence.*;
 public class Type {
 
     /**
+     * The deal's type descriptor.
+     *
+     * @param descriptor the plain english value of the deal type.
+     * @return the deal's type descriptor.
+     */
+    @Getter
+    @Setter
+    @Column
+    protected String descriptor;
+    /**
      * The identifier for a deal's type.
      *
      * @param typeId the new type id value.
@@ -26,15 +36,4 @@ public class Type {
     @Column(name = "type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long typeId;
-
-    /**
-     * The deal's type descriptor.
-     *
-     * @param descriptor the plain english value of the deal type.
-     * @return the deal's type descriptor.
-     */
-    @Getter
-    @Setter
-    @Column
-    protected String descriptor;
 }

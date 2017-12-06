@@ -18,12 +18,12 @@ abstract public class SimpleEmail {
         return this.emailId;
     }
 
-    public String getEmail() {
-        return this.email;
-    }
-
     public void setEmailId(Long id) {
         this.emailId = id;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     public void setEmail(String email) {

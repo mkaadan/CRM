@@ -1,8 +1,6 @@
 package com.cylinder.deals.model;
 
 import com.cylinder.RespositoryTests;
-import com.cylinder.deals.model.Deal;
-import com.cylinder.deals.model.DealRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
