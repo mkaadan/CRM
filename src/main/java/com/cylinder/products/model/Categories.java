@@ -8,6 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "categories", schema = "product")
 public class Categories {
+
     @Id
     @Column(name = "category_id")
     protected Long categoryId;
@@ -20,5 +21,12 @@ public class Categories {
 
     public String getDescriptor() {
         return this.descriptor;
+    }
+    public void setCategoryId(Long categoryId) {
+      this.categoryId = categoryId;
+    }
+
+    public void setDescriptor(String descriptor) {
+       this.descriptor = descriptor;
     }
 }
