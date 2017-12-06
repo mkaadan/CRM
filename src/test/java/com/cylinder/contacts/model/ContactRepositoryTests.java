@@ -31,20 +31,20 @@ public class ContactRepositoryTests extends RespositoryTests {
     @Test
     public void testExistsBy() {
         Long id = new Long("1");
-        boolean isExisting = contactRepository.existsById(id);
+        boolean isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, true);
         id = new Long("4");
-        isExisting = contactRepository.existsById(id);
+        isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, false);
     }
 
     @Test
     public void testDeleteById() {
         Long id = new Long("4");
-        boolean isExisting = contactRepository.existsById(id);
+        boolean isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, true);
-        contactRepository.deleteById(id);
-        isExisting = contactRepository.existsById(id);
+        contactRepository.existsByContactId(id);
+        isExisting = contactRepository.existsByContactId(id);
         assertEquals(isExisting, false);
     }
 

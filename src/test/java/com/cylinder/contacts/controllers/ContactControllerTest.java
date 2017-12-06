@@ -51,11 +51,11 @@ public class ContactControllerTest extends ControllerTests {
         contact.setLastName("Testa");
         contacts.add(contact);
         contact = new Contact();
-        contact.setLeadId(new Long("2"));
+        contact.setContactId(new Long("2"));
         contact.setLastName("Testb");
         contacts.add(contact);
         contact = new Contact();
-        contact.setLeadId(new Long("3"));
+        contact.setContactId(new Long("3"));
         contact.setLastName("Testc");
         contacts.add(contact);
         return contacts;
@@ -80,8 +80,8 @@ public class ContactControllerTest extends ControllerTests {
         given(this.contactRepository.findAll()).willReturn(leads);
         given(this.contactRepository.findOne(eq(new Long("1")))).willReturn(mockSingleContactData());
         given(this.contactRepository.findOne(eq(new Long("1")))).willReturn(null);
-        given(this.contactRepository.existsById(new Long("1"))).willReturn(true);
-        given(this.contactRepository.existsById(new Long("5"))).willReturn(false);
+        given(this.contactRepository.existsByContactId(new Long("1"))).willReturn(true);
+        given(this.contactRepository.existsByContactId(new Long("5"))).willReturn(false);
         given(this.contactRepository.save(any(Contact.class))).willReturn(mockSingleContactData());
     }
 
