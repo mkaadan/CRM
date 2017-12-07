@@ -99,6 +99,7 @@ public class AdminController extends BaseController {
             model.addAttribute("userRole", roles);
             return "crmusers/admin/newuser";
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             service.saveUser(user);
             return "redirect:/admin/user/overview";
         }
