@@ -26,7 +26,7 @@ public class CrmUser {
     @Setter
     @Id
     @Column(name = "account_id")
-    private long accountId;
+    private Long accountId;
 
     /**
      * The email that is associated to the user.
