@@ -61,8 +61,9 @@ public class UserController extends BaseController {
             throw new NotFoundException();
         }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
+        System.out.println("\n\n\n\n" + currentUser.getAccountId() + "\n\n\n\n\n");
         // check if the authenticated user is altering their own password; restict otherwise.
-        if (userId == currentUser.getAccountId()) {
+        if (userId.equals(currentUser.getAccountId())) {
             super.setCommonModelAttributes(model,
                     auth,
                     userRepository,
@@ -99,7 +100,7 @@ public class UserController extends BaseController {
         }
         CrmUser currentUser = userRepository.findByEmail(auth.getName());
         // check if the authenticated user is altering their own password; restict otherwise.
-        if (userId == currentUser.getAccountId()) {
+        if (userId.equals(currentUser.getAccountId())) {
             Optional<FieldError> passwordError =
                     passForm.isUserSubPasswordValid(passwordEncoder,
                             currentUser.getPassword(),
